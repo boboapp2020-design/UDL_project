@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UDL Intelligence — Mitr Lao Sugar</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f7f7f5;
+  --white:#ffffff;
+  --border:#e8e8e4;
+  --border2:#d0d0ca;
+  --text:#111111;
+  --text2:#555550;
+  --text3:#a0a09a;
+  --blue:#2563eb;
+  --red:#dc2626;
+  --orange:#d97706;
+  --green:#059669;
+  --purple:#7c3aed;
+  --r:12px;--r2:8px;
+  --shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --shadow2:0 4px 12px rgba(0,0,0,0.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter','Noto Sans Thai',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:14px}
+a{text-decoration:none;color:var(--blue)}
+
+/* === LAYOUT === */
+.layout{display:flex;min-height:100vh}
+
+/* === SIDEBAR === */
+.sidebar{
+  width:228px;background:var(--white);border-right:1px solid var(--border);
+  position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;
+  transition:transform .3s ease;
+}
+.sidebar::-webkit-scrollbar{width:0}
+.sidebar-logo{padding:28px 20px 20px;border-bottom:1px solid var(--border)}
+.logo-mark{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.logo-mark .dot{width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.logo-mark span{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:1px;text-transform:uppercase}
+.sidebar-logo h1{font-size:16px;font-weight:700;color:var(--text);line-height:1.3;letter-spacing:-.3px}
+.sidebar-logo p{font-size:12px;color:var(--text3);margin-top:3px}
+.nav-group{padding:20px 20px 6px;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1.2px;font-weight:600}
+.nav a{
+  display:flex;align-items:center;gap:9px;padding:8px 20px;
+  color:var(--text2);font-size:13px;transition:all .15s;
+  border-radius:0;border-left:2px solid transparent;
+}
+.nav a .icon{font-size:14px;width:18px;text-align:center;flex-shrink:0;opacity:.5}
+.nav a:hover{background:#f7f7f5;color:var(--text);border-left-color:var(--border2)}
+.nav a:hover .icon{opacity:.8}
+.nav a.active{background:#eff6ff;color:var(--blue);border-left-color:var(--blue);font-weight:500}
+.nav a.active .icon{opacity:1}
+.nav-pill{font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;background:#fee2e2;color:var(--red);margin-left:auto}
+
+/* === MAIN === */
+.main{margin-left:228px;flex:1}
+section{padding:60px 52px;max-width:1040px;margin:0 auto}
+section+section{border-top:1px solid var(--border)}
+
+/* === SECTION HEADER === */
+.section-tag{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px}
+h2{font-size:28px;font-weight:700;letter-spacing:-.5px;line-height:1.25;color:var(--text)}
+.sub{font-size:15px;color:var(--text2);margin-top:8px;margin-bottom:36px;max-width:640px;line-height:1.75}
+
+/* === CARDS === */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:24px;box-shadow:var(--shadow)}
+.card:hover{border-color:var(--border2)}
+.card h3{font-size:14px;font-weight:600;margin-bottom:10px;color:var(--text)}
+.card p{font-size:13px;color:var(--text2);line-height:1.7}
+
+/* === KPI === */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+.kpi{
+  background:var(--white);border:1px solid var(--border);border-radius:var(--r);
+  padding:24px;text-align:left;box-shadow:var(--shadow);transition:box-shadow .2s,border-color .2s;
+}
+.kpi:hover{box-shadow:var(--shadow2);border-color:var(--border2)}
+.kpi .val{font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:6px}
+.kpi .lbl{font-size:12px;color:var(--text2);font-weight:500}
+.kpi .bench{font-size:11px;color:var(--text3);margin-top:3px}
+.kpi.red .val{color:var(--red)}
+.kpi.orange .val{color:var(--orange)}
+.kpi.green .val{color:var(--green)}
+.kpi.blue .val{color:var(--blue)}
+.kpi-line{width:32px;height:3px;border-radius:2px;margin-bottom:14px}
+.kpi.red .kpi-line{background:var(--red)}
+.kpi.orange .kpi-line{background:var(--orange)}
+.kpi.green .kpi-line{background:var(--green)}
+.kpi.blue .kpi-line{background:var(--blue)}
+
+/* === ALERT === */
+.alert{border-radius:var(--r2);padding:14px 18px;font-size:13px;line-height:1.7;margin:16px 0;border-left:3px solid}
+.alert.info{background:#eff6ff;border-color:var(--blue);color:#1d4ed8}
+.alert.warn{background:#fffbeb;border-color:var(--orange);color:#92400e}
+.alert.danger{background:#fef2f2;border-color:var(--red);color:#991b1b}
+.alert.success{background:#ecfdf5;border-color:var(--green);color:#065f46}
+.alert strong{font-weight:600}
+
+/* === TAGS === */
+.tag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.tag-red{background:#fef2f2;color:var(--red)}
+.tag-orange{background:#fffbeb;color:var(--orange)}
+.tag-green{background:#ecfdf5;color:var(--green)}
+.tag-blue{background:#eff6ff;color:var(--blue)}
+.tag-purple{background:#f5f3ff;color:var(--purple)}
+
+/* === GRID === */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:900px){.g2,.g3{grid-template-columns:1fr}}
+
+/* === PROCESS === */
+.process-flow{display:flex;gap:0;overflow-x:auto;padding:4px 0 8px;margin-bottom:20px;scrollbar-width:thin}
+.process-flow::-webkit-scrollbar{height:3px}.process-flow::-webkit-scrollbar-thumb{background:var(--border2)}
+.proc-node{
+  flex-shrink:0;cursor:pointer;
+  background:var(--white);border:1px solid var(--border);border-radius:var(--r);
+  padding:16px 14px;text-align:center;min-width:106px;
+  transition:all .2s;position:relative;box-shadow:var(--shadow);
+}
+.proc-node:hover,.proc-node.active{border-color:var(--blue)}
+.proc-node.active{background:#eff6ff}
+.proc-node .n-icon{font-size:26px;margin-bottom:6px}
+.proc-node .n-label{font-size:11px;font-weight:500;color:var(--text2);line-height:1.4}
+.proc-node .n-risk{
+  position:absolute;top:-7px;right:-7px;width:17px;height:17px;border-radius:50%;
+  border:2px solid var(--bg);font-size:9px;display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:#fff;
+}
+.n-risk.high{background:var(--red)}.n-risk.med{background:var(--orange)}.n-risk.low{background:var(--green)}
+.proc-arrow{display:flex;align-items:center;justify-content:center;width:28px;flex-shrink:0;color:var(--text3);font-size:14px}
+.step-detail{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:24px;box-shadow:var(--shadow);display:none;animation:fi .2s ease}
+.step-detail.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.step-detail h4{font-size:15px;font-weight:700;margin-bottom:12px}
+.step-detail ul{padding-left:18px;color:var(--text2);font-size:13px}
+.step-detail ul li{margin-bottom:5px}
+
+/* === CHART BOX === */
+.chart-box{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.chart-box .ch-title{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px}
+.chart-box canvas{max-height:250px}
+
+/* === TABLE === */
+.tbl-wrap{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{padding:10px 14px;text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--text3);background:#f7f7f5;border-bottom:1px solid var(--border);white-space:nowrap}
+tbody td{padding:9px 14px;border-bottom:1px solid #f3f3f0;white-space:nowrap;color:var(--text2)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#fafaf8}
+.c-red{color:var(--red);font-weight:600}
+.c-orange{color:var(--orange);font-weight:600}
+.c-green{color:var(--green);font-weight:600}
+.c-blue{color:var(--blue)}
+
+/* === FORMULA === */
+.formula-box{
+  background:#f7f7f5;border:1px solid var(--border);border-radius:var(--r2);
+  padding:18px 20px;font-family:'JetBrains Mono','Fira Code',monospace;font-size:13px;
+  line-height:2;margin:14px 0;overflow-x:auto;color:var(--text2);
+}
+.formula-inline{
+  background:#f7f7f5;border:1px solid var(--border);border-radius:var(--r2);
+  padding:9px 14px;font-family:monospace;font-size:12px;color:var(--text2);margin-bottom:6px;
+}
+.formula-inline.red{background:#fef2f2;border-color:#fecaca;color:var(--red)}
+.formula-inline.green{background:#ecfdf5;border-color:#a7f3d0;color:var(--green)}
+
+/* === LOSS BAR === */
+.loss-bar{display:flex;height:32px;border-radius:6px;overflow:hidden;gap:2px;margin:14px 0}
+.loss-bar div{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff;transition:flex .5s ease}
+
+/* === PROJECT CARDS === */
+.proj-card{
+  background:var(--white);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px 24px;transition:border-color .15s,box-shadow .15s;cursor:pointer;box-shadow:var(--shadow);
+}
+.proj-card:hover{border-color:var(--border2);box-shadow:var(--shadow2)}
+.proj-card.open{border-color:var(--blue)}
+.proj-header{display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:6px}
+.proj-title{font-size:14px;font-weight:600;color:var(--text);line-height:1.4}
+.proj-desc{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:10px}
+.proj-expand{display:none;animation:fi .2s ease;border-top:1px solid var(--border);margin-top:14px;padding-top:14px}
+.proj-card.open .proj-expand{display:block}
+.why-box{background:#eff6ff;border-radius:var(--r2);padding:12px 14px;font-size:13px;color:#1e40af;line-height:1.7;margin-bottom:10px}
+.proj-meta{display:flex;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--text3);align-items:center}
+.proj-meta .impact{color:var(--green);font-weight:600}
+
+/* === ROADMAP === */
+.roadmap{display:flex;flex-direction:column}
+.rm-item{display:flex;gap:20px;padding:22px 0;border-bottom:1px solid var(--border)}
+.rm-item:last-child{border-bottom:0}
+.rm-badge{flex-shrink:0;width:64px;text-align:center}
+.rm-badge .phase{font-size:10px;font-weight:700;padding:5px 0;border-radius:6px;display:block;letter-spacing:.5px}
+.rm-badge .when{font-size:10px;color:var(--text3);margin-top:4px;display:block}
+.rm-body h3{font-size:14px;font-weight:600;margin-bottom:4px}
+.rm-body p{font-size:13px;color:var(--text2);line-height:1.7}
+
+/* === CALCULATOR === */
+.calc-box{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:32px;box-shadow:var(--shadow)}
+.calc-box h3{font-size:18px;font-weight:700;margin-bottom:6px}
+.calc-box .sub-sm{font-size:13px;color:var(--text2);margin-bottom:28px;line-height:1.6}
+.slider-row{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.slider-row label{font-size:13px;color:var(--text2);flex-shrink:0;width:200px}
+input[type=range]{
+  flex:1;-webkit-appearance:none;appearance:none;height:3px;
+  background:linear-gradient(90deg,var(--blue) var(--pct,50%),var(--border) 0);
+  border-radius:2px;outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:16px;height:16px;border-radius:50%;
+  background:var(--blue);border:3px solid var(--white);cursor:pointer;
+  box-shadow:0 1px 4px rgba(0,0,0,0.2);
+}
+.slider-val{font-size:14px;font-weight:700;color:var(--blue);min-width:56px;text-align:right}
+.calc-results{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}
+@media(max-width:700px){.calc-results{grid-template-columns:1fr}}
+.calc-result-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r2);padding:16px;text-align:center}
+.calc-result-card .r-val{font-size:22px;font-weight:800;color:var(--green);margin-bottom:3px;letter-spacing:-.5px}
+.calc-result-card .r-lbl{font-size:11px;color:var(--text3)}
+.calc-gauge{width:100%;height:6px;background:var(--border);border-radius:3px;margin-top:18px;overflow:hidden}
+.gauge-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--red),var(--orange),var(--green));transition:width .5s ease}
+
+/* === GLOSSARY === */
+.gls-table td{padding:7px 12px;border-bottom:1px solid #f3f3f0;font-size:13px}
+.gls-table td:first-child{color:var(--blue);font-weight:600;font-family:monospace;font-size:12px;width:120px;white-space:nowrap}
+.gls-table td:last-child{color:var(--text2)}
+.gls-table tr:last-child td{border-bottom:0}
+
+/* === SYSTEMS BOX === */
+.sys-box{
+  background:var(--white);border:1px solid var(--border);border-radius:var(--r);
+  padding:20px 24px;font-size:13px;line-height:2.2;color:var(--text2);box-shadow:var(--shadow);
+}
+.sys-box .hot{color:var(--red);font-weight:600}
+.sys-box .chain{color:var(--text3)}
+
+/* === DIVIDER === */
+.divider{height:1px;background:var(--border);margin:24px 0}
+
+/* === HAMBURGER === */
+.hamburger{
+  display:none;position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--white);border:1px solid var(--border);color:var(--text);
+  padding:8px 12px;border-radius:8px;font-size:16px;cursor:pointer;box-shadow:var(--shadow);
+}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .hamburger{display:block}
+  section{padding:40px 20px}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* === SCROLL ANIMATION === */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .45s ease,transform .45s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* === INLINE STAT === */
+.inline-stat{display:inline-flex;align-items:baseline;gap:4px}
+.inline-stat .big{font-size:22px;font-weight:800;letter-spacing:-.5px}
+</style>
+</head>
+<body>
+
+<button class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark"><div class="dot"></div><span>Mitr Lao Sugar</span></div>
+    <h1>UDL Intelligence</h1>
+    <p>Project Control Center</p>
+  </div>
+  <div class="nav">
+    <div class="nav-group">เรียนรู้</div>
+    <a href="#overview"><span class="icon">⚡</span> ภาพรวมโครงการ <span class="nav-pill">!</span></a>
+    <a href="#process"><span class="icon">⚙️</span> กระบวนการผลิต</a>
+    <a href="#udl"><span class="icon">❓</span> UDL คืออะไร</a>
+    <div class="nav-group">วิเคราะห์</div>
+    <a href="#data"><span class="icon">📊</span> ข้อมูล 12 ฤดู</a>
+    <a href="#rootcause"><span class="icon">🔍</span> สาเหตุ &amp; Pattern</a>
+    <a href="#benchmark"><span class="icon">🎯</span> เทียบ Benchmark</a>
+    <div class="nav-group">ลงมือทำ</div>
+    <a href="#projects"><span class="icon">💡</span> ไอเดียโครงการ</a>
+    <a href="#roadmap"><span class="icon">🗺️</span> แผนปฏิบัติการ</a>
+    <a href="#calc"><span class="icon">🧮</span> คำนวณมูลค่า</a>
+    <a href="#glossary"><span class="icon">📖</span> คำศัพท์</a>
+  </div>
+</nav>
+
+<div class="main">
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="section-tag">ภาพรวมโครงการ</div>
+  <h2>ลด Undetermined Loss</h2>
+  <p class="sub">โรงงานสูญเสียน้ำตาลโดยไม่ทราบสาเหตุเฉลี่ย <strong style="color:var(--red)">6.47%</strong> ต่อฤดู — เทียบ World-class target <strong style="color:var(--green)">&lt;2.5%</strong> — Gap นี้คือโอกาสมูลค่า <strong>~77 ล้านบาท/ฤดู</strong></p>
+
+  <div class="kpi-grid reveal">
+    <div class="kpi red">
+      <div class="kpi-line"></div>
+      <div class="val" data-count="6.47" data-suffix="%">—</div>
+      <div class="lbl">UDL เฉลี่ย 12 ฤดู</div>
+      <div class="bench">Target &lt;2.5%</div>
+    </div>
+    <div class="kpi orange">
+      <div class="kpi-line"></div>
+      <div class="val" data-count="81.3" data-suffix="%">—</div>
+      <div class="lbl">Overall Recovery</div>
+      <div class="bench">World-class &gt;87.5%</div>
+    </div>
+    <div class="kpi orange">
+      <div class="kpi-line"></div>
+      <div class="val" data-count="83.3" data-suffix="%">—</div>
+      <div class="lbl">BHR เฉลี่ย</div>
+      <div class="bench">World-class &gt;91%</div>
+    </div>
+    <div class="kpi red">
+      <div class="kpi-line"></div>
+      <div class="val">~77M฿</div>
+      <div class="lbl">มูลค่า UDL ต่อฤดู</div>
+      <div class="bench">น้ำตาลที่หายไปโดยไม่รู้สาเหตุ</div>
+    </div>
+  </div>
+
+  <div class="alert info reveal">
+    <strong>สำหรับคุณในฐานะคนนอกฝ่ายโรงงาน —</strong> UDL เป็นปัญหาข้ามแผนก คนในสายผลิตมักมองแค่ส่วนของตัวเอง ความสามารถด้าน "คิดเชิงระบบ" คือจุดแข็งที่หายากที่สุดในการแก้ปัญหานี้
+  </div>
+
+  <div class="g3 reveal" style="margin-top:20px">
+    <div class="card">
+      <div class="section-tag" style="margin-bottom:6px">ฤดูที่แย่ที่สุด</div>
+      <div class="inline-stat"><span class="big c-red">8.02%</span><span style="font-size:12px;color:var(--text3)"> UDL</span></div>
+      <p style="margin-top:4px">2025-26 — Crushing Rate สูงสุดในประวัติการณ์ที่ 275 t/h</p>
+    </div>
+    <div class="card">
+      <div class="section-tag" style="margin-bottom:6px">ฤดูที่ดีที่สุด</div>
+      <div class="inline-stat"><span class="big c-green">3.97%</span><span style="font-size:12px;color:var(--text3)"> UDL</span></div>
+      <p style="margin-top:4px">2023-24 — พิสูจน์ว่าโรงงานนี้ทำได้ดีกว่านี้</p>
+    </div>
+    <div class="card">
+      <div class="section-tag" style="margin-bottom:6px">โอกาสใหญ่ที่สุด</div>
+      <div class="inline-stat"><span class="big c-orange">BHR Gap</span></div>
+      <p style="margin-top:4px">ต่ำกว่า World-class ถึง 8% — Boiling House คือ "เหมืองทอง" หลัก</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-tag">กระบวนการผลิต</div>
+  <h2>น้ำตาลเกิดขึ้นได้ยังไง?</h2>
+  <p class="sub">อ้อย 1 ตัน → น้ำตาล ~120 กก. ผ่าน 6 สถานี — แต่ละสถานีมีโอกาสสูญเสีย UDL ต่างกัน กดเพื่อดูรายละเอียด</p>
+
+  <div class="process-flow reveal">
+    <div class="proc-node active" onclick="showStep(0,this)">
+      <div class="n-risk low">✓</div>
+      <div class="n-icon">🌾</div>
+      <div class="n-label">1. รับอ้อย<br>&amp; ชั่ง</div>
+    </div>
+    <div class="proc-arrow">›</div>
+    <div class="proc-node" onclick="showStep(1,this)">
+      <div class="n-risk med">!</div>
+      <div class="n-icon">🔧</div>
+      <div class="n-label">2. เตรียม<br>&amp; หีบ</div>
+    </div>
+    <div class="proc-arrow">›</div>
+    <div class="proc-node" onclick="showStep(2,this)">
+      <div class="n-risk high">!!</div>
+      <div class="n-icon">🧪</div>
+      <div class="n-label">3. ทำใส<br>(Clarify)</div>
+    </div>
+    <div class="proc-arrow">›</div>
+    <div class="proc-node" onclick="showStep(3,this)">
+      <div class="n-risk high">!!</div>
+      <div class="n-icon">🔥</div>
+      <div class="n-label">4. ระเหย<br>(Evap)</div>
+    </div>
+    <div class="proc-arrow">›</div>
+    <div class="proc-node" onclick="showStep(4,this)">
+      <div class="n-risk high">!!</div>
+      <div class="n-icon">💎</div>
+      <div class="n-label">5. ตกผลึก<br>(Pan)</div>
+    </div>
+    <div class="proc-arrow">›</div>
+    <div class="proc-node" onclick="showStep(5,this)">
+      <div class="n-risk med">!</div>
+      <div class="n-icon">🌀</div>
+      <div class="n-label">6. ปั่นแยก<br>(Cent)</div>
+    </div>
+  </div>
+
+  <div id="stepDetails">
+    <div class="step-detail active" data-idx="0">
+      <h4>🌾 สถานีที่ 1: รับอ้อย &amp; ชั่ง</h4>
+      <div class="g2">
+        <div>
+          <p style="margin-bottom:10px"><strong>ทำอะไร:</strong> อ้อยจากไร่ → ชั่งน้ำหนัก → วัดคุณภาพ (Pol%, Brix%, Fiber%, CCS)</p>
+          <ul>
+            <li><strong>Pol% Cane</strong> = ปริมาณน้ำตาลในอ้อย (เฉลี่ย 15.5%)</li>
+            <li><strong>Fiber%</strong> = เส้นใย → กลายเป็นชานอ้อย (เชื้อเพลิง boiler)</li>
+            <li><strong>CCS</strong> = Commercial Cane Sugar = ราคาที่ชาวไร่ได้รับ</li>
+            <li><strong>% Burnt Cane</strong> = อ้อยที่เผาก่อนตัด (ลด Pol 0.3-0.5%)</li>
+          </ul>
+        </div>
+        <div class="alert warn" style="margin:0">
+          <strong>⚠️ จุดเสี่ยง UDL:</strong> เครื่องชั่งผิดพลาด หรือ Lab วิเคราะห์ Pol ไม่แม่น → ตัวเลขเข้าระบบผิดตั้งแต่ต้น → UDL สูงทั้งที่ไม่ได้มีการสูญเสียจริง (Measurement Error)
+        </div>
+      </div>
+    </div>
+    <div class="step-detail" data-idx="1">
+      <h4>🔧 สถานีที่ 2: เตรียมอ้อย &amp; หีบ (Milling)</h4>
+      <div class="g2">
+        <div>
+          <p style="margin-bottom:10px"><strong>ทำอะไร:</strong> สับอ้อยให้ละเอียด → บีบเอาน้ำอ้อยออกผ่านลูกหีบ 4-6 ลูก → ฉีด Imbibition water ชะน้ำตาล</p>
+          <ul>
+            <li><strong>PI (Preparation Index)</strong> = ความละเอียดอ้อยที่สับ (เป้า ≥92, เฉลี่ยเรา 93.8)</li>
+            <li><strong>Extraction % Pol</strong> = น้ำตาลที่หีบออกมาได้ (เป้า ≥97%, เฉลี่ยเรา 96.8%)</li>
+            <li><strong>Imbibition % Fiber</strong> = น้ำร้อนที่ฉีดชะน้ำตาล (เป้า 250-280%)</li>
+            <li><strong>Pol% Bagasse</strong> = น้ำตาลค้างในชาน (เป้า &lt;2%)</li>
+          </ul>
+        </div>
+        <div class="alert info" style="margin:0">
+          <strong>💡 ข้อมูลโรงงานเรา:</strong> Extraction เฉลี่ย 96.8% ใกล้เคียง benchmark แต่ยังมี room — PI เพิ่ม 1 unit = Extraction +0.17% = เงินเพิ่มอีก 1-2M บาท/ฤดู
+        </div>
+      </div>
+    </div>
+    <div class="step-detail" data-idx="2">
+      <h4>🧪 สถานีที่ 3: ทำใส (Clarification) — UDL Risk สูง</h4>
+      <div class="g2">
+        <div>
+          <p style="margin-bottom:10px"><strong>ทำอะไร:</strong> Mixed Juice มีสิ่งเจือปน → เติมปูนขาว + ให้ความร้อน → ตกตะกอน → แยก Clear Juice จาก Mud (กรองเป็น Filter Cake)</p>
+          <ul>
+            <li><strong>pH Control</strong> = ต้องรักษา 7.0-7.2 ตลอดเวลา</li>
+            <li><strong>Retention Time</strong> = เวลาที่น้ำอ้อยอยู่ใน Clarifier (เป้า &lt;2 ชั่วโมง)</li>
+            <li><strong>Purity Drop</strong> = ความบริสุทธิ์ที่ลดลง (เป้า &lt;2 units)</li>
+          </ul>
+        </div>
+        <div class="alert danger" style="margin:0">
+          <strong>🚨 Inversion Loss:</strong> pH ต่ำ + ร้อน + นานเกิน → ซูโครสแตกตัวเป็น glucose + fructose = นับเป็น UDL! Retention 2 ชม. ที่ pH 7.2 = สูญน้ำตาล 0.43%/ฤดู
+        </div>
+      </div>
+    </div>
+    <div class="step-detail" data-idx="3">
+      <h4>🔥 สถานีที่ 4: ระเหย (Evaporation) — UDL Risk สูงมาก</h4>
+      <div class="g2">
+        <div>
+          <p style="margin-bottom:10px"><strong>ทำอะไร:</strong> Clear Juice (Brix ~15%) → ต้มระเหยน้ำออกผ่านหม้อระเหย 4-5 ลูก → ได้ Syrup (Brix 65-68%)</p>
+          <ul>
+            <li><strong>Steam Economy</strong> = ประสิทธิภาพการใช้ไอน้ำ (เป้า &gt;4.5 kg/kg)</li>
+            <li><strong>Syrup Brix</strong> = ความเข้มข้น (เป้า 65-68%) ต่ำ → Pan ทำงานหนักขึ้น</li>
+            <li><strong>Entrainment</strong> = น้ำตาลถูกพาไปกับไอน้ำ → หายเลย</li>
+          </ul>
+        </div>
+        <div class="alert danger" style="margin:0">
+          <strong>🚨 Entrainment:</strong> เมื่อเร่งการผลิต ระดับของเหลวในหม้อสูงขึ้น → น้ำตาลถูกพาไปกับไอน้ำ = UDL 100% ปรับ crushing rate ลง 10% อาจลด UDL ได้ 1-2%
+        </div>
+      </div>
+    </div>
+    <div class="step-detail" data-idx="4">
+      <h4>💎 สถานีที่ 5: ตกผลึก (Pan Boiling) — UDL Risk สูงมาก</h4>
+      <div class="g2">
+        <div>
+          <p style="margin-bottom:10px"><strong>ทำอะไร:</strong> Syrup → ต้มภายใต้สุญญากาศจนน้ำตาลตกผลึก ผ่าน 3 รอบ (A→B→C) โดย C-strike คือขั้นสำคัญที่สุด</p>
+          <ul>
+            <li><strong>A-strike</strong> = ผลิตน้ำตาลผลิตภัณฑ์ที่จำหน่าย</li>
+            <li><strong>C-strike</strong> = ดึงน้ำตาลสุดท้าย ส่วนที่เหลือ = Final Molasses</li>
+            <li><strong>FM Purity</strong> = น้ำตาลค้างในกาก (เป้า &lt;33%)</li>
+            <li><strong>BHR เฉลี่ยเรา: 83.3%</strong> vs World-class: &gt;91%</li>
+          </ul>
+        </div>
+        <div class="alert warn" style="margin:0">
+          <strong>⚠️ BHR Gap 8% คือโอกาสใหญ่ที่สุด:</strong> C-crystallizer เย็นพอไหม? Retention time เพียงพอไหม? Pan cycle ถูก cut เพราะรีบหีบไหม? คำถามที่คนนอกถามได้โดยไม่ขัดแย้ง
+        </div>
+      </div>
+    </div>
+    <div class="step-detail" data-idx="5">
+      <h4>🌀 สถานีที่ 6: ปั่นแยก (Centrifugals)</h4>
+      <div class="g2">
+        <div>
+          <p style="margin-bottom:10px"><strong>ทำอะไร:</strong> ปั่นแยกผลึกน้ำตาลออกจาก molasses ด้วย G-force 1,000-2,700G แล้วล้างผลึก</p>
+          <ul>
+            <li>ล้างน้อยเกิน → น้ำตาลสีเข้ม คุณภาพต่ำ</li>
+            <li>ล้างมากเกิน → น้ำตาลละลายกลับ → yield loss → UDL ↑</li>
+            <li><strong>Crystal CV</strong> = ความสม่ำเสมอผลึก (เป้า &lt;30%)</li>
+          </ul>
+        </div>
+        <div class="alert info" style="margin:0">
+          <strong>💡 ปัญหาที่นี่มักมาจากขั้น 5:</strong> ถ้า Pan ให้ผลึกสม่ำเสมอ ขั้นนี้จะไม่มีปัญหา แต่ถ้าผลึก CV สูง → ต้องล้างมากขึ้น → over-washing → UDL ↑
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UDL EXPLAINED -->
+<section id="udl">
+  <div class="section-tag">ความรู้หลัก</div>
+  <h2>UDL คืออะไร?</h2>
+  <p class="sub">น้ำตาลที่ "หายไป" โดยระบบ mass balance อธิบายไม่ได้ — คำนวณจากสมการที่เหลือ</p>
+
+  <div class="card reveal" style="margin-bottom:16px">
+    <h3>สูตรคำนวณ</h3>
+    <div class="formula-box">
+      <div>น้ำตาลทั้งหมดที่เข้า <span style="color:var(--text3)">(Cane Pol)</span></div>
+      <div style="padding-left:20px;color:var(--text2)">= น้ำตาลผลิตภัณฑ์</div>
+      <div style="padding-left:20px;color:var(--text2)">+ สูญเสียในชานอ้อย (Bagasse Loss)</div>
+      <div style="padding-left:20px;color:var(--text2)">+ สูญเสียในกากหม้อกรอง (Filter Cake Loss)</div>
+      <div style="padding-left:20px;color:var(--text2)">+ สูญเสียในกากน้ำตาล (Final Molasses Loss)</div>
+      <div style="padding-left:20px"><strong style="color:var(--red)">+ UDL ← ตัวเลขที่เหลือ = "ของหายที่อธิบายไม่ได้"</strong></div>
+    </div>
+  </div>
+
+  <div class="loss-bar reveal">
+    <div style="flex:9.8;background:#3b82f6">FM 9.8%</div>
+    <div style="flex:6.5;background:#dc2626">UDL 6.5%</div>
+    <div style="flex:3.2;background:#94a3b8">Bag</div>
+    <div style="flex:0.4;background:#22c55e">FC</div>
+  </div>
+  <p style="font-size:11px;color:var(--text3);margin-bottom:20px">การกระจายของ Total Loss โดยเฉลี่ย — โรงงาน Mitr Lao</p>
+
+  <div class="g3 reveal">
+    <div class="card">
+      <div style="font-size:11px;font-weight:600;color:var(--red);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Chemical Losses</div>
+      <p>น้ำตาลถูกทำลายทางเคมี: Inversion (pH ต่ำ+ร้อน), Thermal decomposition, Maillard reaction</p>
+    </div>
+    <div class="card">
+      <div style="font-size:11px;font-weight:600;color:var(--orange);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Physical Losses</div>
+      <p>น้ำตาลหายทางกายภาพ: Entrainment (ไปกับไอน้ำ), Leaks &amp; Spills, Over-washing</p>
+    </div>
+    <div class="card">
+      <div style="font-size:11px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Measurement Errors</div>
+      <p>ไม่ได้หายจริง แต่วัดผิด: Scale errors, Lab analysis, Sampling, Stock in process</p>
+    </div>
+  </div>
+</section>
+
+<!-- DATA -->
+<section id="data">
+  <div class="section-tag">ข้อมูล 12 ฤดู</div>
+  <h2>Performance ย้อนหลัง 2014–2026</h2>
+  <p class="sub">สรุปจาก Daily Report 12 ไฟล์ — ค่า TO-DATE สุดท้ายของแต่ละฤดูการผลิต</p>
+
+  <div class="chart-box reveal" style="margin-bottom:16px">
+    <div class="ch-title">UDL Trend — 12 ฤดู</div>
+    <canvas id="udlTrend"></canvas>
+  </div>
+  <div class="g2 reveal" style="margin-bottom:16px">
+    <div class="chart-box">
+      <div class="ch-title">Loss Distribution</div>
+      <canvas id="lossChart"></canvas>
+    </div>
+    <div class="chart-box">
+      <div class="ch-title">Recovery &amp; BHR Trend</div>
+      <canvas id="recovChart"></canvas>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>ฤดู</th><th>อ้อย (kt)</th><th>Pol%C</th><th>CCS</th>
+          <th>Ext%</th><th>BHR%</th><th>Recovery%</th>
+          <th>UDL%</th><th>Pol%Bag</th><th>Imb%F</th><th>Steam</th><th>สถานะ</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ROOT CAUSE -->
+<section id="rootcause">
+  <div class="section-tag">วิเคราะห์สาเหตุ</div>
+  <h2>ทำไม UDL ถึงสูง?</h2>
+  <p class="sub">เปรียบเทียบ Best vs Worst season และ correlation pattern จากข้อมูล 12 ปี</p>
+
+  <div class="g2 reveal" style="margin-bottom:16px">
+    <div class="card" style="border-left:3px solid var(--green)">
+      <div class="tag tag-green" style="margin-bottom:10px">✅ ดีที่สุด: 2023-24</div>
+      <div class="inline-stat" style="margin-bottom:12px"><span class="big c-green">3.97%</span><span style="font-size:12px;color:var(--text3);margin-left:4px">UDL</span></div>
+      <table style="font-size:12px;width:100%"><tbody>
+        <tr><td style="color:var(--text3);padding:3px 0">Crushing Rate</td><td style="text-align:right;font-weight:600">206 t/h</td></tr>
+        <tr><td style="color:var(--text3);padding:3px 0">BHR</td><td style="text-align:right;font-weight:600">83.22%</td></tr>
+        <tr><td style="color:var(--text3);padding:3px 0">PI</td><td style="text-align:right;font-weight:600">94.86</td></tr>
+        <tr><td style="color:var(--text3);padding:3px 0">Time Efficiency</td><td style="text-align:right;font-weight:600">88.3%</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card" style="border-left:3px solid var(--red)">
+      <div class="tag tag-red" style="margin-bottom:10px">❌ แย่ที่สุด: 2025-26</div>
+      <div class="inline-stat" style="margin-bottom:12px"><span class="big c-red">8.02%</span><span style="font-size:12px;color:var(--text3);margin-left:4px">UDL</span></div>
+      <table style="font-size:12px;width:100%"><tbody>
+        <tr><td style="color:var(--text3);padding:3px 0">Crushing Rate</td><td style="text-align:right;font-weight:600;color:var(--red)">275 t/h (+33%!)</td></tr>
+        <tr><td style="color:var(--text3);padding:3px 0">BHR</td><td style="text-align:right;font-weight:600;color:var(--red)">79.52% (ต่ำสุด)</td></tr>
+        <tr><td style="color:var(--text3);padding:3px 0">PI</td><td style="text-align:right;font-weight:600;color:var(--orange)">92.58</td></tr>
+        <tr><td style="color:var(--text3);padding:3px 0">Time Efficiency</td><td style="text-align:right;font-weight:600;color:var(--red)">83.9%</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="g2 reveal" style="margin-bottom:16px">
+    <div class="chart-box">
+      <div class="ch-title">Crushing Rate vs UDL</div>
+      <canvas id="corrCrush"></canvas>
+    </div>
+    <div class="chart-box">
+      <div class="ch-title">BHR vs UDL</div>
+      <canvas id="corrBHR"></canvas>
+    </div>
+  </div>
+
+  <div class="alert danger reveal">
+    <strong>Key Finding:</strong> เมื่อโรงงานเร่งหีบ → ทุก station ถูก overload พร้อมกัน → Clarifier retention time ลด → Evaporator entrainment เพิ่ม → Pan cycle สั้น → UDL พุ่ง — นี่คือ systemic effect ที่คนมองแค่แผนกตัวเองมองไม่เห็น
+  </div>
+
+  <div class="sys-box reveal" style="margin-top:16px">
+    <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.8px">Systems Thinking View</div>
+    <span style="color:var(--orange);font-weight:600">Crushing Rate ↑ 33%</span>
+    <span class="chain"> → </span>Clarifier overload → retention ↓ → <span class="hot">Inversion ↑ → UDL ↑</span><br>
+    <span style="opacity:0;display:inline-block;width:180px"></span><span class="chain">→ </span>Evaporator ระดับสูง → <span class="hot">Entrainment ↑ → UDL ↑</span><br>
+    <span style="opacity:0;display:inline-block;width:180px"></span><span class="chain">→ </span>Pan cycle สั้น → <span class="hot">FM Purity ↑ → BHR ↓ → Recovery ↓</span>
+  </div>
+</section>
+
+<!-- BENCHMARK -->
+<section id="benchmark">
+  <div class="section-tag">เปรียบเทียบ</div>
+  <h2>เราอยู่ตรงไหนของโลก?</h2>
+  <p class="sub">เทียบ KPI กับมาตรฐาน World-class ตาม Peter Rein (2007)</p>
+
+  <div class="chart-box reveal" style="margin-bottom:16px">
+    <div class="ch-title">Gap Analysis — Mitr Lao vs World-class</div>
+    <canvas id="benchChart" style="max-height:280px"></canvas>
+  </div>
+
+  <div class="g3 reveal">
+    <div class="card">
+      <div class="section-tag" style="margin-bottom:4px;color:var(--red)">UDL Gap</div>
+      <div class="inline-stat"><span class="big c-red">+4.97%</span></div>
+      <p style="margin-top:6px">เรา 6.47% vs World-class &lt;1.5%<br>ลดได้ครึ่ง = ประหยัด ~38M฿/ฤดู</p>
+    </div>
+    <div class="card">
+      <div class="section-tag" style="margin-bottom:4px;color:var(--orange)">BHR Gap</div>
+      <div class="inline-stat"><span class="big c-orange">−7.7%</span></div>
+      <p style="margin-top:6px">เรา 83.3% vs World-class &gt;91%<br>"เหมืองทอง" ที่ใหญ่ที่สุด</p>
+    </div>
+    <div class="card">
+      <div class="section-tag" style="margin-bottom:4px;color:var(--green)">Strength</div>
+      <div class="inline-stat"><span class="big c-green">96.8%</span></div>
+      <p style="margin-top:6px">Extraction ใกล้ World-class (97.5%)<br>จุดแข็งที่ต้องรักษาไว้</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-tag">ไอเดียโครงการ</div>
+  <h2>สิ่งที่คนนอกฝ่ายโรงงานทำได้</h2>
+  <p class="sub">ไม่ต้องรู้วิธีเดินเครื่อง — ใช้ Systems Thinking, Data Analysis, และการตั้งคำถามจากมุมมองภายนอก</p>
+
+  <div style="display:flex;flex-direction:column;gap:10px" class="reveal">
+    <div class="proj-card" onclick="toggleProj(this)">
+      <div class="proj-header">
+        <div class="proj-title">🔍 โครงการ 1 — Mass Balance Audit &amp; Measurement Review</div>
+        <span class="tag tag-red">High Impact</span>
+      </div>
+      <div class="proj-desc">ตรวจสอบความถูกต้องของระบบการวัดทั้งหมด — เครื่องชั่ง, Lab, Flow meter, Mass balance formula</div>
+      <div class="proj-expand">
+        <div class="why-box"><strong>ทำไมคนนอกทำได้ดีกว่า:</strong> คนในฝ่ายผลิต "ชินชา" กับตัวเลข ไม่ตั้งคำถาม คุณสามารถถามว่า "เครื่องชั่ง calibrate ครั้งสุดท้ายเมื่อไหร่?" "Lab มี QC Protocol อะไร?" — คำถามง่ายๆ ที่คนในไม่เคยถาม</div>
+        <p style="font-size:13px;color:var(--text2)">ถ้า Measurement Error คือสาเหตุ → ลด UDL ได้ 1-3% โดยไม่ต้องเปลี่ยนอะไรในโรงงานเลย</p>
+      </div>
+      <div class="proj-meta">
+        <span>⏱ 2-4 สัปดาห์</span>
+        <span>👥 Lab + QC</span>
+        <span class="impact">💰 ลด UDL 1-3% = 15-45M THB</span>
+      </div>
+    </div>
+
+    <div class="proj-card" onclick="toggleProj(this)">
+      <div class="proj-header">
+        <div class="proj-title">📊 โครงการ 2 — Daily UDL Dashboard &amp; Alert System</div>
+        <span class="tag tag-red">High Impact</span>
+      </div>
+      <div class="proj-desc">สร้าง dashboard แสดง UDL รายวัน พร้อม alert เมื่อเกินเกณฑ์ — ตอนนี้โรงงานรู้ UDL แค่ "สิ้นฤดู" เท่านั้น</div>
+      <div class="proj-expand">
+        <div class="why-box"><strong>ทำไมคนนอกทำได้ดีกว่า:</strong> ต้องการทักษะ IT/Data ที่ฝ่ายโรงงานมักไม่มี ดึงข้อมูลจาก Daily Report อัตโนมัติ → แสดง trend → alert เมื่อ UDL &gt;4% ในวันนั้น → แก้ได้ทันท่วงที</div>
+        <p style="font-size:13px;color:var(--text2)">ปัจจุบัน: รู้ปัญหาหลังฤดูจบ | หลังโครงการ: รู้ปัญหา "วันนั้น" เลย</p>
+      </div>
+      <div class="proj-meta">
+        <span>⏱ 4-6 สัปดาห์</span>
+        <span>👥 IT + โรงงาน</span>
+        <span class="impact">💰 เห็นปัญหาเร็วขึ้น 7 เท่า</span>
+      </div>
+    </div>
+
+    <div class="proj-card" onclick="toggleProj(this)">
+      <div class="proj-header">
+        <div class="proj-title">⚡ โครงการ 3 — Crushing Rate Optimization Study</div>
+        <span class="tag tag-red">High Impact</span>
+      </div>
+      <div class="proj-desc">วิเคราะห์ข้อมูลรายวัน: crushing rate เท่าไหร่ที่ได้ทั้งปริมาณและ UDL ต่ำที่สุด — หา "sweet spot"</div>
+      <div class="proj-expand">
+        <div class="why-box"><strong>ทำไมคนนอกทำได้ดีกว่า:</strong> ฝ่ายโรงงานถูก KPI "ปริมาณ" กดดัน ไม่มีใครพิสูจน์ว่า "หีบช้าลง 10% แต่ได้น้ำตาลมากกว่า" คุณนำเสนอข้อมูลนี้ได้อย่างเป็นกลาง</div>
+        <p style="font-size:13px;color:var(--text2)">ปี 2025-26: หีบ 275 t/h → UDL 8.02% | ปี 2023-24: หีบ 206 t/h → UDL 3.97% — ต่างกัน 4% จากอัตราหีบอย่างเดียว</p>
+      </div>
+      <div class="proj-meta">
+        <span>⏱ 3-4 สัปดาห์</span>
+        <span>👥 วิเคราะห์ข้อมูลเอง</span>
+        <span class="impact">💰 ลด UDL 1-2% = 15-30M THB</span>
+      </div>
+    </div>
+
+    <div class="proj-card" onclick="toggleProj(this)">
+      <div class="proj-header">
+        <div class="proj-title">🔧 โครงการ 4 — Systematic Leak &amp; Entrainment Survey</div>
+        <span class="tag tag-orange">Medium Impact</span>
+      </div>
+      <div class="proj-desc">จัดทีมสำรวจจุดรั่วไหลทั้งโรงงานอย่างเป็นระบบ ด้วย checklist และ tracking system</div>
+      <div class="proj-expand">
+        <div class="why-box"><strong>ทำไมคนนอกทำได้ดีกว่า:</strong> ออกแบบ checklist ที่ครอบคลุม สร้าง priority matrix track ว่าแก้แล้วยังไง — ใช้ systems thinking จัดระเบียบสิ่งที่เคยเป็น "ตรวจเมื่อนึกได้"</div>
+      </div>
+      <div class="proj-meta">
+        <span>⏱ Off-season</span>
+        <span>👥 Maintenance</span>
+        <span class="impact">💰 ลด UDL 0.5-1.5% = 8-22M THB</span>
+      </div>
+    </div>
+
+    <div class="proj-card" onclick="toggleProj(this)">
+      <div class="proj-header">
+        <div class="proj-title">📈 โครงการ 5 — Cross-Department UDL Scorecard</div>
+        <span class="tag tag-orange">Medium Impact</span>
+      </div>
+      <div class="proj-desc">สร้าง shared KPI ที่เชื่อม Milling + Boiling + Lab เข้าด้วยกัน เพราะตอนนี้แต่ละแผนกดู KPI ตัวเองโดยไม่เห็นผลข้ามแผนก</div>
+      <div class="proj-expand">
+        <div class="why-box"><strong>ทำไมคนนอกทำได้ดีกว่า:</strong> คุณไม่ได้อยู่ฝ่ายใดฝ่ายหนึ่ง มองเห็นได้ว่า "KPI ของ Milling (เร่งหีบ) ทำร้าย KPI ของ Boiling (BHR)" สามารถออกแบบ shared KPI ได้โดยไม่มีอคติ</div>
+      </div>
+      <div class="proj-meta">
+        <span>⏱ 2-3 สัปดาห์</span>
+        <span>👥 ผู้จัดการทุกแผนก</span>
+        <span class="impact">💰 ระบบติดตามยั่งยืน</span>
+      </div>
+    </div>
+
+    <div class="proj-card" onclick="toggleProj(this)">
+      <div class="proj-header">
+        <div class="proj-title">🤖 โครงการ 6 — Predictive UDL Model</div>
+        <span class="tag tag-purple">Future</span>
+      </div>
+      <div class="proj-desc">ใช้ข้อมูล 12 ปีสร้าง ML model ทำนาย UDL ล่วงหน้า → แจ้งเตือนก่อนที่ UDL จะพุ่ง</div>
+      <div class="proj-expand">
+        <div class="why-box"><strong>ทำไมคนนอกทำได้ดีกว่า:</strong> ต้องการ Data Science + Systems Thinking — ไม่ต้องรู้วิธีเดินเครื่อง แต่ต้องรู้ว่า parameter ไหนสำคัญ (คุณมีข้อมูลนี้แล้ว!)</div>
+        <p style="font-size:13px;color:var(--text2)">Input: Crushing Rate, PI, Brix, pH, retention time → Output: UDL prediction</p>
+      </div>
+      <div class="proj-meta">
+        <span>⏱ 2-3 เดือน</span>
+        <span>👥 IT + Automation</span>
+        <span class="impact">💰 Smart Factory roadmap</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="section-tag">แผนปฏิบัติการ</div>
+  <h2>Roadmap — Step by Step</h2>
+  <p class="sub">เริ่มจากสิ่งที่ทำได้วันนี้ ไปจนถึงเป้าหมายระยะยาว</p>
+
+  <div class="roadmap reveal">
+    <div class="rm-item">
+      <div class="rm-badge">
+        <span class="phase" style="background:#eff6ff;color:var(--blue)">NOW</span>
+        <span class="when">สัปดาห์ 1-2</span>
+      </div>
+      <div class="rm-body">
+        <h3>Phase 1 — เรียนรู้ &amp; Baseline <span class="tag tag-green" style="font-size:10px;margin-left:6px">คุณอยู่ที่นี่</span></h3>
+        <p>ศึกษากระบวนการผลิตจากเว็บไซต์นี้ ทำความเข้าใจ KPI 12 ฤดู ระบุปัญหาหลัก เตรียมสรุปนำเสนอผู้บริหาร</p>
+      </div>
+    </div>
+    <div class="rm-item">
+      <div class="rm-badge">
+        <span class="phase" style="background:#fffbeb;color:var(--orange)">NEXT</span>
+        <span class="when">สัปดาห์ 3-4</span>
+      </div>
+      <div class="rm-body">
+        <h3>Phase 2 — Mass Balance &amp; Measurement Audit</h3>
+        <p>ตรวจสอบ: เครื่องชั่งอ้อย calibrate ล่าสุดเมื่อไหร่? Lab มี QC Protocol อะไร? Flow meter ทำงานปกติ? — อาจลด UDL 1-3% โดยไม่ต้องเปลี่ยนอะไรในโรงงาน</p>
+      </div>
+    </div>
+    <div class="rm-item">
+      <div class="rm-badge">
+        <span class="phase" style="background:#f5f3ff;color:var(--purple)">SOON</span>
+        <span class="when">เดือน 2-3</span>
+      </div>
+      <div class="rm-body">
+        <h3>Phase 3 — Daily Analysis &amp; Dashboard</h3>
+        <p>วิเคราะห์ข้อมูลรายวัน — วันไหน UDL สูง เกิดอะไรขึ้นในวันนั้น? สร้าง dashboard ให้โรงงานเห็น UDL แบบ real-time</p>
+      </div>
+    </div>
+    <div class="rm-item">
+      <div class="rm-badge">
+        <span class="phase" style="background:#ecfdf5;color:var(--green)">PLAN</span>
+        <span class="when">Off-season</span>
+      </div>
+      <div class="rm-body">
+        <h3>Phase 4 — Physical &amp; Process Improvements</h3>
+        <p>ซ่อมจุดรั่ว, ทบทวน crushing rate policy, ปรับปรุง C-crystallizer, ติดตั้ง entrainment separator</p>
+      </div>
+    </div>
+    <div class="rm-item">
+      <div class="rm-badge">
+        <span class="phase" style="background:#fef2f2;color:var(--red)">GOAL</span>
+        <span class="when">ฤดูหน้า</span>
+      </div>
+      <div class="rm-body">
+        <h3>Phase 5 — UDL จาก 6.5% → ต่ำกว่า 4%</h3>
+        <p>ลดได้ 2.5% = ประหยัด ~30M THB/ฤดู → รายงานผู้บริหาร → วางแผน Phase 6: Smart Factory</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section id="calc">
+  <div class="section-tag">เครื่องมือพิเศษ</div>
+  <h2>Financial Impact Calculator</h2>
+  <p class="sub">ลาก slider เพื่อดูว่าถ้าลด UDL ได้ตามเป้า จะประหยัดได้เท่าไหร่ — ใช้นำเสนอผู้บริหารได้เลย</p>
+
+  <div class="calc-box reveal">
+    <h3>UDL Reduction Calculator</h3>
+    <p class="sub-sm">ปัจจุบัน UDL = <strong style="color:var(--red)">6.47%</strong> — ปรับ slider เพื่อดูผลกระทบทางการเงิน</p>
+
+    <div class="slider-row">
+      <label>เป้าหมาย UDL ที่ต้องการ</label>
+      <input type="range" id="targetUDL" min="1" max="6" step="0.1" value="3" oninput="calcImpact(this.value)" style="--pct:75%">
+      <span class="slider-val" id="targetVal">3.0%</span>
+    </div>
+    <div class="slider-row">
+      <label>ราคาน้ำตาล (บาท/ตัน)</label>
+      <input type="range" id="sugarPrice" min="12000" max="25000" step="1000" value="18000" oninput="calcImpact(document.getElementById('targetUDL').value)" style="--pct:50%">
+      <span class="slider-val" id="priceVal">18,000 ฿</span>
+    </div>
+
+    <div class="calc-gauge"><div class="gauge-fill" id="gaugeFill" style="width:40%"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-top:5px">
+      <span>UDL 1% (World-class)</span><span>UDL 6.47% (ปัจจุบัน)</span>
+    </div>
+
+    <div class="calc-results">
+      <div class="calc-result-card">
+        <div class="r-val" id="r-baht">฿48M</div>
+        <div class="r-lbl">ประหยัดได้ต่อฤดู</div>
+      </div>
+      <div class="calc-result-card">
+        <div class="r-val" id="r-sugar">2,668 ตัน</div>
+        <div class="r-lbl">น้ำตาลที่ได้กลับคืน</div>
+      </div>
+      <div class="calc-result-card">
+        <div class="r-val" id="r-pct">-3.47%</div>
+        <div class="r-lbl">UDL ที่ลดลง</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSARY -->
+<section id="glossary">
+  <div class="section-tag">อ้างอิง</div>
+  <h2>คำศัพท์ &amp; สูตรสำคัญ</h2>
+  <p class="sub">รวมคำที่ใช้บ่อยในโรงงานน้ำตาล — เปิดดูเวลาเจอคำที่ไม่คุ้นในการประชุม</p>
+
+  <div class="g2 reveal">
+    <div class="card">
+      <h3 style="margin-bottom:10px">คำศัพท์กระบวนการ</h3>
+      <table class="gls-table" style="width:100%"><tbody>
+        <tr><td>Pol</td><td>ปริมาณซูโครส วัดโดย Polarimeter</td></tr>
+        <tr><td>Brix</td><td>ปริมาณของแข็งทั้งหมด (น้ำตาล + อื่นๆ)</td></tr>
+        <tr><td>Purity</td><td>= Pol/Brix × 100 = % น้ำตาลในของแข็งทั้งหมด</td></tr>
+        <tr><td>CCS</td><td>Commercial Cane Sugar = ค่าน้ำตาลเชิงพาณิชย์</td></tr>
+        <tr><td>PI</td><td>Preparation Index = ความละเอียดอ้อยที่สับ</td></tr>
+        <tr><td>Extraction</td><td>% น้ำตาลที่หีบออกมาได้จากอ้อย</td></tr>
+        <tr><td>BHR</td><td>Boiling House Recovery = ประสิทธิภาพตกผลึก</td></tr>
+        <tr><td>FM</td><td>Final Molasses = กากน้ำตาล (by-product สุดท้าย)</td></tr>
+        <tr><td>Imbibition</td><td>น้ำร้อนที่ฉีดลูกหีบเพื่อชะน้ำตาลออก</td></tr>
+        <tr><td>Entrainment</td><td>น้ำตาลที่ถูกพาไปกับไอน้ำ = UDL โดยตรง</td></tr>
+        <tr><td>Inversion</td><td>ซูโครสแตกตัวเป็น glucose+fructose = สูญเสียถาวร</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:10px">สูตรสำคัญ</h3>
+      <div class="formula-inline">CCS = (Pol − (Brix−Pol) × 0.4) × 0.74</div>
+      <div class="formula-inline">Recovery = Sugar Pol Wt / Cane Pol Wt × 100</div>
+      <div class="formula-inline">BHR = (PtyS − PtyFM) / ((100−PtyFM) × PtyS) × 10000</div>
+      <div class="formula-inline">Extraction = MJ Pol Wt / Cane Pol Wt × 100</div>
+      <div class="formula-inline red">UDL = Total Loss − Bag Loss − FC Loss − FM Loss</div>
+      <div class="formula-inline green">Savings = TCD × Days × Pol%/100 × ΔUDL% × Price(฿/t)</div>
+      <div class="alert info" style="margin-top:14px;font-size:12px">
+        <strong>อ้างอิง:</strong> Peter Rein, "Cane Sugar Engineering", Verlag Dr. Albert Bartens, Berlin, 2007
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script>
+// DATA
+const S=['14-15','15-16','16-17','17-18','18-19','19-20','20-21','21-22','22-23','23-24','24-25','25-26'];
+const D={
+  cane:[372,323,443,496,569,495,337,415,562,488,505,634],
+  pol:[15.35,15.01,15.42,15.47,15.67,16.37,16.32,16.12,16.40,15.26,15.25,15.34],
+  ccs:[13.62,13.45,13.83,14.01,14.16,15.00,15.13,14.88,15.10,13.64,13.70,13.85],
+  ext:[96.15,96.05,96.88,96.62,96.99,96.90,97.12,97.01,97.28,97.21,97.03,96.97],
+  bhr:[81.30,84.70,82.62,84.39,82.79,84.66,84.02,86.75,83.53,83.22,83.04,79.52],
+  rec:[78.19,81.36,80.12,81.53,80.32,82.09,81.69,84.16,81.30,82.32,81.83,78.24],
+  udl:[7.89,6.36,7.00,7.12,6.12,5.66,7.36,5.87,7.13,3.97,5.10,8.02],
+  polBag:[1.98,1.95,1.67,1.79,1.67,1.77,1.66,1.66,1.55,1.57,1.64,1.75],
+  imb:[296,325,246,236,243,273,268,270,244,254,242,243],
+  steam:[529,567,582,474,442,461,500,497,473,493,459,526],
+  bag:[3.85,3.93,3.09,3.38,3.01,3.10,2.86,2.99,2.72,2.77,2.97,3.03],
+  fm:[9.77,8.11,9.55,7.72,9.34,8.81,7.67,6.76,8.58,10.67,9.61,10.24],
+  fc:[0.29,0.24,0.23,0.25,1.21,0.35,0.42,0.22,0.26,0.28,0.48,0.47],
+  crush:[171,159,171,210,201,185,188,207,197,206,230,275]
+};
+
+// CHART DEFAULTS
+Chart.defaults.color='#9ca3af';
+Chart.defaults.font.family="Inter,'Noto Sans Thai',sans-serif";
+Chart.defaults.font.size=11;
+const grid='rgba(0,0,0,0.06)';
+
+// UDL TREND
+new Chart(document.getElementById('udlTrend'),{
+  type:'line',
+  data:{labels:S,datasets:[
+    {label:'UDL %',data:D.udl,borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,0.06)',fill:true,tension:.35,pointRadius:4,pointBackgroundColor:'#dc2626',pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2},
+    {label:'Target (2.5%)',data:Array(12).fill(2.5),borderColor:'#059669',borderDash:[5,4],pointRadius:0,borderWidth:1.5},
+    {label:'Concern (4%)',data:Array(12).fill(4),borderColor:'#d97706',borderDash:[5,4],pointRadius:0,borderWidth:1.5}
+  ]},
+  options:{responsive:true,interaction:{mode:'index'},plugins:{legend:{position:'bottom',labels:{color:'#6b7280',boxWidth:10,padding:14}}},scales:{y:{min:0,max:10,grid:{color:grid},ticks:{color:'#9ca3af'}},x:{grid:{display:false},ticks:{color:'#9ca3af'}}}}
+});
+
+// LOSS
+new Chart(document.getElementById('lossChart'),{
+  type:'bar',
+  data:{labels:S,datasets:[
+    {label:'Bagasse',data:D.bag,backgroundColor:'rgba(59,130,246,0.65)',borderRadius:2},
+    {label:'Molasses',data:D.fm,backgroundColor:'rgba(245,158,11,0.65)',borderRadius:2},
+    {label:'Filter Cake',data:D.fc,backgroundColor:'rgba(16,185,129,0.65)',borderRadius:2},
+    {label:'UDL',data:D.udl,backgroundColor:'rgba(220,38,38,0.65)',borderRadius:2}
+  ]},
+  options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:'#6b7280',boxWidth:10,padding:12}}},scales:{x:{stacked:true,grid:{display:false},ticks:{color:'#9ca3af'}},y:{stacked:true,grid:{color:grid},ticks:{color:'#9ca3af'}}}}
+});
+
+// RECOVERY
+new Chart(document.getElementById('recovChart'),{
+  type:'line',
+  data:{labels:S,datasets:[
+    {label:'Recovery %',data:D.rec,borderColor:'#2563eb',tension:.35,pointRadius:3,pointBackgroundColor:'#2563eb',pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2},
+    {label:'BHR %',data:D.bhr,borderColor:'#7c3aed',tension:.35,pointRadius:3,pointBackgroundColor:'#7c3aed',pointBorderColor:'#fff',pointBorderWidth:2,borderWidth:2},
+    {label:'World-class (87.5%)',data:Array(12).fill(87.5),borderColor:'#059669',borderDash:[5,4],pointRadius:0,borderWidth:1.5}
+  ]},
+  options:{responsive:true,interaction:{mode:'index'},plugins:{legend:{position:'bottom',labels:{color:'#6b7280',boxWidth:10,padding:12}}},scales:{y:{min:75,max:95,grid:{color:grid},ticks:{color:'#9ca3af'}},x:{grid:{display:false},ticks:{color:'#9ca3af'}}}}
+});
+
+// SCATTER
+new Chart(document.getElementById('corrCrush'),{
+  type:'scatter',
+  data:{datasets:[{
+    data:D.crush.map((c,i)=>({x:c,y:D.udl[i],label:S[i]})),
+    backgroundColor:D.udl.map(u=>u>7?'rgba(220,38,38,.8)':u>4?'rgba(217,119,6,.8)':'rgba(5,150,105,.8)'),
+    pointRadius:6,pointHoverRadius:8
+  }]},
+  options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw.label}: ${c.raw.x}t/h → UDL ${c.raw.y}%`}}},scales:{x:{title:{display:true,text:'Crushing Rate (t/h)',color:'#9ca3af'},grid:{color:grid},ticks:{color:'#9ca3af'}},y:{title:{display:true,text:'UDL %',color:'#9ca3af'},grid:{color:grid},ticks:{color:'#9ca3af'}}}}
+});
+new Chart(document.getElementById('corrBHR'),{
+  type:'scatter',
+  data:{datasets:[{
+    data:D.bhr.map((b,i)=>({x:b,y:D.udl[i],label:S[i]})),
+    backgroundColor:D.udl.map(u=>u>7?'rgba(220,38,38,.8)':u>4?'rgba(217,119,6,.8)':'rgba(5,150,105,.8)'),
+    pointRadius:6,pointHoverRadius:8
+  }]},
+  options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw.label}: BHR ${c.raw.x}% → UDL ${c.raw.y}%`}}},scales:{x:{title:{display:true,text:'BHR %',color:'#9ca3af'},grid:{color:grid},ticks:{color:'#9ca3af'}},y:{title:{display:true,text:'UDL %',color:'#9ca3af'},grid:{color:grid},ticks:{color:'#9ca3af'}}}}
+});
+
+// BENCHMARK
+new Chart(document.getElementById('benchChart'),{
+  type:'bar',
+  data:{
+    labels:['Extraction %','Recovery %','BHR %','Time Efficiency %'],
+    datasets:[
+      {label:'Mitr Lao (เฉลี่ย)',data:[96.8,81.3,83.3,86.1],backgroundColor:'rgba(37,99,235,0.55)',borderColor:'#2563eb',borderWidth:1,borderRadius:4},
+      {label:'World-class',data:[97.5,87.5,91,93],backgroundColor:'rgba(5,150,105,0.1)',borderColor:'#059669',borderWidth:1.5,borderRadius:4}
+    ]
+  },
+  options:{indexAxis:'y',responsive:true,plugins:{legend:{position:'bottom',labels:{color:'#6b7280',boxWidth:10,padding:12}}},scales:{x:{min:70,max:100,grid:{color:grid},ticks:{color:'#9ca3af'}},y:{grid:{display:false},ticks:{color:'#6b7280'}}}}
+});
+
+// TABLE
+const tbody=document.getElementById('tbody');
+S.forEach((s,i)=>{
+  const u=D.udl[i];
+  const cls=u>7?'c-red':u>4?'c-orange':'c-green';
+  const badge=u>7?'🔴 วิกฤต':u>4?'🟡 ระวัง':'🟢 ดี';
+  tbody.innerHTML+=`<tr>
+    <td><strong>${s}</strong></td>
+    <td>${D.cane[i]}</td><td>${D.pol[i]}</td><td>${D.ccs[i]}</td>
+    <td>${D.ext[i]}</td>
+    <td class="${D.bhr[i]<83?'c-red':D.bhr[i]<86?'c-orange':'c-green'}">${D.bhr[i]}</td>
+    <td class="${D.rec[i]<80?'c-red':D.rec[i]<83?'c-orange':'c-green'}">${D.rec[i]}</td>
+    <td class="${cls}"><strong>${u}</strong></td>
+    <td class="${D.polBag[i]>2?'c-orange':''}">${D.polBag[i]}</td>
+    <td>${D.imb[i]}</td><td>${D.steam[i]}</td>
+    <td class="${cls}">${badge}</td>
+  </tr>`;
+});
+
+// PROCESS
+function showStep(idx,el){
+  document.querySelectorAll('.proc-node').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.step-detail').forEach((d,i)=>d.classList.toggle('active',i===idx));
+}
+
+// PROJECTS
+function toggleProj(card){
+  const open=card.classList.contains('open');
+  document.querySelectorAll('.proj-card').forEach(c=>c.classList.remove('open'));
+  if(!open)card.classList.add('open');
+}
+
+// CALCULATOR
+function calcImpact(target){
+  target=parseFloat(target);
+  const price=parseInt(document.getElementById('sugarPrice').value);
+  const reduction=Math.max(0,6.47-target);
+  const sugar=496000*0.155*(reduction/100);
+  const baht=sugar*price;
+  document.getElementById('targetVal').textContent=target.toFixed(1)+'%';
+  document.getElementById('priceVal').textContent=price.toLocaleString()+' ฿';
+  document.getElementById('r-baht').textContent='฿'+Math.round(baht/1e6)+'M';
+  document.getElementById('r-sugar').textContent=Math.round(sugar).toLocaleString()+' ตัน';
+  document.getElementById('r-pct').textContent='-'+reduction.toFixed(2)+'%';
+  const pct=Math.max(0,100-(reduction/5.47)*100);
+  document.getElementById('gaugeFill').style.width=pct+'%';
+  const sl=document.getElementById('targetUDL');
+  sl.style.setProperty('--pct',((target-1)/5*100)+'%');
+  const sl2=document.getElementById('sugarPrice');
+  sl2.style.setProperty('--pct',((price-12000)/13000*100)+'%');
+}
+calcImpact(3);
+document.getElementById('sugarPrice').addEventListener('input',function(){
+  this.style.setProperty('--pct',((parseInt(this.value)-12000)/13000*100)+'%');
+  document.getElementById('priceVal').textContent=parseInt(this.value).toLocaleString()+' ฿';
+});
+
+// COUNTERS
+function animCount(el){
+  const t=parseFloat(el.dataset.count),sf=el.dataset.suffix||'';
+  const dur=1600,start=performance.now();
+  const step=ts=>{
+    const p=Math.min((ts-start)/dur,1);
+    const e=1-Math.pow(1-p,3);
+    el.textContent=(t*e).toFixed(2)+sf;
+    if(p<1)requestAnimationFrame(step);else el.textContent=t+sf;
+  };
+  requestAnimationFrame(step);
+}
+
+// SCROLL REVEAL
+const io=new IntersectionObserver(e=>{
+  e.forEach(en=>{
+    if(en.isIntersecting){
+      en.target.classList.add('in');
+      en.target.querySelectorAll('[data-count]').forEach(animCount);
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// SCROLL SPY
+const navLinks=document.querySelectorAll('.nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  document.querySelectorAll('section[id]').forEach(s=>{
+    if(window.scrollY>=s.offsetTop-130)cur='#'+s.id;
+  });
+  navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===cur));
+},{passive:true});
+</script>
+</body>
+</html>
