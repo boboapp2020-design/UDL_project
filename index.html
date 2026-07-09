@@ -389,6 +389,60 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
 }
 /* SPA PAGE SYSTEM */
 .page-section.hidden { display: none !important; }
+/* DIAGNOSIS TAB */
+.rein-ref {
+  display: inline-block; font-size: 0.72rem; font-weight: 600;
+  background: rgba(14,116,144,0.08); color: var(--accent2);
+  border: 1px solid rgba(14,116,144,0.25); border-radius: 6px;
+  padding: 0.1rem 0.5rem; margin: 0 0.15rem; white-space: nowrap; vertical-align: middle;
+}
+.verdict-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow); margin-bottom: 1.5rem; overflow: hidden;
+}
+.verdict-card .v-head {
+  display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.verdict-card .v-rank {
+  width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 1.15rem; color: #fff;
+}
+.verdict-card .v-head h3 { font-size: 1.15rem; font-weight: 700; color: var(--navy); flex: 1; }
+.verdict-card .v-head .v-size { text-align: right; flex-shrink: 0; }
+.verdict-card .v-head .v-size .sz { font-size: 1.15rem; font-weight: 700; }
+.verdict-card .v-head .v-size .lb { font-size: 0.7rem; color: var(--text3); }
+.verdict-card .v-body { padding: 1.5rem; }
+.verdict-card .v-body h4 { font-size: 0.95rem; color: var(--navy); margin: 1.1rem 0 0.4rem; font-weight: 700; }
+.verdict-card .v-body h4:first-child { margin-top: 0; }
+.verdict-card .v-body p, .verdict-card .v-body li { color: var(--text2); font-size: 0.9rem; }
+.verdict-card .v-body ul { padding-left: 1.25rem; }
+.verdict-card .v-body li { margin-bottom: 0.4rem; }
+.evidence-strip {
+  background: var(--surface2); border-radius: 10px; padding: 0.85rem 1.1rem;
+  margin: 0.75rem 0; font-size: 0.88rem; color: var(--text2);
+  border-left: 4px solid var(--accent);
+}
+.evidence-strip strong { color: var(--navy); }
+.purity-chain { display: flex; align-items: stretch; gap: 0; flex-wrap: wrap; margin: 1.25rem 0; }
+.purity-chain .pc-node {
+  flex: 1; min-width: 130px; text-align: center; padding: 0.9rem 0.6rem;
+  background: var(--surface); border: 1px solid var(--border);
+}
+.purity-chain .pc-node:first-child { border-radius: 10px 0 0 10px; }
+.purity-chain .pc-node:last-child { border-radius: 0 10px 10px 0; }
+.purity-chain .pc-node .pc-val { font-size: 1.35rem; font-weight: 800; }
+.purity-chain .pc-node .pc-lb { font-size: 0.72rem; color: var(--text3); margin-top: 0.2rem; line-height: 1.4; }
+.diag-table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+table.diag { width: 100%; border-collapse: collapse; font-size: 0.83rem; white-space: nowrap; }
+table.diag th, table.diag td { padding: 0.55rem 0.8rem; text-align: center; border-bottom: 1px solid var(--border); }
+table.diag th { background: var(--surface2); color: var(--navy); font-weight: 600; font-size: 0.75rem; }
+table.diag td { color: var(--text2); }
+table.diag td:first-child { font-weight: 600; color: var(--text); }
+table.diag tr.hl td { background: rgba(220,38,38,0.06); font-weight: 600; }
+.ref-list { font-size: 0.85rem; color: var(--text2); padding-left: 1.25rem; }
+.ref-list li { margin-bottom: 0.45rem; }
 /* SUB-TABS (within a page) */
 .subtab-bar { display: flex; gap: 0.5rem; margin-bottom: 2.5rem; border-bottom: 2px solid var(--border); flex-wrap: wrap; }
 .subtab-btn {
@@ -487,6 +541,7 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
     <div class="subtab-bar">
       <button class="subtab-btn active" data-subpage="steps" onclick="showSubpage('steps')">ขั้นตอนกระบวนการ</button>
       <button class="subtab-btn" data-subpage="wi" onclick="showSubpage('wi')">วิจารณ์เอกสาร WI (32 ฉบับ)</button>
+      <button class="subtab-btn" data-subpage="diagnosis" onclick="showSubpage('diagnosis')">วินิจฉัย: UDL เกิดที่ไหน 🔍</button>
     </div>
   </div>
 </div>
@@ -1514,6 +1569,207 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- ===== SECTION 2c: UDL DIAGNOSIS (Rein-referenced) ===== -->
+<section id="process-diagnosis" class="page-section subpage" data-page="process" data-subpage="diagnosis">
+  <div class="container">
+    <div class="section-title"><span class="num">🔍</span> วินิจฉัย: UDL ของโรงงานเกิดที่กระบวนการไหน</div>
+    <p class="section-subtitle">วิเคราะห์จากข้อมูลดิบ Daily Report ครบ 12 ฤดูหีบ (2014-15 → 2025-26) ด้วยวิธีสมดุลมวลอิสระ (Independent Pol Balance) เทียบกับกรอบวินิจฉัยในตำรามาตรฐานของอุตสาหกรรม — Peter Rein, <em>Cane Sugar Engineering</em> (2007) โดยเฉพาะบทที่ 25 "Chemical Control of Factories"</p>
+
+    <!-- METHOD -->
+    <div class="formula-box">
+      <div class="formula-desc">วิธีวิเคราะห์</div>
+      <div class="formula" style="font-size:1rem;">ไม่เชื่อตัวเลข UDL ที่รายงาน — แต่สร้างสมดุล Pol ขึ้นเองจากข้อมูลดิบ แล้วหาว่าตัวเลข "ขัดแย้งกันเอง" ตรงไหน</div>
+      <div class="formula-desc" style="margin-top:0.75rem;">
+        จาก Daily Report แต่ละฤดูดึงค่า Cane Pol Weight, Mixed Juice Pol Weight, Total Sugar Pol Weight, น้ำหนัก+Purity ของ Final Molasses/Filter Cake มาคำนวณ 3 ตัวชี้วัดที่โรงงานไม่ได้รายงาน:
+        <br>① <strong>Pol Factor</strong> = (MJ Pol + Bagasse Pol) ÷ Cane Pol — ค่าปกติ ≈ 0.99 <span class="rein-ref">Rein eq. 25.1</span>
+        <br>② <strong>Boiling-House UDL</strong> = (MJ Pol − Sugar Pol − Molasses Pol − Filter Cake Pol) ÷ Cane Pol — วัดว่าน้ำตาลที่ "เข้าถึงหลังลูกหีบแล้ว" หายไปเท่าไร
+        <br>③ <strong>SJM − BHR Gap</strong> = ส่วนต่างระหว่าง recovery ตามทฤษฎี (จาก purity น้ำตาล/น้ำอ้อย/molasses) กับ recovery จริง <span class="rein-ref">Rein eq. 25.12, §15.2</span>
+      </div>
+    </div>
+
+    <!-- KPI STRIP -->
+    <div class="kpi-row">
+      <div class="kpi-card"><div class="kpi-label">Pol หายไม่ทราบสาเหตุ 25/26</div><div class="kpi-value" style="color:var(--red)">7,796 ตัน</div><div class="kpi-sub">= UDL 8.02% ของ Pol in Cane</div></div>
+      <div class="kpi-card"><div class="kpi-label">มูลค่าถ้ากู้คืนได้ 75%</div><div class="kpi-value" style="color:var(--red)">~$2.5-3M</div><div class="kpi-sub">ต่อฤดู ที่ราคาน้ำตาลดิบปัจจุบัน</div></div>
+      <div class="kpi-card"><div class="kpi-label">Loss หลังลูกหีบ (bhUDL)</div><div class="kpi-value" style="color:var(--red)">9.44%</div><div class="kpi-sub">ของ Pol ที่เข้า Boiling House แล้ว</div></div>
+      <div class="kpi-card"><div class="kpi-label">Pol Factor ตั้งแต่ 23/24</div><div class="kpi-value" style="color:var(--orange)">1.014-1.017</div><div class="kpi-sub">ค่าปกติ ≈ 0.99-1.00 (Rein)</div></div>
+      <div class="kpi-card"><div class="kpi-label">Benchmark ตำรา</div><div class="kpi-value" style="color:var(--green)">~0.4-2%</div><div class="kpi-sub">"Inevitable loss" (Honig 1959) + ค่าวัดคลาดปกติ</div></div>
+    </div>
+
+    <!-- MASTER TABLE -->
+    <h3 style="font-size:1.15rem; font-weight:700; color:var(--navy); margin:2rem 0 0.5rem;">ตารางวินิจฉัยหลัก — 12 ฤดูหีบ (คำนวณเองจากข้อมูลดิบ)</h3>
+    <p style="color:var(--text2); font-size:0.9rem; margin-bottom:0.5rem;">bhUDL และ Pol Factor คือค่าที่ผมคำนวณใหม่จาก Pol Weight ดิบในรายงาน — ไม่ใช่ค่าที่โรงงานรายงาน</p>
+    <div class="diag-table-wrap">
+      <table class="diag">
+        <thead><tr>
+          <th>ฤดู</th><th>UDL รายงาน<br>(% Pol Cane)</th><th>bhUDL<br>(หลังลูกหีบ)</th><th>SJM−BHR<br>Gap (จุด)</th><th>Pol Factor<br>(ปกติ ≈0.99)</th><th>Loss Time<br>(% Available)</th><th>ชม.หยุดเครื่อง<br>(Mill+Boil+Boiler+Power)</th><th>Purity Rise<br>หม้อปั่น C (เกณฑ์ &lt;1.5)</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>14/15</td><td>7.89</td><td>7.92</td><td>6.84</td><td>1.000</td><td>4.87</td><td>95.9</td><td>+1.12</td></tr>
+          <tr><td>15/16</td><td>6.36</td><td>6.35</td><td>5.07</td><td>1.000</td><td>2.87</td><td>54.7</td><td>+1.02</td></tr>
+          <tr><td>16/17</td><td>7.00</td><td>7.08</td><td>7.04</td><td>1.001</td><td>6.37</td><td>167.2</td><td>+0.66</td></tr>
+          <tr><td>17/18</td><td>7.12</td><td>7.12</td><td>5.51</td><td>1.000</td><td>3.38</td><td>70.2</td><td>+0.36</td></tr>
+          <tr><td>18/19</td><td>6.12</td><td>6.14</td><td>7.06</td><td>1.000</td><td>6.45</td><td>193.9</td><td>—</td></tr>
+          <tr><td>19/20</td><td>5.66</td><td>5.72</td><td>5.90</td><td>1.001</td><td>2.76</td><td>61.2</td><td>−0.92</td></tr>
+          <tr><td>20/21</td><td>7.36</td><td>7.45</td><td>7.39</td><td>1.001</td><td>0.53</td><td>9.2</td><td>+0.71</td></tr>
+          <tr><td>21/22</td><td>5.87</td><td>5.87</td><td>4.85</td><td>1.000</td><td>1.38</td><td>28.0</td><td>+0.73</td></tr>
+          <tr><td>22/23</td><td>7.13</td><td>7.18</td><td>7.63</td><td>1.001</td><td>2.38</td><td>46.4</td><td>+0.63</td></tr>
+          <tr><td>23/24</td><td style="color:var(--green);font-weight:700">3.97</td><td>5.65</td><td>5.41</td><td style="color:var(--orange);font-weight:700">1.017</td><td>1.20</td><td>25.6</td><td>−1.78</td></tr>
+          <tr><td>24/25</td><td>5.10</td><td>6.62</td><td>7.05</td><td style="color:var(--orange);font-weight:700">1.015</td><td>0.60</td><td>12.2</td><td>−0.07</td></tr>
+          <tr class="hl"><td>25/26</td><td style="color:var(--red)">8.02</td><td style="color:var(--red)">9.44</td><td style="color:var(--red)">10.16</td><td style="color:var(--orange)">1.014</td><td style="color:var(--red)">5.46</td><td style="color:var(--red)">130.3</td><td style="color:var(--red)">+2.84</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-row">
+      <div>
+        <h3 style="font-size:1rem; font-weight:700; color:var(--navy); margin-bottom:0.25rem;">UDL รายงาน vs Loss ที่คำนวณได้หลังลูกหีบ (bhUDL)</h3>
+        <p style="color:var(--text3); font-size:0.8rem;">bhUDL ≥ UDL ทุกฤดู → การสูญเสียไม่ระบุแหล่งอยู่หลังลูกหีบเป็นหลัก</p>
+        <div class="chart-container" style="height:320px;"><canvas id="chartDiagBhUdl"></canvas></div>
+      </div>
+      <div>
+        <h3 style="font-size:1rem; font-weight:700; color:var(--navy); margin-bottom:0.25rem;">Pol Factor — สมดุลหน้าโรงงาน "แตก" ตั้งแต่ 23/24</h3>
+        <p style="color:var(--text3); font-size:0.8rem;">Rein eq. 25.1: ค่าปกติ ≈ 0.99 | ค่า &gt;1 แปลว่า Pol ในน้ำอ้อยมากกว่าที่อ้อยใส่เข้ามา — เป็นไปไม่ได้ทางฟิสิกส์</p>
+        <div class="chart-container" style="height:320px;"><canvas id="chartDiagPolFactor"></canvas></div>
+      </div>
+    </div>
+
+    <div style="max-width:820px; margin:0 auto;">
+      <h3 style="font-size:1rem; font-weight:700; color:var(--navy); margin-bottom:0.25rem;">เวลาหยุดเครื่อง vs UDL — r = +0.49</h3>
+      <p style="color:var(--text3); font-size:0.8rem;">ปีที่หยุดเครื่องมาก UDL มักสูง (Rein Table 25.1: start-up/shutdown → entrainment + inversion + liquidation loss)</p>
+      <div class="chart-container" style="height:300px;"><canvas id="chartDiagStops"></canvas></div>
+    </div>
+
+    <!-- VERDICT 1 -->
+    <h3 style="font-size:1.3rem; font-weight:700; color:var(--navy); margin:2.5rem 0 1rem;">คำวินิจฉัย — เรียงตามน้ำหนักหลักฐาน</h3>
+
+    <div class="verdict-card">
+      <div class="v-head">
+        <div class="v-rank" style="background:var(--red)">1</div>
+        <h3>Boiling House (ระเหย → เคี่ยว → ปั่น) — ที่ที่น้ำตาล "หายจริง" มากที่สุด</h3>
+        <div class="v-size"><div class="sz" style="color:var(--red)">5.6-9.4%</div><div class="lb">ของ Pol ทุกฤดู (คำนวณอิสระ)</div></div>
+      </div>
+      <div class="v-body">
+        <p>เมื่อตั้งต้นจาก Pol ที่เข้าถึง Mixed Juice แล้ว (ผ่านลูกหีบมาแล้ว) — หักน้ำตาลที่ผลิตได้ + Molasses + Filter Cake ออก — ยังหายอีก <strong>5.6-9.4% ทุกฤดู</strong> และปี 25/26 หนักสุดที่ 9.44% ขณะที่ SJM−BHR Gap = 10.16 จุด (สูงสุดใน 12 ปี) ทั้งที่ตามตำรา Honig (1959) การสูญเสียที่ "หลีกเลี่ยงไม่ได้" ใน boiling house ควรอยู่แค่ <strong>~0.4%</strong> เท่านั้น <span class="rein-ref">Rein §25.4.5</span></p>
+
+        <h4>จุดที่ 1a — การหยุด-เดินเครื่องบ่อย (ตัวแปรอันดับหนึ่งของปี 25/26)</h4>
+        <div class="evidence-strip"><strong>หลักฐาน:</strong> 25/26 หยุดรวม 130.3 ชม. (Mill 53.8 + Boiling 48.2 + Boiler 24.6 + Power 3.7) เทียบ 23/24 ที่หยุดแค่ 25.6 ชม. — UDL ต่างกัน 4.05 จุด | Correlation 12 ฤดู: r(UDL, Loss Time) = +0.49</div>
+        <ul>
+          <li>ทุกครั้งที่หยุด: น้ำเชื่อม/Massecuite ค้างร้อนในระบบ → Inversion ต่อเนื่อง — ที่ Brix สูง &gt;75 อัตรา inversion เพิ่ม <strong>~2 เท่า</strong> เทียบ Brix &lt;65 <span class="rein-ref">Honig 1959, อ้างใน Rein §25.4.4</span></li>
+          <li>ช่วง start-up/shutdown คือช่วงที่ entrainment รุนแรงที่สุด — "carryover due to foaming or frothing, often associated with start-up or shutdown or unsteady operation" <span class="rein-ref">Rein §12.9 ข้อ 3-4</span></li>
+          <li>การล้างระบบ (liquidation) แต่ละรอบหยุด = น้ำตาลลงท่อระบายโดยไม่มีการวัด <span class="rein-ref">Rein Table 25.1: "Overflows / Leakage → Sugars in effluent"</span></li>
+        </ul>
+
+        <h4>จุดที่ 1b — Evaporator ทำงานเกินดีไซน์ ~32% และไม่มีการเฝ้าระวัง Entrainment เลย</h4>
+        <div class="evidence-strip"><strong>หลักฐาน:</strong> 25/26 หีบจริง 274.8 ตัน/ชม. บนระบบระเหยที่ออกแบบที่ ~208 ตัน/ชม. (5,000 t/d) | ใน Daily Report ทั้ง 151 แถว <strong>ไม่มีช่อง "Sugar in Condensate" แม้แต่ช่องเดียว</strong></div>
+        <ul>
+          <li>ความเร็วไอเกินสเปก → หยดน้ำเชื่อมเล็ก 1-100 μm ถูกพัดไปกับไอ ("entrainment of small droplets whose terminal velocity is less than the velocity of the vapor stream") <span class="rein-ref">Rein §12.9 ข้อ 5</span></li>
+          <li>ตำราระบุว่าการวัดน้ำตาลใน condensate (phenol-sulfuric / resorcinol test) เป็นการวัด <em>พื้นฐานที่ต้องมี</em> ของห้อง Lab — โรงงานเรายังมองไม่เห็น loss ช่องทางนี้ทั้งช่องทาง <span class="rein-ref">Rein §25.2.6</span></li>
+          <li>Residence time ใน evaporator มีผลตรงต่อ UDL — วัดจริงโดย Rein &amp; Love (1995) <span class="rein-ref">Rein §12.8.8</span> — pH ที่ตกจาก 6.89 → 6.39 ตลอดชุด Evap ของเราบ่งชี้มี inversion เกิดระหว่างระเหยจริง</li>
+          <li>เคสตำราตรงกับเราอีกจุด: ปั๊ม Filtrate ของหม้อกรองมีปัญหา → filtrate ถูกดูดข้ามไป condenser = "instances of large undetermined losses" <span class="rein-ref">Rein §13 (Filtration)</span></li>
+        </ul>
+
+        <h4>จุดที่ 1c — หม้อปั่น C + เส้นทาง Molasses ผิดปกติชัดเจนเฉพาะปี 25/26</h4>
+        <div class="evidence-strip"><strong>หลักฐาน:</strong> Purity Rise ที่หม้อปั่น C: 23/24 = −1.78 → 24/25 = −0.07 → <strong>25/26 = +2.84</strong> (เกณฑ์โรงงานเอง &lt;1.5) | Final Molasses purity 36.63 สูงกว่า Nutsch หลังหม้อปั่น (32.62) ถึง <strong>4.0 จุด</strong></div>
+        <div class="purity-chain">
+          <div class="pc-node"><div class="pc-val" style="color:var(--navy)">60.63</div><div class="pc-lb">C-Massecuite<br>Purity</div></div>
+          <div class="pc-node"><div class="pc-val" style="color:var(--green)">32.62</div><div class="pc-lb">C-Mol Nutsch/Cent<br>(แม่เหลวทำได้จริง)</div></div>
+          <div class="pc-node"><div class="pc-val" style="color:var(--orange)">35.46</div><div class="pc-lb">C-Mol Lab<br>(+2.84 Purity Rise)</div></div>
+          <div class="pc-node"><div class="pc-val" style="color:var(--red)">36.63</div><div class="pc-lb">Final Molasses<br>(ชั่งขายจริง)</div></div>
+        </div>
+        <ul>
+          <li>Nutsch พิสูจน์ว่า Massecuite เคี่ยวได้ถึง purity 32.6 แล้ว แต่ molasses ที่ออกจากโรงงานจริงอยู่ที่ 36.6 — น้ำตาลอีก ~4 จุด purity ถูก "เติมกลับ" เข้า molasses หลังการเคี่ยว: น้ำล้างหม้อปั่นมากเกิน (over-washing), ผลึกหลุดตะแกรง, หรือของ rework/หกล้นถูกทิ้งรวมลง molasses ระหว่างช่วงหยุดเครื่อง</li>
+          <li>น้ำที่เติมที่หม้อปั่นเปลี่ยนสมดุล nonsucrose/water ของ molasses อย่างมีนัยสำคัญ — ตำราเตือนประเด็นนี้ตรงๆ <span class="rein-ref">Rein §18.1.3</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- VERDICT 2 -->
+    <div class="verdict-card">
+      <div class="v-head">
+        <div class="v-rank" style="background:var(--orange)">2</div>
+        <h3>ระบบวัดและบัญชีน้ำตาล — "แตก" ตั้งแต่ฤดู 23/24 เป็นต้นมา</h3>
+        <div class="v-size"><div class="sz" style="color:var(--orange)">±1.5-2%</div><div class="lb">ความไม่แน่นอนของตัวเลข UDL</div></div>
+      </div>
+      <div class="v-body">
+        <div class="evidence-strip"><strong>หลักฐานชิ้นสำคัญที่สุดของการวิเคราะห์นี้:</strong> Pol Factor = 1.000-1.001 ต่อเนื่อง 9 ฤดู (14/15 → 22/23) แล้วกระโดดเป็น 1.014-1.017 สามฤดูติด (23/24 → 25/26) — ตรงกับช่วงที่ Trash% หยุดถูกวัด (เดิมวัดได้ 1.3-5.1% ทุกปี → 24/25 = 0.34 → 25/26 = 0.00)</div>
+        <ul>
+          <li>ตำราবระบุว่า Pol Factor "usually has a value around 0.99 — significant variations from the norm represent a flag to look for errors or problems" <span class="rein-ref">Rein §25.2.6, eq. 25.1</span></li>
+          <li>Table 25.1 ชี้อาการนี้ตรงๆ: Pol Factor สูง = <strong>"Raw juice overweights"</strong> หรือ <strong>"Raw juice sample evaporation"</strong> หรือการวิเคราะห์อ้อยเข้า (Pol% Cane) ต่ำกว่าจริง <span class="rein-ref">Rein Table 25.1</span></li>
+          <li><strong>นัยสำคัญ:</strong> ถ้า Pol% Cane ต่ำกว่าจริง (เช่น เพราะไม่หัก Trash) แปลว่า UDL จริง <em>สูงกว่า</em> 8.02% ที่รายงาน ไม่ใช่ต่ำกว่า</li>
+          <li>Purity ของ C-Molasses มี 4 ตัวเลขขัดแย้งกันเองในรายงานฉบับเดียว (37.2 / 32.6 / 35.5 / 36.6) — บ่งชี้ปัญหา sampling/analysis <span class="rein-ref">Rein Table 25.1: "Analysis — discrepancy between lab pols"</span></li>
+          <li>ไม่มีการทำ in-process stock adjustment ต้น/ปลายฤดู ทั้งที่น้ำตาลค้างในระบบ ≈ 3 เท่าของการผลิต 1 วัน (≈3,600 ตัน pol ที่กำลังผลิตปัจจุบัน) และ error สูงสุดตอนเปิด/ปิดฤดูพอดี <span class="rein-ref">Rein §25.2.3</span></li>
+          <li>ตำราสรุปไว้ชัด: "the calculated undetermined loss is the difference between two large numbers... unless special steps are taken to obtain really accurate measurements, this calculated loss is meaningless" <span class="rein-ref">Rein §25.2.1</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- VERDICT 3 -->
+    <div class="verdict-card">
+      <div class="v-head">
+        <div class="v-rank" style="background:var(--yellow)">3</div>
+        <h3>Sucrose Inversion — สะสมตามสภาพเดินเครื่องและ pH</h3>
+        <div class="v-size"><div class="sz" style="color:var(--yellow)">~0.5-2%</div><div class="lb">ประเมินจากสภาพจริง vs ตำรา</div></div>
+      </div>
+      <div class="v-body">
+        <div class="evidence-strip"><strong>หลักฐาน:</strong> pH Mixed Juice 5.46 (เกณฑ์ &gt;5.3 — เฉียดเส้น) | pH ตกตลอดชุด Evaporator 6.89 → 6.39 | Purity Drop of Cane Juice ปี 25/26 = 1.02 สูงสุดเท่าปี 14/15 (ปีอ้อยไฟไหม้ 23.6%)</div>
+        <ul>
+          <li>สมการ Vukov (1965): อัตรา inversion เป็นสัดส่วนตรงกับความเข้มข้น H⁺ — <strong>pH ลด 1 หน่วย = inversion เร็วขึ้น 10 เท่า</strong> และเพิ่มแบบ exponential ตามอุณหภูมิ (Eₐ = 108.5 kJ/mol) <span class="rein-ref">Rein §25.4.2, eq. 25.19</span></li>
+          <li>ที่อุณหภูมิใช้งาน pH จริงต่ำกว่าค่าที่วัดที่ 25°C — inversion จริงสูงกว่าที่คิดจากค่า Lab <span class="rein-ref">Rein §25.4.3, Fig. 25.4</span></li>
+          <li>Benchmark: inversion จาก Clarified Juice → Syrup ควรอยู่แค่ 2-3 kg ต่อตัน sucrose (0.2-0.3%) <span class="rein-ref">Schäffler 2001, อ้างใน Rein §25.4.1</span> — สภาพของเรา (โหลดเกิน + residence time ยาว + หยุดบ่อย) ผลักตัวเลขนี้ขึ้นหลายเท่า</li>
+          <li>Microbial loss ที่ลูกหีบ: โรงที่สุขาภิบาลหละหลวมเสียได้ถึง <strong>2% ของ sucrose ทั้งหมด</strong>, โรงที่จัดการดี ~1% <span class="rein-ref">Hugot 1986:326, อ้างใน Rein §5.12.2</span> — ของเรายังไม่เคยวัด Lactic Acid/Dextran ใน Mixed Juice เลย (ตำราให้เกณฑ์: &gt;300-400 mg/kg DS = ต้องแก้ไข <span class="rein-ref">Rein §5.12.3</span>)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- NOT THE CAUSE -->
+    <div class="verdict-card">
+      <div class="v-head">
+        <div class="v-rank" style="background:var(--green)">✕</div>
+        <h3>สิ่งที่ข้อมูลบอกชัดว่า "ไม่ใช่" ตัวการ — อย่าเสียแรงผิดที่</h3>
+        <div class="v-size"></div>
+      </div>
+      <div class="v-body">
+        <h4>ไม่ใช่การเคี่ยว/Exhaustion (ที่คนมักโทษเป็นอันดับแรก)</h4>
+        <ul>
+          <li>Molasses purity 36.6 ดูสูง แต่เมื่อคำนวณ <strong>Target Purity</strong> ตามสูตรมาตรฐาน — TP = 41.1 − 8.7·log(RS/Ash) <span class="rein-ref">Miller et al. 1998, Rein Table 18.1</span> — ด้วย RS/Ash ของโรงงานเรา = 15.99/10.05 = 1.59 → เป้าหมายที่เคมีน้ำอ้อยเราอนุญาตคือ <strong>~36-39</strong></li>
+          <li>ดังนั้น Target Purity Difference (TPD) ≈ 0 — <strong>หม้อเคี่ยวทำได้ใกล้ขีดจำกัดทางเคมีแล้ว</strong> RS ที่สูงมาจากอ้อยไฟไหม้/อ้อยค้าง ซึ่งต้องแก้ที่ไร่และคิวรับอ้อย ไม่ใช่ที่หม้อเคี่ยว <span class="rein-ref">Rein §18.1.3</span></li>
+        </ul>
+        <h4>ไม่ใช่ลูกหีบ (Milling)</h4>
+        <ul>
+          <li>Bagasse Loss เป็น Determined Loss ที่วัดแยกอยู่แล้ว (3.03% — อยู่ในเกณฑ์) และ correlation UDL กับอัตราหีบ (TCH) = +0.02 — ไม่มีความสัมพันธ์</li>
+          <li>สมดุล Pol หน้าโรงงานปิดพอดีมา 9 ฤดูติดก่อนปี 23/24 — ลูกหีบไม่ใช่จุดที่ตัวเลขรั่ว</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MISSING DATA -->
+    <div class="note-box">
+      <strong>ข้อมูลที่ยังขาด — ถ้าหามาได้จะชี้จุดได้ละเอียดขึ้นอีกมาก (เรียงตามความสำคัญ):</strong>
+      <ol style="margin-top:0.6rem; padding-left:1.25rem;">
+        <li><strong>Daily Report รายวันจริงทุกวัน</strong> (ไฟล์ปัจจุบันคือสแนปช็อตวันสุดท้ายของฤดูเท่านั้น) — จะ match UDL รายสัปดาห์กับเหตุการณ์หยุดเครื่องรายครั้งได้</li>
+        <li><strong>ผลวัด Sugar in Condensate</strong> — ถ้าไม่เคยวัด ควรเป็นมาตรการแรกของโครงการ (resorcinol test ทุก 2 ชม. ตาม Rein §25.2.6) — พิสูจน์/ตัดประเด็น entrainment ได้เด็ดขาด</li>
+        <li><strong>น้ำหนัก Molasses ขายจริง (weighbridge)</strong> เทียบตัวเลขรายงาน + บันทึกสอบเทียบถัง — ตัดประเด็น "Molasses underweights" (Rein Table 25.1)</li>
+        <li><strong>Lactic Acid / Dextran ใน Mixed Juice</strong> — วัดขนาด microbial loss ที่ลูกหีบ (เกณฑ์ 300-400 mg/kg DS)</li>
+        <li><strong>ผล HPLC True Sucrose ของน้ำอ้อยและ Molasses</strong> เทียบค่า Pol — ตำราบอก pol balance เพี้ยนจาก sucrose balance ได้ 1-3 จุด (Rein §25.2.2)</li>
+      </ol>
+    </div>
+
+    <!-- REFERENCES -->
+    <h3 style="font-size:1.05rem; font-weight:700; color:var(--navy); margin:2rem 0 0.75rem;">เอกสารอ้างอิง</h3>
+    <ul class="ref-list">
+      <li>Rein, P. (2007). <em>Cane Sugar Engineering</em>. Verlag Dr. Albert Bartens KG, Berlin. — §25.2 Factory Sucrose Balances (eq. 25.1 Pol Factor, §25.2.3 Stock in Process, §25.2.4-25.2.5 Undetermined Loss Mechanisms, Table 25.1 Symptoms), §25.4 Inversion Losses (Vukov equations, Table 25.2), §12.8.8 Sucrose Losses in Evaporators, §12.9 Entrainment Separation, §18.1.3 Target Purity Equations (Table 18.1), §5.12 Sucrose Losses Along the Milling Train</li>
+      <li>Vukov, K. (1965). Kinetic aspects of sucrose hydrolysis. <em>Int. Sugar J.</em> — อ้างใน Rein §25.4.2</li>
+      <li>Schäffler, K.J. (2001) — inversion benchmark 2-3 kg/t sucrose, อ้างใน Rein §25.4.1</li>
+      <li>Honig, P. (1959) — "inevitable loss" ~0.4% boiling house, อ้างใน Rein §25.4.5</li>
+      <li>Hugot, E. (1986). <em>Handbook of Cane Sugar Engineering</em>, p.326 — microbial loss ที่ลูกหีบ 1-2%, อ้างใน Rein §5.12.2</li>
+      <li>Miller, K.F. et al. (1998) — Target Purity equation, อ้างใน Rein Table 18.1</li>
+      <li>Rein, P. &amp; Love, D.J. (1995) — residence time vs undetermined loss, อ้างใน Rein §12.8.8</li>
+      <li>ข้อมูลดิบ: Daily Processing Status Report, Mitr Lao Sugar Co., Ltd. ฤดูหีบ 2014-15 ถึง 2025-26 (12 ไฟล์)</li>
+    </ul>
   </div>
 </section>
 
@@ -2766,6 +3022,63 @@ new Chart(document.getElementById('chartWaterfall'), {
   options: { responsive:true, maintainAspectRatio:false,
     plugins: { legend: { display:false } },
     scales: { y: { min:0, max:9, title:{display:true,text:'UDL % ที่ยังอธิบายไม่ได้'} } } }
+});
+
+// ===== DIAGNOSIS CHARTS =====
+const DIAG = {
+  bhUdl:    [7.92, 6.35, 7.08, 7.12, 6.14, 5.72, 7.45, 5.87, 7.18, 5.65, 6.62, 9.44],
+  sjmBhr:   [6.84, 5.07, 7.04, 5.51, 7.06, 5.90, 7.39, 4.85, 7.63, 5.41, 7.05, 10.16],
+  polFactor:[1.000,1.000,1.001,1.000,1.000,1.001,1.001,1.000,1.001,1.017,1.015,1.014],
+  lossTime: [4.87, 2.87, 6.37, 3.38, 6.45, 2.76, 0.53, 1.38, 2.38, 1.20, 0.60, 5.46],
+};
+
+new Chart(document.getElementById('chartDiagBhUdl'), {
+  type: 'bar',
+  data: {
+    labels: seasons,
+    datasets: [
+      { label:'UDL รายงาน', data:DATA.map(d=>d.udl), backgroundColor:'rgba(37,99,235,0.55)', borderRadius:4 },
+      { label:'bhUDL (คำนวณอิสระ — หลังลูกหีบ)', data:DIAG.bhUdl, backgroundColor:'rgba(220,38,38,0.65)', borderRadius:4 },
+      { label:'SJM−BHR Gap', data:DIAG.sjmBhr, type:'line', borderColor:'#7c3aed', borderWidth:2, borderDash:[5,3], pointRadius:3, fill:false },
+    ]
+  },
+  options: { responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{ position:'top', labels:{ font:{ size:11 } } } },
+    scales:{ y:{ min:0, max:11, title:{ display:true, text:'% ของ Pol in Cane / จุด' } } } }
+});
+
+new Chart(document.getElementById('chartDiagPolFactor'), {
+  type: 'line',
+  data: {
+    labels: seasons,
+    datasets: [
+      { label:'Pol Factor (คำนวณจาก Pol Weight ดิบ)', data:DIAG.polFactor,
+        borderColor:'#ea580c', backgroundColor:'rgba(234,88,12,0.10)', fill:true, tension:0.1,
+        pointRadius:5, pointBackgroundColor:DIAG.polFactor.map(v => v > 1.005 ? '#dc2626' : '#16a34a') },
+      { label:'ค่าปกติตาม Rein (≈0.99-1.00)', data:Array(12).fill(1.00), borderColor:'#16a34a', borderDash:[6,4], borderWidth:2, pointRadius:0, fill:false },
+    ]
+  },
+  options: { responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{ position:'top', labels:{ font:{ size:11 } } },
+      tooltip:{ callbacks:{ label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(3)}` } } },
+    scales:{ y:{ min:0.99, max:1.02, title:{ display:true, text:'Pol Factor' }, ticks:{ callback:v=>v.toFixed(3) } } } }
+});
+
+new Chart(document.getElementById('chartDiagStops'), {
+  type: 'bar',
+  data: {
+    labels: seasons,
+    datasets: [
+      { label:'Loss Time % Available', data:DIAG.lossTime, backgroundColor:'rgba(202,138,4,0.55)', borderRadius:4, yAxisID:'y' },
+      { label:'UDL %', data:DATA.map(d=>d.udl), type:'line', borderColor:'#dc2626', borderWidth:2, pointRadius:4, yAxisID:'y1' },
+    ]
+  },
+  options: { responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{ position:'top', labels:{ font:{ size:11 } } } },
+    scales:{
+      y:{ min:0, max:8, title:{ display:true, text:'Loss Time %' } },
+      y1:{ position:'right', min:0, max:10, grid:{ drawOnChartArea:false }, title:{ display:true, text:'UDL %' } }
+    } }
 });
 
 // ===== SPA PAGE SWITCHING =====
