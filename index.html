@@ -171,6 +171,37 @@ section { padding: 4.5rem 2rem; }
 .yield-loss { border-left-color: var(--orange); background: rgba(234,88,12,0.05); } .yield-loss .sub-title { color: var(--orange); }
 .process-step .content ul { padding-left: 1.2rem; }
 .process-step .content li { color: var(--text2); font-size: 0.88rem; margin-bottom: 0.3rem; }
+.sub-section.steps { border-left-color: var(--navy2); background: rgba(15,48,92,0.05); }
+.sub-section.steps .sub-title { color: var(--navy2); }
+.sub-section.steps ol { padding-left: 1.2rem; }
+.sub-section.steps li { color: var(--text2); font-size: 0.88rem; margin-bottom: 0.35rem; }
+.wi-ref { margin-top: 1rem; font-size: 0.8rem; color: var(--text3); }
+.wi-ref a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.wi-ref a:hover { text-decoration: underline; }
+/* WI CRITIQUE */
+.wi-dept-group { margin-bottom: 3rem; scroll-margin-top: 90px; }
+.wi-dept-title { display: flex; align-items: center; gap: 0.75rem; font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 1.25rem; padding-bottom: 0.6rem; border-bottom: 2px solid var(--accent); }
+.wi-dept-title .dept-count { font-size: 0.72rem; font-weight: 600; color: #fff; background: var(--accent); padding: 0.2rem 0.6rem; border-radius: 20px; }
+.wi-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.1rem; box-shadow: var(--shadow); }
+.wi-card .wi-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.wi-card .wi-id { font-weight: 700; color: var(--accent); font-size: 0.82rem; }
+.wi-card .wi-title { font-weight: 700; color: var(--navy); font-size: 1.02rem; margin-top: 0.15rem; }
+.wi-card .wi-meta { font-size: 0.75rem; color: var(--text3); white-space: nowrap; }
+.wi-card .wi-quality { font-size: 0.87rem; color: var(--text2); margin: 0.75rem 0; padding: 0.7rem 1rem; background: var(--surface2); border-radius: 8px; border-left: 3px solid var(--accent2); }
+.wi-card .wi-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 0.75rem; }
+.wi-card .wi-col .col-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+.wi-card .wi-col.coverage .col-label { color: var(--accent); }
+.wi-card .wi-col.gaps .col-label { color: var(--red); }
+.wi-card .wi-col ul { padding-left: 1.1rem; }
+.wi-card .wi-col li { font-size: 0.85rem; color: var(--text2); margin-bottom: 0.35rem; }
+.wi-badge { display: inline-block; font-size: 0.68rem; padding: 0.15rem 0.55rem; border-radius: 6px; font-weight: 700; margin-left: 0.5rem; vertical-align: middle; }
+.wi-badge.old { background: rgba(220,38,38,0.1); color: var(--red); }
+.wi-badge.mid { background: rgba(234,88,12,0.1); color: var(--orange); }
+.wi-badge.new { background: rgba(22,163,74,0.1); color: var(--green); }
+.wi-jump { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.wi-jump a { background: var(--surface2); color: var(--navy); text-decoration: none; font-size: 0.82rem; font-weight: 600; padding: 0.5rem 0.9rem; border-radius: 20px; border: 1px solid var(--border); }
+.wi-jump a:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+@media (max-width: 900px) { .wi-card .wi-cols { grid-template-columns: 1fr; } }
 /* STATS TABLE */
 .stats-table-wrap { overflow-x: auto; margin: 1.5rem 0; }
 table.stats {
@@ -358,6 +389,16 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
 }
 /* SPA PAGE SYSTEM */
 .page-section.hidden { display: none !important; }
+/* SUB-TABS (within a page) */
+.subtab-bar { display: flex; gap: 0.5rem; margin-bottom: 2.5rem; border-bottom: 2px solid var(--border); flex-wrap: wrap; }
+.subtab-btn {
+  background: none; border: none; cursor: pointer; font-family: var(--sans);
+  padding: 0.85rem 1.5rem; font-size: 0.95rem; font-weight: 600; color: var(--text2);
+  border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.15s;
+}
+.subtab-btn:hover { color: var(--accent); }
+.subtab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.subpage.hidden { display: none !important; }
 </style>
 </head>
 <body>
@@ -441,7 +482,16 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
 </section>
 
 <!-- ===== SECTION 2: PROCESS FLOW ===== -->
-<section id="process" class="page-section" data-page="process" style="background: var(--surface);">
+<div class="page-section" data-page="process" style="background: var(--surface); padding: 4.5rem 2rem 0;">
+  <div class="container">
+    <div class="subtab-bar">
+      <button class="subtab-btn active" data-subpage="steps" onclick="showSubpage('steps')">ขั้นตอนกระบวนการ</button>
+      <button class="subtab-btn" data-subpage="wi" onclick="showSubpage('wi')">วิจารณ์เอกสาร WI (32 ฉบับ)</button>
+    </div>
+  </div>
+</div>
+
+<section id="process" class="page-section subpage" data-page="process" data-subpage="steps" style="background: var(--surface);">
   <div class="container">
     <div class="eyebrow-index">Section 02</div>
     <div class="section-title"><span class="num">2</span> กระบวนการผลิตน้ำตาล</div>
@@ -459,19 +509,21 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
         <div class="content">
           <h3>รับอ้อย (Cane Receiving)</h3>
           <div class="station-en">Weighing → Sampling → Quality Analysis</div>
+          <div class="sub-section steps">
+            <div class="sub-title">ขั้นตอนการทำงาน</div>
+            <ol>
+              <li>อ้อยรถบรรทุกเข้าชั่งน้ำหนักที่สะพานชั่ง</li>
+              <li>สุ่มเก็บตัวอย่างอ้อยด้วยเครื่อง Core Sampler ให้เป็นตัวแทนของรถ/Lot</li>
+              <li>หั่นตัวอย่าง วิเคราะห์ %Pol, %Fiber, %Brix, Purity ในห้อง Lab</li>
+              <li>บันทึกผลเป็น Baseline สำหรับคำนวณ Sugar Balance ทั้งระบบ</li>
+              <li>อ้อยถูกลำเลียงเข้า Cane Carrier เข้าสู่กระบวนการหีบ</li>
+            </ol>
+          </div>
           <div class="sub-section yield-loss">
-            <div class="sub-title">Yield Loss</div>
+            <div class="sub-title">แหล่งที่มาของ Loss</div>
             <ul>
               <li>ไม่มี Physical Loss โดยตรง แต่ความคลาดเคลื่อนที่นี่ส่งผลต่อ UDL ทั้งระบบ</li>
               <li>อ้อยไฟไหม้ทำให้เกิดการย่อยสลายน้ำตาล (Inversion) ก่อนเข้าโรงงาน</li>
-            </ul>
-          </div>
-          <div class="sub-section wi-summary">
-            <div class="sub-title">สรุปจาก WI (ML-WI-1630-001)</div>
-            <ul>
-              <li>การวิเคราะห์อ้อย: วัด Pol%, Fiber%, Brix, Purity — เป็น Baseline ของการคำนวณ Loss ทั้งหมด</li>
-              <li>ถ้าวิเคราะห์อ้อยผิดพลาด ⟹ Sugar Balance ผิดทั้งหมด ⟹ UDL บวม/หด ผิดจากความเป็นจริง</li>
-              <li>ความแม่นยำของเครื่องชั่ง + วิธีสุ่มตัวอย่างอ้อย คือจุดเริ่มต้นที่สำคัญที่สุด</li>
             </ul>
           </div>
           <div class="sub-section risk">
@@ -490,6 +542,7 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
               <li>ตรวจสอบระบบสุ่มตัวอย่างให้เป็นตัวแทนที่ดี</li>
             </ul>
           </div>
+          <div class="wi-ref">อ้างอิง WI: <a href="#wi-lab">ML-WI-1630-001</a> · <a href="#wi-calib">ML-WI-3330-002</a></div>
         </div>
       </div>
 
@@ -502,22 +555,23 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
         <div class="content">
           <h3>หีบอ้อย (Milling)</h3>
           <div class="station-en">Preparation → 5 Mill Tandems → Mixed Juice | แผนก 3110</div>
+          <div class="sub-section steps">
+            <div class="sub-title">ขั้นตอนการทำงาน</div>
+            <ol>
+              <li>อ้อยผ่าน Leveller/Shredder เตรียมความพร้อม (เป้าหมาย PI 89-91)</li>
+              <li>ป้อนอ้อยเข้าลูกหีบชุดที่ 1-5 ต่อเนื่องกัน (Tandem)</li>
+              <li>ฉีดน้ำ Imbibition ที่ลูกหีบท้ายๆ (~30% น้ำหนักอ้อย, ≥75°C) เพื่อสกัดน้ำตาลจากเส้นใยเพิ่ม</li>
+              <li>ควบคุมแรงดันไฮดรอลิคกดลูกหีบแต่ละชุด (2,000-3,300 PSIG)</li>
+              <li>เก็บน้ำอ้อยรวม (Mixed Juice) ส่งต่อแผนกทำใส ส่วนกากอ้อย (Bagasse) ส่งเป็นเชื้อเพลิงหม้อไอน้ำ</li>
+              <li>ตรวจ Brix Curve และ Pol%Bagasse เป็นระยะเพื่อยืนยันประสิทธิภาพ</li>
+            </ol>
+          </div>
           <div class="sub-section yield-loss">
-            <div class="sub-title">Yield Loss — Bagasse Loss ~3.0-3.9%</div>
+            <div class="sub-title">แหล่งที่มาของ Loss — Bagasse Loss ~3.0-3.9%</div>
             <ul>
               <li>Pol ที่ตกค้างในชานอ้อย = Determined Loss (วัดได้)</li>
               <li>เป้าหมาย: Pol%Bag ≤ 1.7%, Extraction ≥ 97%</li>
               <li>ลด Pol%Bag 0.10% = เพิ่มน้ำตาล <strong>5.80 ตัน/วัน</strong> (ที่ 20,000 TCH)</li>
-            </ul>
-          </div>
-          <div class="sub-section wi-summary">
-            <div class="sub-title">สรุปจาก WI (3110-007 ถึง 011, SP-003)</div>
-            <ul>
-              <li><strong>แรงดัน Hydraulic:</strong> Mill 1-4 = 2,400-2,800 PSIG, Mill 5 = 3,300 PSIG</li>
-              <li><strong>Imbibition:</strong> ~30% น้ำหนักอ้อย, อุณหภูมิ ≥ 75°C</li>
-              <li><strong>PI เป้าหมาย:</strong> 89-91 (ดัชนีการเตรียมอ้อย)</li>
-              <li><strong>Brix Curve:</strong> ใช้ตรวจสอบประสิทธิภาพ Imbibition ในแต่ละ Mill</li>
-              <li>ปัญหาที่พบ: Roller สึก, แรงดัน Hydraulic ไม่เพียงพอ, อุณหภูมิน้ำ Imbibition ต่ำ</li>
             </ul>
           </div>
           <div class="sub-section risk">
@@ -527,6 +581,7 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
               <li>Roller สึก/เบี้ยว → การบีบไม่สม่ำเสมอ → Pol%Bag สูง</li>
               <li>น้ำ Imbibition ต่ำกว่า 75°C → สกัดน้ำตาลจากเส้นใยได้ไม่ดี</li>
               <li>น้ำอ้อยรั่วไหลระหว่าง Mill → สูญเสียโดยตรง (UDL)</li>
+              <li>หยุด-เริ่มเครื่องบ่อย → อ้อย/น้ำอ้อยค้างระบบนาน → เสี่ยง Inversion</li>
             </ul>
           </div>
           <div class="sub-section opportunity">
@@ -535,8 +590,10 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
               <li>เพิ่ม PI ให้ถึง 89-91 ด้วยการ Set ชุด Preparation ให้เหมาะสม</li>
               <li>ตรวจสอบรอยรั่วของ Juice Tray ทุกสัปดาห์</li>
               <li>ควบคุมอุณหภูมิ Imbibition ≥ 75°C อย่างสม่ำเสมอ</li>
+              <li>ใช้สูตรคำนวณน้ำตาลสูญเสียจริง (ตัน/วัน) จาก ML-SP-3110-003 ผูกกับ Purity Drop ทุกกะ</li>
             </ul>
           </div>
+          <div class="wi-ref">อ้างอิง WI: <a href="#wi-milling">ML-WI-3110-007 ถึง 011, ML-SP-3110-003</a></div>
         </div>
       </div>
 
@@ -549,23 +606,23 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
         <div class="content">
           <h3>ทำใส (Clarification)</h3>
           <div class="station-en">Liming → Heating → Flocculation → Settling → Filtration | แผนก 3210</div>
+          <div class="sub-section steps">
+            <div class="sub-title">ขั้นตอนการทำงาน</div>
+            <ol>
+              <li>น้ำอ้อยรวมเข้าเครื่องอุ่น (Heater) แรกจนถึง ~70-75°C</li>
+              <li>เติมน้ำปูนขาว (Liming) ปรับ pH ให้เป็นกลาง-ด่างอ่อน (~7.0-7.2)</li>
+              <li>อุ่นซ้ำและส่งเข้า Flash Tank เพื่อไล่ฟองอากาศ</li>
+              <li>เติมสารพักใส (Flocculant) แล้วส่งเข้าถัง Clarifier ให้ตะกอนแยกตัว (Settling)</li>
+              <li>น้ำอ้อยใส (Clear Juice) ส่วนบนไหลไปแผนกระเหย ส่วนโคลนด้านล่างส่งไปกรองที่ Vacuum Filter (RVF)</li>
+              <li>กากตะกอนกรอง (Filter Cake) นำออกนอกระบบ ส่วนน้ำกรอง (Filtrate) หมุนเวียนกลับเข้ากระบวนการ</li>
+            </ol>
+          </div>
           <div class="sub-section yield-loss">
-            <div class="sub-title">Yield Loss — Filter Cake Loss ~0.2-1.2%</div>
+            <div class="sub-title">แหล่งที่มาของ Loss — Filter Cake Loss ~0.2-1.2%</div>
             <ul>
               <li>Pol ในกากหม้อกรอง (Filter Cake) = Determined Loss</li>
               <li>การรั่วไหลของน้ำอ้อย/Syrup = Direct UDL</li>
               <li>pH ไม่เหมาะสม → Inversion (น้ำตาลซูโครสถูกย่อยสลาย) → UDL</li>
-            </ul>
-          </div>
-          <div class="sub-section wi-summary">
-            <div class="sub-title">สรุปจาก WI (3210-001 ถึง 005, 012)</div>
-            <ul>
-              <li><strong>ปูนขาว:</strong> ทั้งระบบเก่า (ปูนก้อน) + ระบบใหม่ (ปูนผง Silo) — ควบคุม pH 7.0-7.2</li>
-              <li><strong>Flocculant:</strong> Max.Floc. 917, 3.5 kg ต่อ 8.5 m³, ความเข้มข้น 0.04%, อุณหภูมิ 45-55°C</li>
-              <li><strong>Lime Saccharate:</strong> อัตราส่วน ปูน:น้ำอ้อย = 1:1 หรือ 1:2</li>
-              <li><strong>Flash Tank:</strong> ระดับ 20-50%, ระยะ Settling 60-90 วินาที</li>
-              <li><strong>Vacuum Filter:</strong> เป้าหมายสุญญากาศ High Side &lt;250mmHg, Low Side &lt;200mmHg</li>
-              <li><strong style="color:var(--red);">ML-WI-3210-012 — การรั่วไหล Syrup:</strong> เป็น Direct UDL! ต้องมีระบบตรวจสอบ + เก็บกลับ</li>
             </ul>
           </div>
           <div class="sub-section risk">
@@ -586,6 +643,7 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
               <li>ทดสอบ Tube ของ Heater ก่อนเปิดหีบทุกฤดู</li>
             </ul>
           </div>
+          <div class="wi-ref">อ้างอิง WI: <a href="#wi-clarification">ML-WI-3210-001 ถึง 005, 012</a></div>
         </div>
       </div>
 
@@ -598,21 +656,22 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
         <div class="content">
           <h3>ระเหย (Evaporation)</h3>
           <div class="station-en">Multiple-Effect Evaporation → Syrup (Brix 60-65°)</div>
+          <div class="sub-section steps">
+            <div class="sub-title">ขั้นตอนการทำงาน</div>
+            <ol>
+              <li>น้ำอ้อยใสเข้าระบบระเหยหลายเอฟเฟกต์ (Multiple-Effect Evaporator) ต่อเนื่องกัน 4-5 Effect</li>
+              <li>ไอน้ำจากหม้อไอน้ำให้ความร้อน Effect แรก ไอที่เกิดขึ้นถูกส่งต่อเป็นแหล่งความร้อนของ Effect ถัดไป</li>
+              <li>ตรวจสอบ Brix ของน้ำเชื่อมที่ออกแต่ละ Effect เพื่อติดตามอัตราการระเหย</li>
+              <li>ตรวจ Brix ใน Condensate เป็นระยะ เพื่อยืนยันว่าไม่มี Tube รั่ว</li>
+              <li>น้ำเชื่อม (Syrup) เข้มข้นถึง Brix 60-65° ถูกส่งต่อแผนกเคี่ยว</li>
+            </ol>
+          </div>
           <div class="sub-section yield-loss">
-            <div class="sub-title">Yield Loss</div>
+            <div class="sub-title">แหล่งที่มาของ Loss</div>
             <ul>
               <li>ไม่มี Yield Loss โดยตรงในทางทฤษฎี (แค่ระเหยน้ำ)</li>
               <li>แต่! Entrainment (น้ำอ้อยถูกพาไปกับไอน้ำ) = UDL</li>
               <li>Calandria Tube รั่ว → Sugar เจือปนใน Condensate = UDL</li>
-            </ul>
-          </div>
-          <div class="sub-section wi-summary">
-            <div class="sub-title">สรุปจาก WI</div>
-            <ul>
-              <li>ตรวจ Brix ใน Condensate เป็นประจำ — ถ้ามี Brix = Tube รั่ว</li>
-              <li>Entrainment Separator ต้องทำงานได้ดี</li>
-              <li>การทำความสะอาด Evaporator ส่งผลต่ออัตราการระเหยและ Retention Time</li>
-              <li>Retention Time นาน → เพิ่มโอกาส Inversion ที่อุณหภูมิสูง</li>
             </ul>
           </div>
           <div class="sub-section risk">
@@ -643,29 +702,24 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
         <div class="content">
           <h3>เคี่ยว/ต้มผลึก (Pan Boiling)</h3>
           <div class="station-en">3-Boiling System: A/B/C Seed → A/B/C Massecuite | แผนก 3220</div>
+          <div class="sub-section steps">
+            <div class="sub-title">ขั้นตอนการทำงาน</div>
+            <ol>
+              <li>เตรียมหม้อเคี่ยว ทดสอบ Hold Vacuum ก่อนเริ่มต้ม (ลดลง &gt;20 หน่วยใน 20 นาที = รั่ว)</li>
+              <li>ต้ม A-Seed จากน้ำเชื่อม + B-Magma (45-50%) จนได้เกรนน้ำตาล 0.8-0.9mm</li>
+              <li>ต้มต่อเป็น A-Massecuite จนได้ Brix/Purity Drop ตามเป้า แล้ว Discharge สู่ Crystallizer</li>
+              <li>ทำซ้ำระบบเดียวกันสำหรับ B-Boiling (ฐาน C-Magma, เกรน 0.6-0.7mm) และ C-Boiling (ฐาน A/B-Molasses ด้วยเทคนิค Slurry Seed Shock 450-500ml)</li>
+              <li>ควบคุม Boiling Profile ตาม Set Point 10 ขั้นที่ตั้งไว้ใน DCS + Micro-Polar Brix</li>
+              <li>Massecuite ที่ต้มเสร็จแต่ละ Batch ส่งต่อแผนกปั่นแยก</li>
+            </ol>
+          </div>
           <div class="sub-section yield-loss">
-            <div class="sub-title">Yield Loss</div>
+            <div class="sub-title">แหล่งที่มาของ Loss</div>
             <ul>
               <li>Purity Drop ต่ำ → น้ำตาลตกค้างใน Molasses มากขึ้น (Molasses Loss สูง)</li>
               <li>Crystal Content ต่ำ → ประสิทธิภาพการตกผลึกต่ำ → Recovery ลดลง</li>
               <li>น้ำตาลค้างใน Pan/ท่อ/Tank → Physical Loss (UDL)</li>
-            </ul>
-          </div>
-          <div class="sub-section wi-summary">
-            <div class="sub-title">สรุปจาก WI (3220-001 ถึง 011, SP-001/002/005) — 12 ฉบับ</div>
-            <ul>
-              <li><strong>ระบบ 3-Boiling:</strong>
-                <br>A-Seed: 0.8-0.9mm, B-Magma เป็นฐาน 45-50%
-                <br>B-Seed: 0.6-0.7mm, C-Magma เป็นฐาน | B-Mass: Brix ≥95, ขนาด 0.4-0.5mm
-                <br>C-Seed: 0.1-0.2mm, Slurry Seed 450-500ml (Shock Seeding) | C-Mass: Brix ≥97, ขนาด 0.2-0.35mm
-              </li>
-              <li><strong>Vacuum/Temperature:</strong> ทุก Pan = 620-640mmHg, 65-70°C</li>
-              <li><strong>Hold Vacuum Test:</strong> ลดลง >20 หน่วยใน 20 นาที = รั่ว → ต้องซ่อมก่อนใช้งาน</li>
-              <li><strong>Boiling Profile:</strong> 10 ขั้น Set Point ควบคุมผ่าน DCS + Micro-Polar Brix (ML-SP-3220-005)</li>
-              <li><strong>Calandria Tube Test:</strong> อัดแรงดัน 2.5 Kg/cm² นาน 30 นาที</li>
-              <li><strong>Seed Transfer:</strong> 55m³ Batch Pan → 60m³ Magma Tank, Vacuum 500mmHg ก่อน Transfer</li>
-              <li><strong>Crystallizer:</strong> Motor Load &lt;5A — ถ้าเกิน = มีปัญหาเครื่องกล → น้ำตาลเสื่อมคุณภาพ</li>
-              <li><strong>Sampling:</strong> Massecuite 500-700 CC ที่ 40% ของการ Discharge, Seed 200-400 CC</li>
+              <li>Mass/Mol หกล้นระหว่างต้ม/ย้าย → ตักกลับไปละลายใหม่ แต่ไม่มีการชั่ง/บันทึกปริมาณ (Loss ที่มองไม่เห็นในตัวเลข)</li>
             </ul>
           </div>
           <div class="sub-section risk">
@@ -686,8 +740,10 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
               <li>เพิ่ม Purity Drop → ตรวจสอบ B-Mass Brix ≥95, C-Mass Brix ≥97</li>
               <li>ตรวจ Calandria Tube ก่อนฤดูหีบ (2.5 Kg/cm², 30 นาที)</li>
               <li>ล้าง Pan หลังใช้งานเพื่อลดน้ำตาลค้าง</li>
+              <li>เริ่มบันทึกปริมาณ Mass/Mol ที่หกล้น/กู้คืนทุกครั้งเป็นตัวเลข เพื่อดึงออกจาก UDL</li>
             </ul>
           </div>
+          <div class="wi-ref">อ้างอิง WI: <a href="#wi-panboiling">ML-WI-3220-001 ถึง 011, ML-SP-3220-001/002/005</a></div>
         </div>
       </div>
 
@@ -700,21 +756,23 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
         <div class="content">
           <h3>ปั่นแยก (Centrifugals)</h3>
           <div class="station-en">A/B/C Massecuite → Sugar Crystals + Molasses | แผนก 3230</div>
+          <div class="sub-section steps">
+            <div class="sub-title">ขั้นตอนการทำงาน</div>
+            <ol>
+              <li>Massecuite จาก Crystallizer เข้าเครื่องปั่นเหวี่ยง (Batch หรือ Continuous)</li>
+              <li>ปั่นแยกผลึกน้ำตาลออกจากกากน้ำตาล (Molasses) ด้วยแรงเหวี่ยง</li>
+              <li>ฉีดน้ำล้าง (Wash Water) ที่ผลึกเพื่อล้างสิ่งเจือปน ปรับปริมาณตามความบริสุทธิ์ของ Massecuite</li>
+              <li>ตรวจ Purity Rise ของน้ำตาลที่ได้ (เกณฑ์ ≤1.5%) หากไม่ผ่านต้องปั่นซ้ำ</li>
+              <li>น้ำตาลที่ปั่นได้ส่งเข้าเครื่องอบแห้ง (Dryer) ส่วน Molasses ส่งกลับไปต้มขั้นถัดไป หรือเป็น Final Molasses หากเป็น C-Massecuite</li>
+            </ol>
+          </div>
           <div class="sub-section yield-loss">
-            <div class="sub-title">Yield Loss</div>
+            <div class="sub-title">แหล่งที่มาของ Loss</div>
             <ul>
               <li>Over-washing → ละลายน้ำตาลกลับเข้า Molasses → Molasses Loss + UDL</li>
               <li>Under-washing → คุณภาพน้ำตาลไม่ดี แต่ Recovery ดี (Trade-off)</li>
               <li>ตะแกรง (Screen) เสียหาย → ผลึกน้ำตาลหลุดเข้า Molasses</li>
-            </ul>
-          </div>
-          <div class="sub-section wi-summary">
-            <div class="sub-title">สรุปจาก WI (3230-001 ถึง 003)</div>
-            <ul>
-              <li><strong>ML-WI-3230-001:</strong> ควบคุมความเร็ว, เวลาล้าง, ปริมาณน้ำล้าง — สมดุลระหว่างคุณภาพกับ Recovery</li>
-              <li><strong>ML-WI-3230-002:</strong> ตรวจสอบตะแกรง, ลูกปืน, สมดุลตะกร้า — ตะแกรงเสียหาย = ผลึกหลุดเข้า Molasses</li>
-              <li><strong>ML-WI-3230-003:</strong> ระบบดูดฝุ่น — ฝุ่นน้ำตาลจากการอบแห้ง ถ้าไม่เก็บกลับ = Direct UDL</li>
-              <li>Wash Water Control เป็น Key: ล้างมาก = ละลายน้ำตาลทิ้ง, ล้างน้อย = คุณภาพต่ำ</li>
+              <li>น้ำตาลที่ปั่นซ้ำ (Purity Rise ไม่ผ่าน) ไม่ถูกนับเข้า Mass Balance อย่างเป็นระบบ</li>
             </ul>
           </div>
           <div class="sub-section risk">
@@ -732,8 +790,10 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
               <li>ปรับ Wash Water ตาม Massecuite Purity — ไม่ใช้ค่าเดียวตลอด</li>
               <li>ตรวจ Screen ทุกสัปดาห์ เปลี่ยนตาม Schedule</li>
               <li>ติดตั้งระบบดูดฝุ่นที่มีประสิทธิภาพ + นำน้ำตาลกลับเข้ากระบวนการ</li>
+              <li>กำหนดเป้าหมายเชิงตัวเลขสำหรับปริมาณฝุ่นที่ปล่อยจากการอบแห้ง</li>
             </ul>
           </div>
+          <div class="wi-ref">อ้างอิง WI: <a href="#wi-centrifugal">ML-WI-3230-001 ถึง 003</a></div>
         </div>
       </div>
 
@@ -746,21 +806,21 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
         <div class="content">
           <h3>การวิเคราะห์คุณภาพ (Quality Analysis)</h3>
           <div class="station-en">Lab Analysis ทุกจุด — Cane, Juice, Syrup, Massecuite, Molasses, Bagasse | แผนก 1630</div>
+          <div class="sub-section steps">
+            <div class="sub-title">ขั้นตอนการทำงาน</div>
+            <ol>
+              <li>เก็บตัวอย่างจากทุกจุดของกระบวนการ (อ้อย, น้ำอ้อย, น้ำเชื่อม, Massecuite, Molasses, กากอ้อย, กากตะกอนกรอง)</li>
+              <li>วิเคราะห์ Brix, Pol, Purity ด้วยเครื่อง Polarimeter/Refractometer ตามวิธีที่กำหนดใน WI-1630-001 ถึง 004</li>
+              <li>คำนวณค่า KPI หลัก (Extraction, Recovery, BHR, UDL) จากผลวิเคราะห์ทั้งหมด</li>
+              <li>ส่งผลกลับไปแต่ละแผนกเพื่อปรับการควบคุมกระบวนการ (Feedback Loop)</li>
+            </ol>
+          </div>
           <div class="sub-section yield-loss">
             <div class="sub-title">ผลกระทบต่อ UDL</div>
             <ul>
               <li>ไม่ได้สร้าง Physical Loss แต่ความคลาดเคลื่อนของการวิเคราะห์ส่งผลโดยตรงต่อ "ตัวเลข" UDL</li>
               <li>วิเคราะห์ Molasses Pol ต่ำกว่าจริง → Molasses Loss ต่ำ → UDL สูงเกินจริง (Phantom UDL)</li>
               <li>วิเคราะห์ Cane Pol สูงกว่าจริง → Total Input มาก → UDL สูงเกินจริง</li>
-            </ul>
-          </div>
-          <div class="sub-section wi-summary">
-            <div class="sub-title">สรุปจาก WI (1630-001 ถึง 004)</div>
-            <ul>
-              <li><strong>ML-WI-1630-001:</strong> วิเคราะห์อ้อย (Pol%, Fiber%, Brix, Purity) — ฐานของ Sugar Balance ทั้งหมด</li>
-              <li><strong>ML-WI-1630-002:</strong> วิเคราะห์น้ำอ้อย/Syrup (Brix, Pol, Purity, pH, Turbidity) — ติดตาม Sugar ระหว่างกระบวนการ</li>
-              <li><strong>ML-WI-1630-003:</strong> วิเคราะห์ Massecuite (Brix, Purity, Crystal Content, Grain Size) — ตรวจสอบ Purity Drop + ประสิทธิภาพการต้ม</li>
-              <li><strong>ML-WI-1630-004:</strong> วิเคราะห์ Final Molasses, Filter Cake, Bagasse — ทั้ง 3 ตัวนี้คือ Determined Loss ที่หักจาก Total Loss เพื่อได้ UDL</li>
             </ul>
           </div>
           <div class="sub-section risk">
@@ -777,8 +837,10 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
               <li>ทำ Cross-check ระหว่างวิธีวิเคราะห์ เช่น Pol vs Direct Polarization</li>
               <li>ส่งตัวอย่างให้ Lab ภายนอกวิเคราะห์เปรียบเทียบทุกเดือน</li>
               <li>ลดความคลาดเคลื่อนของ Cane Analysis ด้วยการปรับปรุง Sampling</li>
+              <li>เพิ่มการคำนวณ Purity Drop ระหว่างจุดต่อจุดในทุก Juice Train เพื่อระบุตำแหน่ง Loss จริง</li>
             </ul>
           </div>
+          <div class="wi-ref">อ้างอิง WI: <a href="#wi-lab">ML-WI-1630-001 ถึง 004</a></div>
         </div>
       </div>
 
@@ -791,13 +853,28 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
         <div class="content">
           <h3>การสอบเทียบเครื่องมือ (Instrument Calibration)</h3>
           <div class="station-en">Calibration & Verification ของเครื่องมือวัดทุกชนิด | แผนก 3330</div>
-          <div class="sub-section wi-summary">
-            <div class="sub-title">สรุปจาก WI (ML-WI-3330-002)</div>
+          <div class="sub-section steps">
+            <div class="sub-title">ขั้นตอนการทำงาน</div>
+            <ol>
+              <li>จัดทำแผนสอบเทียบเครื่องมือวัดประจำปีตามชนิดเครื่องมือ</li>
+              <li>สอบเทียบเครื่องมือทดสอบมาตรฐานก่อน แล้วจึงใช้ทวนสอบเครื่องมือควบคุมในกระบวนการ</li>
+              <li>เปรียบเทียบค่าที่วัดได้กับค่าอ้างอิง คำนวณ %Error เทียบกับเกณฑ์ยอมรับ</li>
+              <li>หากเกินเกณฑ์ ต้องปรับตั้งหรือส่งซ่อม/เปลี่ยนเครื่องมือ และบันทึกผล Drift ไว้ตรวจสอบแนวโน้ม</li>
+            </ol>
+          </div>
+          <div class="sub-section yield-loss">
+            <div class="sub-title">ผลกระทบต่อ UDL</div>
             <ul>
-              <li>กำหนดตาราง Calibration, วิธีการ, และเกณฑ์การยอมรับ (Acceptance Criteria)</li>
-              <li>ครอบคลุมเครื่องมือทุกชนิด: เครื่องชั่ง, Brix Meter, Polarimeter, pH Meter, Flow Meter ฯลฯ</li>
-              <li><strong>เป็นพื้นฐานที่สุด:</strong> ถ้าเครื่องมือไม่แม่นยำ → ตัวเลขทุกอย่างผิด → UDL อาจเป็น "Phantom" (ดูเหมือนมี Loss แต่จริงๆ ไม่มี)</li>
+              <li>เป็นพื้นฐานที่สุด: ถ้าเครื่องมือไม่แม่นยำ → ตัวเลขทุกอย่างผิด → UDL อาจเป็น "Phantom" (ดูเหมือนมี Loss แต่จริงๆ ไม่มี)</li>
               <li>หรือในทางกลับกัน: เครื่องมืออาจ "ซ่อน" Real Loss ไว้ → ดูเหมือน UDL ต่ำ แต่จริงๆ มี Loss</li>
+            </ul>
+          </div>
+          <div class="sub-section risk">
+            <div class="sub-title">ความเสี่ยง</div>
+            <ul>
+              <li>ครอบคลุมเครื่องมือทุกชนิด (เครื่องชั่ง, pH Meter, Flow Meter, RTD ฯลฯ) แต่ <strong>Polarimeter/Refractometer ไม่ปรากฏในตารางค่าควบคุมเลย</strong> ทั้งที่เป็นต้นทางของสูตร Pol/Brix/Purity ทั้งหมด</li>
+              <li>ไม่ระบุความถี่สอบเทียบในตัวเอกสาร ต้องอ้างอิงแผนแยกที่ไม่ได้แนบ</li>
+              <li>เกณฑ์ ±1% ของ Flow/Level Transmitter ค่อนข้างกว้างเมื่อเทียบกับความสำคัญต่อ Mass Balance</li>
             </ul>
           </div>
           <div class="sub-section opportunity">
@@ -806,12 +883,637 @@ table.proof tr:hover td { background: rgba(37,99,235,0.04); }
               <li>ปฏิบัติตาม ML-WI-3330-002 อย่างเคร่งครัด — Calibrate ตาม Schedule</li>
               <li>บันทึกและวิเคราะห์ Drift ของเครื่องมือ — ถ้า Drift มาก → เปลี่ยน</li>
               <li>ตรวจสอบ Weighing Scale เป็นพิเศษ (ใช้คำนวณปริมาณอ้อย, น้ำตาล, กากน้ำตาล)</li>
+              <li>เพิ่ม Polarimeter/Refractometer เข้าตารางสอบเทียบอย่างเป็นทางการโดยเร็ว</li>
             </ul>
           </div>
+          <div class="wi-ref">อ้างอิง WI: <a href="#wi-calib">ML-WI-3330-002</a></div>
         </div>
       </div>
 
     </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 2b: WI DOCUMENT CRITIQUE ===== -->
+<section id="process-wi" class="page-section subpage" data-page="process" data-subpage="wi">
+  <div class="container">
+    <div class="eyebrow-index">Section 02b</div>
+    <div class="section-title"><span class="num">📋</span> วิจารณ์เอกสาร WI (32 ฉบับ)</div>
+    <p class="section-subtitle">อ่านเอกสาร WI/SP ทั้ง 32 ฉบับจาก 6 แผนก แล้ววิเคราะห์ว่าแต่ละฉบับเขียนเรื่องอะไร เขียนดีแค่ไหน และขาดตกบกพร่องตรงไหนที่เกี่ยวข้องกับ UDL</p>
+
+    <div class="wi-jump">
+      <a href="#wi-milling">แผนกหีบอ้อย (6)</a>
+      <a href="#wi-clarification">แผนกทำใส (6)</a>
+      <a href="#wi-panboiling">แผนกเคี่ยว/ต้มผลึก (12)</a>
+      <a href="#wi-centrifugal">แผนกปั่นแยก (3)</a>
+      <a href="#wi-lab">แผนกวิเคราะห์คุณภาพ (4)</a>
+      <a href="#wi-calib">แผนกสอบเทียบ (1)</a>
+    </div>
+
+    <div class="note-box"><strong>ข้อสังเกตภาพรวมทั้ง 32 ฉบับ:</strong> (1) เกือบทุกฉบับอ้างอิงค่าเป้าหมาย/ค่าควบคุมไปที่แผนคุณภาพ ML-FM-1600-001 แยกต่างหาก แทนที่จะฝังตัวเลขไว้ในเอกสารเอง ทำให้ผู้ปฏิบัติงานต้องเปิดหลายเอกสารพร้อมกัน (2) แทบไม่มีฉบับใดเชื่อมโยง "วิธีปฏิบัติ" เข้ากับ "ปริมาณน้ำตาลสูญเสียเชิงตัวเลข" ยกเว้น ML-SP-3110-003 ฉบับเดียว (3) ของหก/รั่วไหลถูกจัดการทางกายภาพ (ตักคืน/กวาดเก็บ) แต่ไม่เคยถูกชั่งน้ำหนักหรือบันทึกปริมาณ — เป็นช่องโหว่ UDL ที่เกิดซ้ำในหลายแผนก (4) Polarimeter/Refractometer ซึ่งเป็นเครื่องมือต้นทางของสูตร Pol/Brix/Purity ทั้งหมด ไม่ปรากฏในตารางสอบเทียบ ML-WI-3330-002 เลย (5) เอกสารหลายฉบับอายุ 10-15 ปี (2010-2016) ยังไม่เคยทบทวน ขณะที่บางฉบับปรับปรุงล่าสุดปี 2023-2025 — มีความเสี่ยงค่ามาตรฐานไม่ตรงกันระหว่างเอกสาร</div>
+
+    <!-- MILLING -->
+    <div class="wi-dept-group" id="wi-milling">
+      <div class="wi-dept-title">แผนกหีบอ้อย (Milling) — รหัส 3110 <span class="dept-count">6 ฉบับ</span></div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3110-007</span><span class="wi-badge old">Rev.00 · 2010</span><div class="wi-title">การเตรียมความพร้อมในการหีบอ้อยชุดลูกหีบ</div></div>
+          <div class="wi-meta">7 หน้า · ไม่เคยแก้ไข 15 ปี</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> Checklist เตรียมพร้อม 5 ตำแหน่งงาน มีค่าตัวเลขเป้าหมายชัดเจน (แรงดันน้ำมันเทอร์ไบน์ 0.8/1.3/0.5-0.8 kg/cm², รอบเทอร์ไบน์ 770-1,100 RPM, ไฮดรอลิค 2,400-2,800 PSIG, ลม ≥4 kg/cm²) ลำดับขั้นตอนดี</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>Checklist เตรียมพร้อมก่อนหีบแยกตามตำแหน่งงาน</li>
+            <li>ค่าเป้าหมายแรงดัน/รอบของอุปกรณ์หลัก</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่เชื่อมกับ KPI น้ำตาล (Pol%Bagasse, PI, Extraction) เลย — เป็นแค่ checklist เครื่องจักรกล</li>
+            <li>ไม่มี troubleshooting ในตัวเอง หากพบค่าผิดปกติระหว่างเตรียม</li>
+            <li>Rev เก่ามาก (2010) ค่าอุณหภูมิน้ำร้อนยังอ้างอิงแบบเดิม ไม่ตรงกับเอกสารอื่นที่ปรับเป็น 75°C แล้ว</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3110-008</span><span class="wi-badge new">Rev.03 · 2020</span><div class="wi-title">การดำเนินการในการหีบอ้อยด้วยชุดลูกหีบ</div></div>
+          <div class="wi-meta">13 หน้า · ใหม่สุดในกลุ่ม</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ดีมาก มีรายละเอียดเป็นระบบ ครอบคลุมทั้งกรณีเริ่มใหม่และต่อเนื่องจากกะก่อน อ้างอิงฟอร์มบันทึกครบ มีข้อความเตือนเรื่องน้ำอ้อยรั่วไหล "จะทำให้เกิดความสูญเสีย" ตรงประเด็น UDL</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ควบคุม Imbibition%Cane, แรงดันไฮดรอลิค 2,000-2,800 psig</li>
+            <li>ขั้นตอนปลดเหล็ก (tramp iron) ที่แม่เหล็กเชรดเดอร์ + บันทึกทุกกะ</li>
+            <li>ควบคุมความสะอาดระบบป้องกันแบคทีเรีย</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่มีค่าเป้าหมาย Imbibition% ในเอกสารเอง (ต้องเปิด SP-003 แยก)</li>
+            <li>เตือนเรื่องน้ำอ้อยรั่วแต่ไม่มี corrective action ขั้นตอนแก้ไข</li>
+            <li>ตรวจจับเหล็กหลุดใช้แค่ "ฟังเสียง" — วิธีเชิงอัตวิสัย เสี่ยงพลาด</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3110-009</span><span class="wi-badge mid">Rev.01 · 2013</span><div class="wi-title">การตรวจสอบความเรียบร้อยในการหีบอ้อยด้วยชุดลูกหีบ</div></div>
+          <div class="wi-meta">6 หน้า</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> เนื้อหาสำคัญต่อ UDL (เชื่อมข้อมูลวิเคราะห์คุณภาพกับการตรวจสอบหน้างาน) แต่เขียนซ้ำเกือบทั้งหมด 3 รอบสำหรับ 3 ตำแหน่งงาน (หัวหน้ากะ/หัวหน้าแผนก/ผู้ช่วยหัวหน้าแผนก) โดยไม่มีความต่างจริง — สิ้นเปลืองพื้นที่</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ตรวจสอบ PI, 1st Extraction, Pol%Bagasse, Brix Curve, Each Mill Extraction</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่มีตัวเลข threshold ผิดปกติในตัวเอกสาร — บอกแค่ "ตรวจว่าต่ำกว่าค่าควบคุมหรือไม่"</li>
+            <li>ไม่มี troubleshooting ในตัวเอง (ส่งต่อ WI-010 ทั้งหมด)</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3110-010</span><span class="wi-badge mid">Rev.02 · 2014</span><div class="wi-title">การแก้ไขค่าควบคุมไม่เป็นไปตามเป้าหมาย</div></div>
+          <div class="wi-meta">8 หน้า · สำคัญที่สุดของกลุ่มนี้</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ดีเยี่ยม เชื่อมค่าวิเคราะห์คุณภาพเข้ากับ corrective action เป็นระบบครบวงจร ตรงตามหลัก root-cause analysis มีค่าตัวเลขอ้างอิงจริง (ไฮดรอลิค 2,000-2,800 PSI, น้ำร้อน &gt;75°C, มีดสึกไม่เกิน 20%)</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>แก้ปัญหา 6 กรณี: PI ต่ำ, Pol%Bagasse สูง, ความชื้นกากอ้อยสูง, Purity Drop, Brix น้ำอ้อยรวมต่ำ, 1st Extraction ต่ำ</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่มีค่าเป้าหมายในตัวเอกสาร (อ้างอิง ML-FM-1600-001 ทั้งหมด)</li>
+            <li>ขั้นตอนแก้ไขส่วนใหญ่จบที่ "ขออนุมัติหีบต่อ" มากกว่าแก้ที่ต้นเหตุจริง</li>
+            <li>ไม่มีตาราง symptom-cause-fix สรุปให้ดูง่าย ต้องอ่านข้อความยาวทีละกรณี</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3110-011</span><span class="wi-badge old">Rev.00 · 2010</span><div class="wi-title">การหยุดเดินเครื่องจักรในการหีบอ้อยด้วยชุดลูกหีบ</div></div>
+          <div class="wi-meta">5 หน้า · เก่าที่สุดในกลุ่ม</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ดีด้าน mechanical safety มีค่าตัวเลขชัด (อุณหภูมิ &lt;100°C ก่อนหยุดปั๊ม, เกียร์ &lt;40°C) แต่เนื้อหาเน้นความปลอดภัยเครื่องจักรล้วนๆ</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ลำดับหยุดเครื่องปลอดภัย: ปิดวาล์วไอดี, รอ 8 ชม.ก่อนหยุดปั๊มน้ำมัน, ถอดใบมีด, ทำความสะอาด</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li><strong>ไม่มีเนื้อหาเกี่ยวกับ UDL เลย</strong> — ไม่กล่าวถึงการป้องกันสูญเสียน้ำตาลขณะหยุดเครื่อง (น้ำอ้อยค้างระบบ/Inversion จากหยุด-เริ่มบ่อย) ทั้งที่ SP-003 ระบุว่าเป็นสาเหตุ Purity Drop</li>
+            <li>Rev เก่ามาก ไม่ปรับปรุงให้ตรงกับมาตรฐานอุณหภูมิน้ำร้อนที่เอกสารอื่นแก้ไขแล้ว</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-SP-3110-003</span><span class="wi-badge mid">Rev.02 · 2012</span><div class="wi-title">การหีบอ้อยด้วยชุดลูกหีบ (เอกสารวิศวกรรม)</div></div>
+          <div class="wi-meta">22 หน้า · คุณค่าวิชาการสูงสุดในชุด</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ดีเยี่ยม ระดับตำรา Hugot/Peter Rein เต็มรูปแบบ — นิยามศัพท์ครบ สูตรคำนวณ Pol%Cane, Extraction, Hydraulic Load (Hugot formula), Brix Curve และ <strong>สูตรคำนวณน้ำตาลสูญเสียจาก Purity Drop เป็นตัน/วันจริง</strong> (ตัวอย่าง: ลด Purity Drop จาก 1.46→1.00 หน่วย = น้ำตาลเพิ่ม 11.42 ตัน/วัน) — เป็นเอกสารเดียวในทั้ง 32 ฉบับที่ผูกตัวเลขปฏิบัติงานเข้ากับปริมาณน้ำตาลจริง</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ทฤษฎีวิศวกรรมน้ำตาลเต็มรูปแบบ + สูตรคำนวณครบ</li>
+            <li>ตารางคำนวณ Imbibition Water flow rate ตาม TCH/TCD</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>เป็นเอกสารทฤษฎี ไม่เชื่อมกับ WI-010 ชัดเจนว่าเมื่อไหร่ควรใช้สูตรเหล่านี้หน้างาน</li>
+            <li>ตัวอย่างคำนวณใช้ตัวเลขสมมติ (Pol%Cane 13.25%) ไม่ใช่ baseline จริงของ MLS</li>
+            <li>ไม่อัปเดต Rev มา 13 ปี ทั้งที่มีข้อมูล 11 ปีของโรงงานที่ควรนำมาทบทวน</li>
+          </ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLARIFICATION -->
+    <div class="wi-dept-group" id="wi-clarification">
+      <div class="wi-dept-title">แผนกทำใส (Clarification) — รหัส 3210 <span class="dept-count">6 ฉบับ</span></div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3210-001</span><span class="wi-badge new">Rev.01 · 2025</span><div class="wi-title">การเตรียมน้ำปูนขาว</div></div>
+          <div class="wi-meta">ใหม่สุดในทั้งชุด 32 ฉบับ</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ค่อนข้างดี ละเอียดที่สุดในชุด แยกขั้นตอน Auto/Manual ชัดเจน ครอบคลุมทั้งระบบเก่า (ปูนก้อน) และระบบใหม่ (ปูนผง/Silo) มี Troubleshooting</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>เตรียมน้ำปูนขาวทั้ง 2 ระบบ, เดินเครื่อง Auto/Manual</li>
+            <li>แก้ปัญหา %Baume ไม่ได้ตามเป้า / ปูนไม่ลง / อุดตัน</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่มีค่าเป้าหมาย %Baume ชัดเจนในเอกสาร (อ้างอิง SP-3000-001 แยก)</li>
+            <li>ไม่มีความถี่ตรวจ %Baume และไม่กำหนดคุณภาพปูนขาว (%CaO)</li>
+            <li>ไม่มีขั้นตอนจัดการปูนขาวหกรั่วไหล</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3210-002</span><span class="wi-badge old">Rev.03 · 2016</span><div class="wi-title">การเตรียมน้ำยาพักใส (Flocculant)</div></div>
+          <div class="wi-meta">บางที่สุดในชุด (2 หน้า)</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> สั้นมาก มีแค่สูตรผสมตายตัว (Max.Floc.917, 3.5kg/8.5m³=0.04%, อุณหภูมิ 45-55°C) ไม่มีสูตรปรับเปลี่ยน</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>สูตรผสม Flocculant + เงื่อนไขอุณหภูมิ/ความดันลม</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>เอกสารเก่ามาก (10 ปี) — สูตรตายตัว ไม่ปรับ dosage ตามคุณภาพอ้อย</li>
+            <li>ไม่มีวิธีตรวจสอบประสิทธิภาพ flocculant (settling test), ไม่มี troubleshooting</li>
+            <li>ไม่ระบุอายุการใช้งานน้ำยาที่เตรียมแล้ว</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3210-003</span><span class="wi-badge old">Rev.02 · 2015</span><div class="wi-title">การเตรียม Lime Saccharate และเพิ่มอุณหภูมิน้ำอ้อย</div></div>
+          <div class="wi-meta"></div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ปานกลาง ดีด้าน troubleshooting/cleaning ของ Heater</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ควบคุมระบบอุ่นน้ำอ้อย, ผสมปูนขาว:น้ำอ้อย 1:1 หรือ 1:2</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่ระบุ pH เป้าหมายชัดเจนในเอกสาร, ไม่ระบุอุณหภูมิเป้าหมายน้ำอ้อยออกจากฮีตเตอร์</li>
+            <li>ไม่มีขั้นตอนเฝ้าระวัง Inversion จาก pH สูง + อุณหภูมิสูง (สาเหตุ UDL โดยตรง)</li>
+            <li>เอกสารเก่า ไม่ตรงกับ WI-001 ที่ปรับปรุงล่าสุด 2025</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3210-004</span><span class="wi-badge old">Rev.03 · 2015</span><div class="wi-title">การทำใสน้ำอ้อย (Clarification)</div></div>
+          <div class="wi-meta">ดีที่สุดในชุดนี้ (Troubleshooting ครบ)</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ดีที่สุดในชุด 3210 มี Troubleshooting ครบ 6 กรณี อ้างอิงเอกสารหลายฉบับเชื่อมโยงกัน</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>Clarifier, DSM Screen, Flash Tank, Mud Tank + แก้ปัญหา 6 กรณี</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่มีค่าเป้าหมาย Turbidity ของน้ำอ้อยใส, ไม่ควบคุม Pol in Mud/Filter Cake (จุดสูญเสียหลัก)</li>
+            <li>ไม่ระบุ Settling Time เป้าหมาย, ไม่ติดตาม Mud Volume/Recirculation</li>
+            <li>ไม่มีขั้นตอนป้องกันน้ำอ้อยล้น/หก</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3210-005</span><span class="wi-badge old">Rev.01 · 2015</span><div class="wi-title">การควบคุมหม้อกรองสุญญากาศ (RVF)</div></div>
+          <div class="wi-meta">จุดสูญเสียน้ำตาลหลัก</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ปานกลาง มีขั้นตอนครบ 11 ขั้น Troubleshooting เฉพาะ %Pol สูง แต่ไม่มีตัวเลขเป้าหมายหลายจุดสำคัญ</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>RVF, Filtrate Tank, Bagacillo Cyclone + แก้ปัญหา %Pol สูง/แว็คกั้มต่ำ</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่มีค่าเป้าหมาย %Pol in Filter Cake, %Moisture in Filter Cake</li>
+            <li>ไม่มีความถี่เก็บตัวอย่าง, ไม่ควบคุมอัตราส่วน Bagacillo, ไม่มีค่าแว็คกั้ม optimum</li>
+            <li>ไม่ควบคุม Wash Water Ratio ของ Filter Cake</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3210-012</span><span class="wi-badge new">Rev.00 · 2023</span><div class="wi-title">การจัดการน้ำเชื่อมรั่วไหล</div></div>
+          <div class="wi-meta">เกี่ยวกับ UDL โดยตรงที่สุด</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ดีมากด้านขั้นตอนปฏิบัติ ครอบคลุม 3 สถานการณ์ (ในกระบวนการ, หกล้นจากถัง, รั่วตามท่อ/วาล์ว) มีการประสานงานข้ามแผนกชัดเจน</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ลดรอบหีบ, ควบคุม %Brix, กระสอบทรายกั้น, สูบกลับ Lime Juice</li>
+            <li>บันทึก Sugar Content ในร่องน้ำ (ML-FM-3210-003)</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li><strong>ไม่มีการประมาณปริมาณ Loss เชิงตัวเลข</strong> — ไม่สามารถ track UDL จากเหตุการณ์นี้ได้จริง</li>
+            <li>ไม่มีค่าเป้าหมาย Sugar Content ในร่องน้ำ, ไม่มี Root Cause Analysis, ไม่มีเวลาตอบสนอง</li>
+            <li>ข้อควรระวัง (ข้อ 8) ว่างเปล่า, ไม่ครอบคลุมจุดรั่วอื่น (Evaporator, Pan)</li>
+          </ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAN BOILING -->
+    <div class="wi-dept-group" id="wi-panboiling">
+      <div class="wi-dept-title">แผนกเคี่ยว/ต้มผลึก (Pan Boiling) — รหัส 3220 <span class="dept-count">12 ฉบับ</span></div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3220-001</span><span class="wi-badge new">Rev.01 · 2023</span><div class="wi-title">การเตรียมหม้อเคี่ยว (Pan Preparation)</div></div>
+          <div class="wi-meta">5 หน้า</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ดี มีขั้นตอนตัวเลขชัด (ไอน้ำ 0.1-0.5 kg/cm², แว็คกั้ม 600mmHg, 70°C, Hold Vacuum Test 20 นาที ลดลง&gt;20 หน่วย=รั่ว)</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ตรวจอุปกรณ์, ทำความสะอาด, เรียงวาล์ว, Hold Vacuum Test ผ่าน DCS</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่มี decision tree ซ่อม-vs-ยกเลิกเมื่อพบรั่วระหว่างทดสอบ</li>
+            <li>ไม่บันทึกตำแหน่งรั่วที่พบอย่างเป็นระบบ — ประวัติรั่วซ้ำไม่ถูกติดตาม (UDL สะสมที่มองไม่เห็น)</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3220-003</span><span class="wi-badge new">Rev.02 · 2023</span><div class="wi-title">A-Seed Boiling</div></div>
+          <div class="wi-meta">4 หน้า</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ดี ค่าตัวเลขชัด (B-Magma 45-50%, เกรน 0.8-0.9mm, แว็คกั้ม 620-640mmHg, 65-70°C) Troubleshooting 9 ข้อครบ รวม NCR หลังพลาด 3 ครั้งติด</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>วงจรต้ม Seed เต็มรูปแบบ, Brix 10 ขั้นผ่านคอมพิวเตอร์</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>มีขั้นตอนเก็บกวาด Mass/Mol ที่หก แต่<strong>ไม่บันทึกปริมาณที่หก/กู้คืน</strong> — จุด UDL ที่ไม่ถูก quantify</li>
+            <li>ปรับ Purity/Brix เป็นเชิงคุณภาพ ("เพิ่ม/ลด ตามความเหมาะสม") ไม่มีสูตร/ตารางอ้างอิง</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3220-005</span><span class="wi-badge mid">2023</span><div class="wi-title">B-Seed Boiling</div></div>
+          <div class="wi-meta">เลขเอกสารในเนื้อหาพิมพ์เป็น "004"</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ใกล้เคียง A-Seed (ฐาน C-Magma 45-50%, เกรน 0.6-0.7mm) แต่มีปัญหา document control</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>วงจรต้ม B-Seed, ตัดต่อไปหม้อถัดไปผ่าน WI-010</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li><strong>เลขเอกสารในเนื้อหาไม่ตรงกับชื่อไฟล์</strong> (พิมพ์ ML-WI-3220-004) — ปัญหาควบคุมเอกสาร</li>
+            <li>ไม่มีเลข Revision ในหัวเอกสาร (ช่องว่าง), ปัญหาหกไม่บันทึกปริมาณเหมือน A-Seed</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3220-006</span><span class="wi-badge new">Rev.03 · 2023</span><div class="wi-title">B-Massecuite</div></div>
+          <div class="wi-meta">ดีที่สุดในกลุ่ม Seed/Mass</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> สมบูรณ์ที่สุดในชุดต้ม เพิ่มเกณฑ์ %Crystal Content และ Purity Drop ที่เชื่อมกับ UDL โดยตรง (Brix≥95, เกรน 0.4-0.5mm)</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ป้อน A-Mol, Discharge สู่ Crystallizer, %Crystal Content + Purity Drop troubleshooting</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่มีค่าตัวเลข Purity Drop เป้าหมายในเอกสารเอง</li>
+            <li>ไม่มีจุดตรวจสอบปริมาตร Massecuite ที่ discharge จริงเทียบ batch คาดหวัง</li>
+            <li>การป้อนน้ำร้อนแทน A-Mol เมื่อรอ discharge (เจือจาง) ไม่มีการบันทึก/ชดเชยผลกระทบ Brix/Purity</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3220-007</span><span class="wi-badge new">Rev.03 · 2023</span><div class="wi-title">C-Seed Boiling</div></div>
+          <div class="wi-meta">4 หน้า</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> เทคนิคนิวเคลียชันละเอียดที่สุดในชุด (Slurry Seed Shock Method 450-500ml ที่ 83-84 Brix) มีคุณค่าปฏิบัติจริงสูง</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ฐาน C-Magma 25-30% + A-Molasses 20-25%, Brix เป้าหมาย 75-78</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่มีเกณฑ์ False Grain/nucleation ผิดปกติ — จุดเสี่ยง Loss สำคัญของ C-Massecuite</li>
+            <li>ปริมาณ Slurry คงที่ ไม่ปรับตามคุณภาพอ้อย/อุณหภูมิ, ไม่มีมาตรฐานภาพถ่ายเกรนอ้างอิง</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3220-008</span><span class="wi-badge new">Rev.03 · 2023</span><div class="wi-title">C-Massecuite</div></div>
+          <div class="wi-meta">สำคัญที่สุดของทั้ง 12 ฉบับ</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> เนื้อหาเกี่ยว exhaustion ดีที่สุด (Brix≥97, เกรน 0.2-0.35mm, %Crystal Content + Purity Drop) — แต่ขาดตัวเลขสำคัญที่สุด</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ขั้นตอนต้มขั้นสุดท้ายที่กำหนด Final Molasses Purity — ตัวชี้วัด UDL หลัก</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li><strong>ไม่มีเป้าหมาย Final C-Mol Purity ระบุในเอกสาร</strong> (ตัวเลขสำคัญที่สุดของ UDL แต่อยู่นอกเอกสารที่ ML-FM-1600-001)</li>
+            <li>ไม่มีเวลาต้มสูงสุด/เกณฑ์ยกเลิกถ้าต้มไม่ถึง 97 Brix</li>
+            <li>ไม่มี reconciliation ปริมาตร C-Seed+B-Mol ที่ป้อน vs C-Mass ที่ discharge จริง</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3220-009</span><span class="wi-badge new">Rev.01 · 2023</span><div class="wi-title">การย้าย Seed ไปถังพัก (Seed in Tank)</div></div>
+          <div class="wi-meta">4 หน้า</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ชัดเจน มีจุดตรวจ Brix 88-90 ก่อนย้ายเป็น acceptance gate ที่ดี</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ใช้ปั๊มสุญญากาศดึง, แว็คกั้มถัง 500mmHg, ตรวจ Brix ก่อนย้าย</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่มีตรวจระดับถัง before/after เพื่อยืนยันปริมาตรที่รับจริง (mass balance gap)</li>
+            <li>เงื่อนไข "ว่างหมดหรือเหลือ 23-25 m³" กำกวม ไม่มีกฎตัดสินใจชัด</li>
+            <li>ฟอร์มอ้างอิง ML-FM-3220-003 ซ้ำกัน 3 ครั้งสำหรับ A/B/C — น่าจะพิมพ์ผิด</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3220-010</span><span class="wi-badge new">Rev.01 · 2023</span><div class="wi-title">การย้ายครึ่งหม้อสู่หม้อถัดไป (Cutting)</div></div>
+          <div class="wi-meta">3 หน้า</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> กระชับ สอดคล้องกับ WI อื่นในชุด ใช้เทคนิคผลต่างสุญญากาศ</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ย้าย 45-50% ของปริมาตร Seed ระหว่างหม้อโดยตรง (ไม่ผ่านถัง)</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่มีการวัด/บันทึกปริมาตรที่ย้ายจริง (ใช้ประมาณสายตา 45-50%) — จุดที่ไม่ reconcile</li>
+            <li>ไม่มีเกณฑ์กรณีหม้อรับมีรั่ว/ย้ายไม่สำเร็จครึ่งทาง</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3220-011</span><span class="wi-badge new">2023</span><div class="wi-title">PM เครื่องจักรแผนกหม้อเคี่ยว</div></div>
+          <div class="wi-meta">15 หน้า · ยาวสุด ละเอียดสุดในชุด 32 ฉบับ</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ดีเยี่ยมที่สุดในชุดทั้งหมด ตัวเลขวิศวกรรมจริง เกณฑ์ pass/fail ชัด (ทดสอบแรงดัน tube 2.5kg/cm² 30 นาที, เกณฑ์ % degradation ของวาล์วเทียบปีก่อน)</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ทดสอบ/เปลี่ยน tube, overhaul วาล์ว, steam trap, condenser, ซ่อมรอยร้าวเพลากวน</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>หัวข้อ "ข้อควรระวัง" ระบุว่า "ไม่มี" ทั้งที่เอกสาร 15 หน้าเกี่ยวกับซ่อมท่อ/รั่ว</li>
+            <li>ไม่เชื่อมผลการซ่อม (จำนวนท่อรั่วที่พบ) กลับไปยังข้อมูล UDL ของหม้อนั้น</li>
+            <li>ทดสอบรั่วเฉพาะประจำปี — รั่วเล็กๆ ระหว่างฤดูไม่ถูกตรวจจับ/ติดตาม</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-SP-3220-001</span><span class="wi-badge old">Rev.01 · 2010</span><div class="wi-title">คู่มือการเก็บตัวอย่าง</div></div>
+          <div class="wi-meta">Reissue 2023 แต่ไม่มี revision log</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> สั้น ชัดเจน ระบุปริมาณตัวอย่าง Massecuite 500-700cc, Seed 200-400cc</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>จังหวะ/ปริมาณเก็บตัวอย่าง, การส่ง Lab</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่มีมาตรฐานทำความสะอาดภาชนะเก็บตัวอย่าง (เสี่ยง cross-contamination)</li>
+            <li>ไม่มีการสอบเทียบจุดเก็บตัวอย่าง (คันชัก), ไม่มี duplicate/referee sample</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-SP-3220-002</span><span class="wi-badge old">Rev.01 · 2010</span><div class="wi-title">คู่มือรางกวนและถังเชื้อน้ำตาล</div></div>
+          <div class="wi-meta"></div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> สั้น ชัดเจนสำหรับงานกล มีเกณฑ์ตัวเลขมอเตอร์ &lt;5A ที่มีประโยชน์</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ตรวจก่อนสตาร์ท, มอเตอร์ &lt;5A, แก้ปัญหาพื้นฐาน</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>Troubleshooting แค่ 2 ข้อ (บางมาก), ไม่มีการตรวจ/แจ้งเตือนระดับล้น (overflow = UDL โดยตรง)</li>
+            <li>ไม่มีการบันทึกผลตรวจสอบเลย — ไม่มี audit trail</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-SP-3220-005</span><span class="wi-badge old">2010</span><div class="wi-title">Set Point การเคี่ยวน้ำตาล</div></div>
+          <div class="wi-meta">ข้อมูลอ้างอิงมีค่ามากสุดในชุด</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ตารางตัวเลขละเอียดแม่นยำที่สุดในชุด — Brix Set Point 10 ขั้นครบทุก A/B/C Seed/Mass พร้อมภาพหน้าจอ DCS (เช่น C-Mass Final = 95.7-95.8 Brix)</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ตาราง Brix Set Point ครบทุกโปรไฟล์การต้ม + วิธีนำทางหน้าจอ DCS</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li><strong>ไม่มีวิธี cross-check ค่า Micro-Polar Brix กับ Lab Refractometer</strong> — sensor drift จะ bias ทุก batch โดยไม่รู้ตัว กระทบ UDL โดยตรง</li>
+            <li>ไม่มีความถี่/tolerance สอบเทียบระบุ, ไม่อธิบายเหตุผลของช่วง Brix แคบมาก (0.1 หน่วย)</li>
+          </ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTRIFUGAL -->
+    <div class="wi-dept-group" id="wi-centrifugal">
+      <div class="wi-dept-title">แผนกปั่นแยก (Centrifugal) — รหัส 3230 <span class="dept-count">3 ฉบับ</span></div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3230-001</span><span class="wi-badge mid">Rev.06</span><div class="wi-title">การปั่นน้ำตาลและอบแห้งน้ำตาล</div></div>
+          <div class="wi-meta">ปัญหาการอ่านเอกสาร (encoding)</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ครบในเชิงปฏิบัติ มี corrective action loop แต่ข้อความที่ extract จาก PDF บางส่วนเพี้ยนเป็นรหัสอ่านไม่ออก — ปัญหาการเข้ารหัสฟอนต์ที่กระทบการค้นหา/อ้างอิงในระบบดิจิทัล</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ปั่น A/B/C (Batch+Continuous), อบแห้ง DCR/VHP, Purity Rise ≤1.5%</li>
+            <li>อุณหภูมิกากน้ำตาลสุดท้าย &lt;38°C, 3 จุดแม่เหล็กดักสนิม</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>น้ำตาลที่ปั่นซ้ำ (rework) ไม่ถูกนับ/ติดตามเป็นตัวเลขใน mass balance</li>
+            <li>ไม่มีค่าเป้าหมายเชิงปริมาณสำหรับ %Pol/%Moisture ในเอกสารนี้</li>
+            <li>เอกสารมีปัญหาการอ่าน (encoding) ควรแก้ไขเพื่อการอ้างอิง/ฝึกอบรม</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3230-002</span><span class="wi-badge old">Rev.02 · 2016 · Uncontrolled</span><div class="wi-title">การซ่อมแซมและบำรุงรักษาเครื่องจักรแผนกหม้อปั่น</div></div>
+          <div class="wi-meta"></div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> โครงสร้างดี มีประวัติ revision (DAR tracking) ระบุสเปกน้ำมัน/แรงดันอากาศเชิงตัวเลข (≥5 kg/cm²G) แต่ตรา "Uncontrolled" น่าห่วงว่าอาจไม่ใช่เวอร์ชันใช้งานจริง</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>ตาราง PM มอเตอร์หลัก/suspension head/basket valve + Checklist Test Run</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่เชื่อมผล PM (เช่น basket clearance ผิดสเปก) กับผลกระทบเชิงปริมาณต่อ purity/pol loss</li>
+            <li>สถานะ "Uncontrolled" บ่งชี้ความเสี่ยงด้านการควบคุมเอกสาร ควรตรวจสอบเวอร์ชันล่าสุด</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3230-003</span><span class="wi-badge old">สั้นมาก</span><div class="wi-title">การจัดการฝุ่นจากการอบแห้งน้ำตาลทรายดิบ</div></div>
+          <div class="wi-meta">ควรปรับปรุงมากที่สุดฉบับหนึ่ง</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> สั้นมาก (~2 หน้า) เขียนอย่างง่าย ไม่มีสูตรคำนวณ ไม่มีค่าควบคุมเชิงตัวเลขเลย</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>มาตรการป้องกันฝุ่น 2 แนวทาง (น้ำอ้อยใส/น้ำร้อนฉีดพ่น), ตรวจอุปกรณ์</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li><strong>ฝุ่นน้ำตาลคือ UDL ที่จับต้องได้โดยตรง แต่ไม่มีการวัดปริมาณ/เป้าหมายเชิงตัวเลขเลย</strong></li>
+            <li>ไม่ระบุว่าน้ำที่ใช้ฉีดพ่น (พาน้ำตาลไปด้วย) ถูกหมุนเวียนกลับหรือถูกทิ้ง</li>
+            <li>ไม่มี troubleshooting เมื่อฝุ่นเกินระดับ</li>
+          </ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QA LAB -->
+    <div class="wi-dept-group" id="wi-lab">
+      <div class="wi-dept-title">แผนกวิเคราะห์คุณภาพ (QA Lab) — รหัส 1630 <span class="dept-count">4 ฉบับ</span></div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-1630-001</span><span class="wi-badge mid">มาตรฐาน ICUMSA</span><div class="wi-title">วิธีวิเคราะห์อ้อย</div></div>
+          <div class="wi-meta">จุดตั้งต้นของสมการ UDL ทั้งหมด</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ละเอียดดีมาก สูตรครบ อ้างอิงมาตรฐาน ICUMSA ชัดเจน — เป็นเอกสารรากฐานของ Pol%Cane และ Extraction ซึ่งเป็นตัวแปรต้นทางของ mass balance ทั้งระบบ</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>%Fiber Cane, PI, 1st/Each Mill Extraction, %Moisture/Pol กากอ้อย+กากตะกอนกรอง</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่ระบุวิธีสุ่มตัวอย่างอ้อยละเอียด (ความถี่ต่อกะ/lot, ขนาดตัวอย่างเทียบทั้งหมด) — ถ้าสุ่มไม่ representative UDL จะผิดเพี้ยนตั้งแต่ต้นทาง</li>
+            <li>ไม่มี cross-check sanity ระหว่างผล Fiber กับ Extraction</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-1630-002</span><span class="wi-badge mid"></span><div class="wi-title">วิธีวิเคราะห์น้ำอ้อย-น้ำเชื่อม</div></div>
+          <div class="wi-meta">ครอบคลุมทุกจุด Juice Train</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ละเอียดที่สุดฉบับหนึ่งในชุด ครอบคลุมทุกจุดสุ่มตัวอย่างตลอด process train ตั้งแต่หีบอ้อยจนถึงน้ำเชื่อม มีตารางอ้างอิง Density/RDS ครบ</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>pH, Brix/Pol/Purity ทุกจุด (Mixed→Clarified→Syrup), Reducing Sugar, Turbidity, Colour</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li><strong>ไม่มีการคำนวณ "Purity Drop" ระหว่างจุดต่อจุด</strong> — ตัวชี้วัด loss location ที่ตรงประเด็นที่สุดสำหรับ UDL analysis</li>
+            <li>Mud Filtrate Pol ไม่เชื่อมกับปริมาณ filter cake รวมเป็น kg/ตันอ้อย</li>
+            <li>ไม่มี alarm/action limit สำหรับกระบวนการผลิต (มีแต่เกณฑ์ QC ความแม่นยำแลป)</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-1630-003</span><span class="wi-badge mid"></span><div class="wi-title">วิธีวิเคราะห์น้ำตาลหม้อเคี่ยว</div></div>
+          <div class="wi-meta">สำคัญที่สุดของทั้งชุด 1630</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> ครบถ้วนที่สุดเชิงเทคนิค จัดการ interference (EDTA masking) ถูกหลักเคมีวิเคราะห์ มีสูตรคำนวณละเอียดหลายขั้นตอน</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>pH, Brix/Pol/Purity ของ Massecuite/Molasses/Magma/Seed, TSAI, Conductivity Ash</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li><strong>ไม่ระบุ Target Purity ของ Final Molasses ที่ยอมรับได้</strong> — ตัวแปรหลักคำนวณ "Sugar Lost in Final Molasses" หนึ่งใน known loss หลักก่อนได้ UDL</li>
+            <li>ไม่เชื่อมผลวิเคราะห์เข้าสูตร boiling house recovery/exhaustion efficiency — เป็นแค่ "วิธีวัด" ขาด "วิธีนำผลไปวิเคราะห์ loss"</li>
+            <li>ไม่มี troubleshooting เมื่อ Final Molasses Purity สูงผิดปกติ</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-1630-004</span><span class="wi-badge new">Rev.01 · 2020</span><div class="wi-title">วิธีวิเคราะห์น้ำตาลทรายดิบ (VHP/DCR)</div></div>
+          <div class="wi-meta">ทันสมัยที่สุดในชุด</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> เขียนละเอียดมาก ครอบคลุมพารามิเตอร์คุณภาพผลิตภัณฑ์สำเร็จรูปครบตามมาตรฐานสากล มีตัวอย่างคำนวณ MA-CV แบบ step-by-step ชัดเจนดีมาก</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>pH, %Pol (Polarimetry), Reducing Sugar, %Moisture, Colour, Conductivity Ash, Particle Size (MA/CV)</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li>ไม่เชื่อมโยงความถี่การสอบเทียบ Polarimeter ให้ผู้ใช้ทราบ (ต้องดู WI-3330-002 แยก) ทั้งที่ %Pol ที่นี่คือฝั่ง "output" ของสมการ mass balance ทั้งระบบ</li>
+            <li>ไม่ระบุความถี่การสุ่มตัวอย่าง VHP/DCR ต่อกะ/ชั่วโมง เพื่อเป็นตัวแทนทั้ง lot</li>
+          </ul></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALIBRATION -->
+    <div class="wi-dept-group" id="wi-calib">
+      <div class="wi-dept-title">แผนกสอบเทียบเครื่องมือ (Calibration) — รหัส 3330 <span class="dept-count">1 ฉบับ</span></div>
+
+      <div class="wi-card">
+        <div class="wi-head">
+          <div><span class="wi-id">ML-WI-3330-002</span><span class="wi-badge mid">Rev.06</span><div class="wi-title">การสอบเทียบและทวนสอบเครื่องมือวัด</div></div>
+          <div class="wi-meta">รากฐานความน่าเชื่อถือของข้อมูลทั้งระบบ</div>
+        </div>
+        <div class="wi-quality"><strong>เขียนยังไง:</strong> เขียนดี มีตารางเกณฑ์ยอมรับเชิงตัวเลขครบทุกประเภทเครื่องมือ (pH ±0.2, RTD ±2.0°C, Digital Multimeter) รวมตารางค่าคลาดเคลื่อนเครื่องชั่งแต่ละจุดใช้งาน มีตัวอย่างคำนวณ %Error ชัดเจน</div>
+        <div class="wi-cols">
+          <div class="wi-col coverage"><div class="col-label">เนื้อหาครอบคลุม</div><ul>
+            <li>นิยามศัพท์, ผู้รับผิดชอบ, ตารางค่าควบคุมเครื่องมือทดสอบ/เครื่องมือควบคุมในกระบวนการ</li>
+            <li>ตารางค่าคลาดเคลื่อนยอมรับของเครื่องชั่ง (รถบรรทุก, สะพานลูกหีบ, หม้อปั่น/บรรจุ)</li>
+          </ul></div>
+          <div class="wi-col gaps"><div class="col-label">ขาดตกบกพร่อง</div><ul>
+            <li><strong>ไม่ระบุความถี่การสอบเทียบในตัวเอกสารเอง</strong> (อ้างอิงแผนงาน ML-FM-3330-005 ที่ไม่ได้แนบมา) — หากความถี่ไม่พอ ความคลาดเคลื่อนสะสมจะกลายเป็นส่วนหนึ่งของ UDL โดยตรง</li>
+            <li><strong>Polarimeter และ Refractometer ไม่ปรากฏในตารางค่าควบคุมเลย</strong> ทั้งที่เป็นตัวแปรต้นทางของแทบทุกสูตรคำนวณในเอกสาร WI-1630-xxx ทั้งหมด — ช่องว่างที่ชัดเจนที่สุดในทั้ง 32 ฉบับ</li>
+            <li>เกณฑ์ ±1% ของ Flow/Level Transmitter ค่อนข้างกว้างเมื่อเทียบความสำคัญต่อ mass balance ของ UDL</li>
+            <li>ไม่มีการย้อนตรวจสอบข้อมูลการผลิตเมื่อพบเครื่องมือ (โดยเฉพาะเครื่องชั่ง/flow meter) คลาดเคลื่อนเกิน</li>
+          </ul></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -2080,7 +2782,15 @@ function showPage(pageId) {
       if (isProject) a.style.cssText = 'color:#fff; background:var(--accent); font-weight:600; opacity:0.7;';
     }
   });
-  window.scrollTo(0, 0);
+  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  if (pageId === 'process') showSubpage('steps');
+  setTimeout(function(){ Object.values(Chart.instances).forEach(function(c){ c.resize(); }); }, 80);
+}
+
+function showSubpage(name) {
+  document.querySelectorAll('.subpage').forEach(el => el.classList.toggle('hidden', el.dataset.subpage !== name));
+  document.querySelectorAll('.subtab-btn').forEach(b => b.classList.toggle('active', b.dataset.subpage === name));
+  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   setTimeout(function(){ Object.values(Chart.instances).forEach(function(c){ c.resize(); }); }, 80);
 }
 showPage('definition');
