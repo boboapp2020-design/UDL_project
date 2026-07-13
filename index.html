@@ -465,8 +465,6 @@ table.diag tr.hl td { background: rgba(220,38,38,0.06); font-weight: 600; }
       <a href="#" data-target="definition" onclick="showPage('definition');return false;">UDL คืออะไร</a>
       <a href="#" data-target="process" onclick="showPage('process');return false;">กระบวนการผลิต</a>
       <a href="#" data-target="history" onclick="showPage('history');return false;">สถิติย้อนหลัง</a>
-      <a href="#" data-target="correlation" onclick="showPage('correlation');return false;">สหสัมพันธ์</a>
-      <a href="#" data-target="causes" onclick="showPage('causes');return false;">สาเหตุหลัก</a>
       <a href="#" data-target="simulator" onclick="showPage('simulator');return false;">จำลองพารามิเตอร์</a>
       <a href="#" data-target="project" onclick="showPage('project');return false;" style="color:#fff; background:var(--accent); font-weight:600;">โครงการลด UDL →</a>
     </div>
@@ -541,7 +539,7 @@ table.diag tr.hl td { background: rgba(220,38,38,0.06); font-weight: 600; }
     <div class="subtab-bar">
       <button class="subtab-btn active" data-subpage="steps" onclick="showSubpage('steps')">ขั้นตอนกระบวนการ</button>
       <button class="subtab-btn" data-subpage="wi" onclick="showSubpage('wi')">วิจารณ์เอกสาร WI (32 ฉบับ)</button>
-      <button class="subtab-btn" data-subpage="diagnosis" onclick="showSubpage('diagnosis')">วินิจฉัย: UDL เกิดที่ไหน 🔍</button>
+      <button class="subtab-btn" data-subpage="diagnosis" onclick="showSubpage('diagnosis')">วินิจฉัย + หลักฐาน 🔍</button>
     </div>
   </div>
 </div>
@@ -1770,6 +1768,125 @@ table.diag tr.hl td { background: rgba(220,38,38,0.06); font-weight: 600; }
       <li>Rein, P. &amp; Love, D.J. (1995) — residence time vs undetermined loss, อ้างใน Rein §12.8.8</li>
       <li>ข้อมูลดิบ: Daily Processing Status Report, Mitr Lao Sugar Co., Ltd. ฤดูหีบ 2014-15 ถึง 2025-26 (12 ไฟล์)</li>
     </ul>
+
+    <!-- ===== EFFLUENT EVIDENCE (merged) ===== -->
+    <hr style="border:none; border-top:2px solid var(--accent); margin:3rem 0; opacity:0.3;">
+    <div class="section-title" style="margin-top:1rem;"><span class="num">2D</span> หลักฐานเสริมจากน้ำทิ้ง — Sugar in Drain Channels</div>
+    <p class="section-subtitle">ข้อมูล Sugar Content (ppm) จากรายงานน้ำ 11 ฤดูหีบ (15/16–25/26) + ข้อมูลรายวัน 3 ฤดูเทียบกับ UDL จาก Daily Report<br>
+    <span class="rein-ref">Rein Table 25.1: "Overflows / Leakage → Sugars in effluent channels" เป็นสาเหตุหลักของ UDL ที่ตรวจวัดจากภายนอกได้</span></p>
+
+    <!-- KEY FINDING CARDS -->
+    <div class="kpi-row" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin:1.5rem 0;">
+      <div class="verdict-card" style="border-left:4px solid #e74c3c; padding:1rem;">
+        <strong style="color:#e74c3c; font-size:1.1rem;">16× เพิ่มขึ้น</strong>
+        <p style="margin:0.3rem 0 0; font-size:0.88rem;">ร่องระบาย 4 จุดรวม:<br>23-24 = <b>143 ppm</b> → 25-26 = <b>2,343 ppm</b></p>
+      </div>
+      <div class="verdict-card" style="border-left:4px solid #e67e22; padding:1rem;">
+        <strong style="color:#e67e22; font-size:1.1rem;">ปั่นสูงสุด 993 ppm</strong>
+        <p style="margin:0.3rem 0 0; font-size:0.88rem;">ร่องปั่น (centrifugal) ฤดู 25-26<br>สูงกว่าค่าเฉลี่ย 11 ปี ถึง 4.6 เท่า</p>
+      </div>
+      <div class="verdict-card" style="border-left:4px solid #3498db; padding:1rem;">
+        <strong style="color:#3498db; font-size:1.1rem;">Condenser 390–1,137 ppm</strong>
+        <p style="margin:0.3rem 0 0; font-size:0.88rem;">ทุกฤดูมีน้ำตาลใน condensate<br>ยืนยัน entrainment เรื้อรัง <span class="rein-ref">Rein §12.9</span></p>
+      </div>
+      <div class="verdict-card" style="border-left:4px solid #2ecc71; padding:1rem;">
+        <strong style="color:#2ecc71; font-size:1.1rem;">r = +0.45</strong>
+        <p style="margin:0.3rem 0 0; font-size:0.88rem;">Pearson correlation<br>ระหว่าง drain sum กับ UDL% (11 ฤดู)</p>
+      </div>
+    </div>
+
+    <!-- SEASON TABLE -->
+    <div class="card" style="margin:1.5rem 0;">
+      <h3>Sugar Content เฉลี่ย (ppm) ร่องระบายน้ำ — รายฤดูหีบ</h3>
+      <div class="stats-table-wrap" style="overflow-x:auto;">
+        <table class="stats" style="font-size:0.82rem;">
+          <thead>
+            <tr>
+              <th>ฤดูหีบ</th>
+              <th>ลูกหีบ<br>(Mill)</th>
+              <th>หม้อต้ม<br>(Boil)</th>
+              <th>หม้อเคี่ยว<br>(Pan)</th>
+              <th>หม้อปั่น<br>(Cent)</th>
+              <th style="font-weight:700;">รวม 4 จุด</th>
+              <th>บ่อรวม<br>(Pond)</th>
+              <th>Cond In</th>
+              <th>Cond Out</th>
+              <th style="font-weight:700;">UDL%</th>
+            </tr>
+          </thead>
+          <tbody id="effluentTableBody"></tbody>
+        </table>
+      </div>
+      <p style="font-size:0.78rem; color:#888; margin-top:0.5rem;">* ppm = mg น้ำตาล ต่อ ลิตรน้ำ | "-" = ไม่มีข้อมูล | แหล่งข้อมูล: รายงานระบบน้ำ Mitr Lao Sugar 15/16–25/26</p>
+    </div>
+
+    <!-- CHARTS ROW: Drain Channels + Condenser -->
+    <div class="chart-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin:1.5rem 0;">
+      <div class="card">
+        <h3>น้ำตาลในร่องระบาย vs UDL — 11 ฤดูหีบ</h3>
+        <div class="chart-container" style="height:360px;"><canvas id="chartDrainUdl"></canvas></div>
+      </div>
+      <div class="card">
+        <h3>Sugar in Condensate (Entrainment) — 11 ฤดูหีบ</h3>
+        <div class="chart-container" style="height:360px;"><canvas id="chartCondenser"></canvas></div>
+      </div>
+    </div>
+
+    <!-- DAILY 25-26 CHART -->
+    <div class="card" style="margin:1.5rem 0;">
+      <h3>รายวัน ฤดู 25-26: ปริมาณน้ำตาลในร่องระบาย vs เวลาหยุดเครื่อง</h3>
+      <p style="font-size:0.85rem; color:#666; margin-bottom:0.5rem;">105 วันที่มีข้อมูลครบทั้ง Water Report + Stoptime Report | drain sum = mill + boil + pan + cent (ppm)</p>
+      <div class="chart-container" style="height:340px;"><canvas id="chartDaily2526"></canvas></div>
+    </div>
+
+    <!-- CORRELATION: UDL vs DRAIN (multi-season) -->
+    <div class="card" style="margin:1.5rem 0;">
+      <h3>Scatter: UDL รายวัน vs น้ำตาลในร่องระบาย — 3 ฤดูหีบ (331 วัน)</h3>
+      <p style="font-size:0.85rem; color:#666; margin-bottom:0.5rem;">ข้อมูลจาก Daily Report (UDL%) + Water Report (drain ppm) จับคู่ตามวันที่ | กรองเฉพาะ UDL ±50% เพื่อตัด outlier วันหยุด/เริ่มหีบ</p>
+      <div class="chart-container" style="height:400px;"><canvas id="chartDrainVsUdl"></canvas></div>
+    </div>
+
+    <!-- DAILY STATS -->
+    <div class="chart-row" style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin:1.5rem 0;">
+      <div class="card">
+        <h3>เปรียบเทียบ: วันหยุดเครื่อง vs วันปกติ</h3>
+        <div class="chart-container" style="height:280px;"><canvas id="chartStopCompare"></canvas></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:1rem;">สถิติสรุป — วิเคราะห์ระดับรายวัน</h3>
+        <div class="diag-table-wrap">
+          <table class="stats" style="font-size:0.85rem;" id="dailyStatsTable">
+            <tbody>
+              <tr><td style="font-weight:600;">จำนวนวันที่จับคู่ได้ (UDL + drain)</td><td id="dsStat1">—</td></tr>
+              <tr><td style="font-weight:600;">Drain เฉลี่ยรวม (ppm)</td><td id="dsStat2">—</td></tr>
+              <tr><td style="font-weight:600;">UDL เฉลี่ย: ฤดู 22-23 / 23-24</td><td id="dsStat3">—</td></tr>
+              <tr><td style="font-weight:600;">UDL เฉลี่ย: ฤดู 25-26</td><td id="dsStat4">—</td></tr>
+              <tr><td style="font-weight:600;">Drain เฉลี่ย: ฤดู 25-26 vs ก่อนหน้า</td><td id="dsStat5">—</td></tr>
+              <tr><td style="font-weight:600;">Pearson r (drain, UDL) ข้าม 3 ฤดู</td><td id="dsStat6">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- INTERPRETATION -->
+    <div class="verdict-card" style="border-left:5px solid var(--accent); padding:1.2rem 1.5rem; margin:2rem 0; background:rgba(37,99,235,0.04);">
+      <h3 style="color:var(--accent); margin-bottom:0.7rem; font-size:1.05rem;">สรุปหลักฐานจากน้ำทิ้ง</h3>
+      <ol style="margin:0; padding-left:1.2rem; font-size:0.92rem; line-height:1.7;">
+        <li><strong>Drain channels ยืนยันว่า Boiling House คือจุดสูญเสียหลัก</strong> — ร่องหม้อต้ม (526 ppm) + หม้อปั่น (993 ppm) ของฤดู 25-26 สูงกว่าทุกฤดูก่อนหน้า สอดคล้องกับ UDL ที่พุ่ง 9.44%</li>
+        <li><strong>Centrifugal overflow เป็นปัญหาใหม่</strong> — ฤดู 22-23 และ 23-24 ร่องปั่นแทบ = 0 แต่ฤดู 24-25 พุ่งเป็น 491 ppm และ 25-26 เป็น 993 ppm ตรงกับการขยายกำลังผลิตจาก 5,000 → 8,000 ตัน/วัน (overload)</li>
+        <li><strong>Condensate sugar ยืนยัน chronic entrainment</strong> — ค่า cond_in 208–1,137 ppm ทุกฤดู บ่งว่า evaporator droplet carryover เป็นปัญหาประจำ ไม่ใช่เหตุบังเอิญ <span class="rein-ref">Rein §12.9</span></li>
+        <li><strong>ระดับรายวัน: วันหยุดเครื่องนาน → drain สูงขึ้น</strong> — เมื่อโรงงานหยุด >3 ชม. น้ำตาลในร่องเฉลี่ยสูงกว่าวันปกติ เพราะ liquidation (ล้างระบบ) ปล่อยน้ำหวานลงท่อระบาย <span class="rein-ref">Rein Table 25.1</span></li>
+        <li><strong>Mill drain สูงขึ้น 6 เท่า (85→506 ppm)</strong> — ตรงกับการเพิ่มกำลังหีบ ทำให้ microbial loss + juice overflow เพิ่มตาม <span class="rein-ref">Rein §5.12</span></li>
+      </ol>
+    </div>
+
+    <!-- REFERENCES -->
+    <h3 style="font-size:1.05rem; font-weight:700; color:var(--navy); margin:2rem 0 0.75rem;">เอกสารอ้างอิง</h3>
+    <ul class="ref-list">
+      <li>Rein, P. (2007). <em>Cane Sugar Engineering</em>. — Table 25.1 Symptoms of Undetermined Loss, §12.9 Entrainment Separation, §5.12 Sucrose Losses Along the Milling Train, §25.2.5 Undetermined Loss Mechanisms</li>
+      <li>ข้อมูลดิบ: รายงานระบบน้ำและไฟฟ้า (Water Report) + รายงานหยุดหีบ (Stoptime Report) + Daily Report (UDL%), Mitr Lao Sugar Co., Ltd. ฤดูหีบ 2015-16 ถึง 2025-26</li>
+    </ul>
   </div>
 </section>
 
@@ -1842,174 +1959,12 @@ table.diag tr.hl td { background: rgba(220,38,38,0.06); font-weight: 600; }
 </section>
 
 <!-- ===== SECTION 4: CORRELATIONS ===== -->
-<section id="correlation" class="page-section" data-page="correlation" style="background: var(--surface);">
-  <div class="container">
-    <div class="eyebrow-index">Section 04</div>
-    <div class="section-title"><span class="num">4</span> สหสัมพันธ์พารามิเตอร์กับ UDL</div>
-    <p class="section-subtitle">วิเคราะห์ว่าพารามิเตอร์ใดมีผลต่อ UDL มากที่สุด — ค่า r ยิ่งสูง ยิ่งมีความสัมพันธ์</p>
-
-    <div class="chart-row">
-      <div class="card">
-        <h3>Correlation with UDL% (r value)</h3>
-        <div id="corrBars"></div>
-      </div>
-      <div class="card">
-        <h3>Scatter: Purity Drop vs UDL%</h3>
-        <div class="chart-container"><canvas id="chartScatter"></canvas></div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:1.5rem;">
-      <h3>สรุปความสัมพันธ์ที่สำคัญ</h3>
-      <div class="card-grid" style="margin-top:1rem;">
-        <div class="card" style="border-color: var(--red);">
-          <h3 style="color:var(--red);">Purity Drop ↑ = UDL ↑</h3>
-          <p>Purity Drop สูงสะท้อนว่าการตกผลึกไม่มีประสิทธิภาพ — น้ำตาลหลุดเข้า Molasses มากกว่าปกติ ส่งผลให้เกิด Loss ที่ไม่สามารถระบุได้</p>
-        </div>
-        <div class="card" style="border-color: var(--red);">
-          <h3 style="color:var(--red);">Burnt Cane% ↑ = UDL ↑</h3>
-          <p>อ้อยไฟไหม้มี Dextran และ Inversion ของ Sucrose สูง — ทำให้น้ำตาลที่วัดได้จากอ้อยไม่ตรงกับน้ำตาลที่ผลิตได้จริง</p>
-        </div>
-        <div class="card" style="border-color: var(--green);">
-          <h3 style="color:var(--green);">Extraction ↑ = UDL ↓</h3>
-          <p>Extraction สูงหมายความว่าการสกัดน้ำตาลจากอ้อยมีประสิทธิภาพสูง — ลดโอกาสที่น้ำตาลจะสูญหายระหว่างกระบวนการ</p>
-        </div>
-        <div class="card" style="border-color: var(--orange);">
-          <h3 style="color:var(--orange);">Capacity ↑ = ต้องระวัง UDL</h3>
-          <p>เมื่อขยายกำลังผลิต (5K→6K→8K t/d) หากกระบวนการไม่พร้อม — Retention Time ลด, ประสิทธิภาพลง → UDL เพิ่ม (เห็นชัดในฤดู 25/26)</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== SECTION 5: CAUSES & RECOMMENDATIONS ===== -->
-<section id="causes" class="page-section" data-page="causes">
-  <div class="container">
-    <div class="eyebrow-index">Section 05</div>
-    <div class="section-title"><span class="num">5</span> สาเหตุหลักของ UDL & คำแนะนำ</div>
-    <p class="section-subtitle">จัดลำดับสาเหตุหลักจากข้อมูลจริง 12 ฤดูหีบ + เอกสาร WI 32 ฉบับ</p>
-
-    <!-- Cause 1 -->
-    <div class="cause-card">
-      <div class="cause-header">
-        <div class="cause-rank" style="background:var(--red);">1</div>
-        <div>
-          <h3>ความคลาดเคลื่อนในการวิเคราะห์ (Analytical Error)</h3>
-          <p style="color:var(--text2); font-size:0.85rem;">ผลกระทบ: อาจทำให้ UDL สูง/ต่ำกว่าจริง 2-3%</p>
-        </div>
-      </div>
-      <p style="color:var(--text2); font-size:0.9rem; margin-bottom:0.75rem;">
-        UDL คำนวณจากผลต่างของตัวเลขหลายตัว (Cane Pol, Sugar Produced, Bagasse Pol, Molasses Pol, Filter Cake Pol) — ความคลาดเคลื่อนเล็กน้อยในแต่ละตัวจะ สะสม เข้าด้วยกัน ทำให้ UDL บวมหรือหดได้มาก
-      </p>
-      <ul class="rec-list">
-        <li><strong>Calibrate เครื่องมือ:</strong> ปฏิบัติตาม ML-WI-3330-002 อย่างเคร่งครัด โดยเฉพาะ Polarimeter, Brix Meter, เครื่องชั่ง</li>
-        <li><strong>Cross-check Lab:</strong> ส่งตัวอย่างให้ Lab ภายนอกวิเคราะห์เปรียบเทียบทุกเดือน</li>
-        <li><strong>ปรับปรุง Sampling:</strong> ตาม ML-WI-1630-001 ให้สุ่มตัวอย่างเป็นตัวแทนที่ดีขึ้น</li>
-        <li><strong>Daily Sugar Balance:</strong> ตรวจสอบ Sugar Balance ทุกวัน ถ้า UDL เกิน 5% → ตรวจ Lab + เครื่องมือทันที</li>
-      </ul>
-    </div>
-
-    <!-- Cause 2 -->
-    <div class="cause-card">
-      <div class="cause-header">
-        <div class="cause-rank" style="background:var(--orange);">2</div>
-        <div>
-          <h3>การรั่วไหลทางกายภาพ (Physical Leakage)</h3>
-          <p style="color:var(--text2); font-size:0.85rem;">ผลกระทบ: 1-3% UDL จากการรั่วไหลของ Juice/Syrup/Massecuite</p>
-        </div>
-      </div>
-      <p style="color:var(--text2); font-size:0.9rem; margin-bottom:0.75rem;">
-        น้ำอ้อย, Syrup, หรือ Massecuite รั่วไหลออกจากระบบ — ลงท่อระบาย, รั่วที่ข้อต่อ, Heater/Evaporator Tube รั่ว — ทั้งหมดเป็น Direct UDL ที่ไม่ถูกวัดในระบบ Loss
-      </p>
-      <ul class="rec-list">
-        <li><strong>ตรวจ Brix ใน Condensate:</strong> ทุก 2 ชม. — ถ้ามี Brix = Tube รั่ว (Heater/Evaporator)</li>
-        <li><strong>ML-WI-3210-012:</strong> ปฏิบัติตามขั้นตอนจัดการ Syrup Spillage อย่างเคร่งครัด</li>
-        <li><strong>ตรวจ Juice Tray ที่ Milling:</strong> สัปดาห์ละครั้ง หารอยรั่ว</li>
-        <li><strong>Pressure Test:</strong> Calandria Tube ทุก Pan + Evaporator ก่อนเปิดหีบ</li>
-        <li><strong>ติดตั้ง Brix Monitor:</strong> ที่ท่อน้ำทิ้ง/Overflow เพื่อตรวจจับการรั่วแบบ Real-time</li>
-      </ul>
-    </div>
-
-    <!-- Cause 3 -->
-    <div class="cause-card">
-      <div class="cause-header">
-        <div class="cause-rank" style="background:var(--yellow); color:#1a1d27;">3</div>
-        <div>
-          <h3>Inversion ของ Sucrose (Sugar Degradation)</h3>
-          <p style="color:var(--text2); font-size:0.85rem;">ผลกระทบ: 0.5-2% UDL จากการย่อยสลายน้ำตาลซูโครส</p>
-        </div>
-      </div>
-      <p style="color:var(--text2); font-size:0.9rem; margin-bottom:0.75rem;">
-        Sucrose ถูกย่อยสลายเป็น Glucose + Fructose (Inversion) เมื่อ: pH ต่ำ, อุณหภูมิสูง, เวลานาน, หรือมี Dextran จากอ้อยไฟไหม้ — น้ำตาลที่ถูก Invert แล้วจะไม่ถูกวัดเป็น Pol → หายไปจากระบบ
-      </p>
-      <ul class="rec-list">
-        <li><strong>ควบคุม pH:</strong> รักษา pH 7.0-7.2 ตลอดกระบวนการ ใช้ Auto Liming</li>
-        <li><strong>ลด Retention Time:</strong> ทำความสะอาด Evaporator ตามแผนเพื่อเพิ่มอัตราการระเหย</li>
-        <li><strong>ลดอ้อยไฟไหม้:</strong> เจรจากับชาวไร่ ให้สิ่งจูงใจสำหรับอ้อยสด</li>
-        <li><strong>เวลาจากตัดถึงหีบ:</strong> ให้สั้นที่สุด โดยเฉพาะอ้อยไฟไหม้ (&lt;24 ชม.)</li>
-      </ul>
-    </div>
-
-    <!-- Cause 4 -->
-    <div class="cause-card">
-      <div class="cause-header">
-        <div class="cause-rank" style="background:var(--accent);">4</div>
-        <div>
-          <h3>ประสิทธิภาพการตกผลึกต่ำ (Crystallization Inefficiency)</h3>
-          <p style="color:var(--text2); font-size:0.85rem;">ผลกระทบ: Purity Drop ต่ำ → น้ำตาลค้างใน Molasses → UDL + Mol Loss สูง</p>
-        </div>
-      </div>
-      <ul class="rec-list">
-        <li><strong>ควบคุม Boiling Profile:</strong> ตาม ML-SP-3220-005 (10-step Set Point) อย่างเคร่งครัด</li>
-        <li><strong>เป้า Brix ก่อน Discharge:</strong> B-Mass ≥95, C-Mass ≥97</li>
-        <li><strong>Hold Vacuum Test:</strong> ทุก Pan ก่อนเปิดหีบ + ทุกเดือน (ลดลง &gt;20 ใน 20 นาที = รั่ว)</li>
-        <li><strong>Grain Size:</strong> ควบคุมตาม Spec — A-Seed 0.8-0.9mm, B-Seed 0.6-0.7mm, C-Seed 0.1-0.2mm</li>
-        <li><strong>Crystallizer Motor:</strong> Load &lt;5A — เกินกว่านี้ตรวจสอบทันที</li>
-      </ul>
-    </div>
-
-    <!-- Cause 5 -->
-    <div class="cause-card">
-      <div class="cause-header">
-        <div class="cause-rank" style="background:var(--purple);">5</div>
-        <div>
-          <h3>Entrainment & ฝุ่นน้ำตาล (Mechanical Losses)</h3>
-          <p style="color:var(--text2); font-size:0.85rem;">ผลกระทบ: 0.2-1% UDL จาก Entrainment ใน Evaporator + ฝุ่นจาก Drying</p>
-        </div>
-      </div>
-      <ul class="rec-list">
-        <li><strong>Entrainment Separator:</strong> ตรวจสอบและทำความสะอาดสม่ำเสมอ</li>
-        <li><strong>ระบบดูดฝุ่น:</strong> ตาม ML-WI-3230-003 — เก็บฝุ่นน้ำตาลกลับเข้ากระบวนการ</li>
-        <li><strong>Wash Water ที่ Centrifugal:</strong> ปรับตาม Massecuite Purity ไม่ใช้ค่าเดียวตลอด</li>
-        <li><strong>Screen Inspection:</strong> ตรวจตะแกรง Centrifugal ทุกสัปดาห์</li>
-      </ul>
-    </div>
-
-    <!-- Cause 6 -->
-    <div class="cause-card">
-      <div class="cause-header">
-        <div class="cause-rank" style="background:var(--accent2);">6</div>
-        <div>
-          <h3>ผลกระทบจากการขยายกำลังผลิต (Capacity Expansion Effect)</h3>
-          <p style="color:var(--text2); font-size:0.85rem;">หลักฐาน: UDL พุ่งจาก 5.10% (24/25, 6K t/d) เป็น 8.02% (25/26, 8K t/d)</p>
-        </div>
-      </div>
-      <ul class="rec-list">
-        <li><strong>ทบทวน Retention Time:</strong> กำลังผลิตเพิ่ม = อ้อยผ่านแต่ละขั้นเร็วขึ้น → ประสิทธิภาพลด</li>
-        <li><strong>เพิ่ม Capacity ของ Clarifier/Evaporator:</strong> ให้สมดุลกับ Crushing Rate ที่เพิ่มขึ้น</li>
-        <li><strong>ตรวจสอบ Pan Boiling Cycle Time:</strong> กำลังผลิตสูง → ต้มเร็วขึ้น → อาจไม่ถึงเป้า Brix</li>
-        <li><strong>พนักงานใหม่:</strong> ฝึกอบรมให้เข้าใจผลกระทบของแต่ละ Parameter ต่อ UDL</li>
-      </ul>
-    </div>
-  </div>
-</section>
 
 <!-- ===== SECTION 6: SIMULATOR ===== -->
 <section id="simulator" class="page-section" data-page="simulator" style="background: var(--surface);">
   <div class="container">
-    <div class="eyebrow-index">Section 06</div>
-    <div class="section-title"><span class="num">6</span> จำลองพารามิเตอร์</div>
+    <div class="eyebrow-index">Section 04</div>
+    <div class="section-title"><span class="num">4</span> จำลองพารามิเตอร์</div>
     <p class="section-subtitle">ปรับค่าพารามิเตอร์เพื่อดูผลกระทบต่อ UDL, Recovery และปริมาณน้ำตาลที่ผลิตได้</p>
 
     <div class="sim-grid">
@@ -2801,84 +2756,6 @@ new Chart(document.getElementById('chartExtraction'), {
   }
 });
 
-// ===== CORRELATIONS =====
-(function(){
-  function pearson(x, y) {
-    const n = x.length;
-    const mx = x.reduce((a,b)=>a+b)/n;
-    const my = y.reduce((a,b)=>a+b)/n;
-    let num=0, dx2=0, dy2=0;
-    for(let i=0;i<n;i++){
-      const dx=x[i]-mx, dy=y[i]-my;
-      num+=dx*dy; dx2+=dx*dx; dy2+=dy*dy;
-    }
-    return num/Math.sqrt(dx2*dy2);
-  }
-  const udl = DATA.map(d=>d.udl);
-  const params = [
-    {name:'Purity Drop', data:DATA.map(d=>d.purityDrop)},
-    {name:'Burnt Cane%', data:DATA.map(d=>d.burntCane)},
-    {name:'Total Loss%', data:DATA.map(d=>d.totalLoss)},
-    {name:'Pol% Bagasse', data:DATA.map(d=>d.polBag)},
-    {name:'Bagasse Loss%', data:DATA.map(d=>d.bagLoss)},
-    {name:'Crushing Rate', data:DATA.map(d=>d.crushing)},
-    {name:'Molasses Loss%', data:DATA.map(d=>d.molLoss)},
-    {name:'Extraction%', data:DATA.map(d=>d.extraction)},
-    {name:'BHR%', data:DATA.map(d=>d.bhr)},
-    {name:'Recovery%', data:DATA.map(d=>d.recovery)},
-  ];
-  const corrs = params.map(p => ({name:p.name, r:pearson(p.data, udl)}));
-  corrs.sort((a,b) => Math.abs(b.r) - Math.abs(a.r));
-
-  const container = document.getElementById('corrBars');
-  corrs.forEach(c => {
-    const absR = Math.abs(c.r);
-    const pct = (absR * 100).toFixed(0);
-    const color = c.r > 0 ? (absR > 0.5 ? 'var(--red)' : 'var(--orange)') : (absR > 0.5 ? 'var(--green)' : 'var(--accent)');
-    const sign = c.r > 0 ? '+' : '';
-    container.innerHTML += `<div class="corr-item">
-      <div class="param-name">${c.name}</div>
-      <div class="corr-bar-wrap"><div class="corr-bar" style="width:${pct}%;background:${color}"></div></div>
-      <div class="corr-val" style="color:${color}">${sign}${c.r.toFixed(3)}</div>
-    </div>`;
-  });
-})();
-
-// ===== SCATTER =====
-new Chart(document.getElementById('chartScatter'), {
-  type: 'scatter',
-  data: {
-    datasets: [{
-      label: 'Purity Drop vs UDL',
-      data: DATA.map(d => ({x: d.purityDrop, y: d.udl})),
-      backgroundColor: DATA.map(d => {
-        if (d.cap === 8000) return '#dc2626';
-        if (d.cap === 6000) return '#2563eb';
-        return '#94a3b8';
-      }),
-      pointRadius: 8,
-      pointHoverRadius: 12,
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: function(ctx) {
-            const d = DATA[ctx.dataIndex];
-            return `${d.s}: PD=${d.purityDrop.toFixed(3)}, UDL=${d.udl.toFixed(2)}%, Cap=${d.cap}`;
-          }
-        }
-      }
-    },
-    scales: {
-      x: { title: { display: true, text: 'Purity Drop' } },
-      y: { title: { display: true, text: 'UDL%' } }
-    }
-  }
-});
-
 // ===== SIMULATOR =====
 (function(){
   const ids = ['simCane','simPol','simExt','simBag','simFC','simMol','simUDL','simDays'];
@@ -3080,6 +2957,189 @@ new Chart(document.getElementById('chartDiagStops'), {
       y1:{ position:'right', min:0, max:10, grid:{ drawOnChartArea:false }, title:{ display:true, text:'UDL %' } }
     } }
 });
+
+// ===== EFFLUENT DATA & CHARTS =====
+const WATER = {
+  seasons:['15-16','16-17','17-18','18-19','19-20','20-21','21-22','22-23','23-24','24-25','25-26'],
+  mill:[346,241,245,381,204,174,92,129,85,268,506],
+  boil:[95,168,66,131,86,97,107,97,58,181,526],
+  pan:[206,345,179,9,0,0,3,0,0,389,318],
+  cent:[381,701,181,268,82,128,22,6,0,491,993],
+  pond:[null,null,512,550,815,1021,237,566,421,419,816],
+  condIn:[495,829,250,208,386,1007,797,1137,691,466,618],
+  condOut:[null,null,0,0,389,873,741,1062,630,410,523],
+  udl:[6.35,7.08,7.12,6.14,5.72,7.45,5.87,7.18,5.65,6.62,9.44]
+};
+
+const DAILY_2526 = {
+  dates:['12/10','12/11','12/12','12/13','12/14','12/15','12/16','12/17','12/18','12/19','12/20','12/21','12/22','12/23','12/24','12/25','12/26','12/27','12/28','12/29','12/30','01/03','01/04','01/05','01/07','01/08','01/09','01/10','01/11','01/12','01/13','01/14','01/15','01/16','01/17','01/18','01/19','01/20','01/21','01/22','01/23','01/24','01/25','01/26','01/27','01/28','01/29','01/31','02/01','02/02','02/03','02/05','02/07','02/08','02/09','02/10','02/11','02/12','02/13','02/14','02/15','02/16','02/17','02/18','02/19','02/20','02/21','02/22','02/24','02/25','02/26','02/27','02/28','03/01','03/02','03/03','03/04','03/05','03/06','03/07','03/08','03/09','03/10','03/11','03/12','03/13','03/14','03/15','03/16','03/18','03/19','03/20','03/21','03/22','03/23','03/24','03/25','03/26','03/27','03/28','03/29','03/30','03/31','04/01','04/02'],
+  drain:[438,1385,3136,3561,1700,818,4844,5975,2633,3389,1994,3505,2870,4482,5346,2937,1833,2387,1934,1576,1029,1006,9238,4331,4476,5181,2603,3607,2372,4388,3364,2329,2659,2259,2108,4638,3873,2884,5036,2521,4058,2461,2935,2423,2391,2560,1860,2293,1430,2852,2958,4025,1418,2799,978,1823,2216,1618,1297,1633,1821,1410,1796,2173,1827,1540,1115,1307,4547,1762,951,1606,2496,1628,1188,1541,1284,1430,1843,2015,2672,2168,2100,1508,2857,1898,1554,812,1782,1791,2827,1713,1882,1980,2499,2381,1921,2119,2570,1531,2955,3397,2322,2210,1677],
+  stops:[3.83,3.75,3.67,4.08,0.92,2.5,0,0.5,0,11.17,0,6,12,16.75,6.17,0,0,0.33,0,0.42,0,0,1,0,0,0,0,0.5,0,1.63,0,0,2.45,7.25,0,0,1.17,0.75,0.33,4.33,0,0.25,0.17,0,0.47,0,0,0,0,0,0,0,0,0,0.58,0,0,0,0,0,2,0.83,3.08,2.33,0,0,0.17,0,0,0,16.33,9.58,0,0.45,0.17,0,0,0,0,0,0,0,0,2.3,0.33,0,0,0,0,0,0.25,0,0,0,0,0,1.75,0.25,0.25,0,0,0.58,0,0,0]
+};
+
+const MERGED_DAILY = {
+  dates:["2022-12-09","2022-12-10","2022-12-11","2022-12-12","2022-12-13","2022-12-14","2022-12-15","2022-12-17","2022-12-18","2022-12-19","2022-12-21","2022-12-22","2022-12-25","2022-12-26","2022-12-27","2022-12-28","2022-12-29","2022-12-30","2022-12-31","2023-01-01","2023-01-02","2023-01-03","2023-01-04","2023-01-05","2023-01-06","2023-01-07","2023-01-08","2023-01-09","2023-01-10","2023-01-11","2023-01-12","2023-01-13","2023-01-15","2023-01-16","2023-01-17","2023-01-18","2023-01-19","2023-01-20","2023-01-21","2023-01-22","2023-01-23","2023-01-24","2023-01-25","2023-01-26","2023-01-27","2023-01-28","2023-01-29","2023-01-30","2023-01-31","2023-02-01","2023-02-04","2023-02-05","2023-02-06","2023-02-07","2023-02-09","2023-02-10","2023-02-11","2023-02-12","2023-02-13","2023-02-14","2023-02-15","2023-02-16","2023-02-17","2023-02-18","2023-02-19","2023-02-20","2023-02-21","2023-02-23","2023-02-24","2023-02-25","2023-02-26","2023-02-27","2023-02-28","2023-03-01","2023-03-02","2023-03-03","2023-03-04","2023-03-05","2023-03-06","2023-03-07","2023-03-08","2023-03-09","2023-03-11","2023-03-12","2023-03-13","2023-03-14","2023-03-15","2023-03-16","2023-03-17","2023-03-18","2023-03-19","2023-03-20","2023-03-21","2023-03-22","2023-03-23","2023-03-24","2023-03-25","2023-03-26","2023-03-27","2023-03-28","2023-03-29","2023-03-30","2023-03-31","2023-04-02","2023-04-03","2023-04-04","2023-04-05","2023-04-07","2023-04-08","2023-04-09","2023-04-10","2023-04-11","2023-04-13","2023-04-14","2023-04-15","2023-04-17","2023-04-18","2023-04-19","2023-04-20","2023-04-21","2023-12-07","2023-12-08","2023-12-09","2023-12-10","2023-12-11","2023-12-12","2023-12-13","2023-12-14","2023-12-15","2023-12-16","2023-12-17","2023-12-18","2023-12-19","2023-12-20","2023-12-21","2023-12-22","2023-12-23","2023-12-24","2023-12-25","2023-12-26","2023-12-27","2023-12-28","2023-12-29","2023-12-30","2023-12-31","2024-01-01","2024-01-02","2024-01-03","2024-01-04","2024-01-06","2024-01-07","2024-01-08","2024-01-09","2024-01-10","2024-01-11","2024-01-12","2024-01-13","2024-01-14","2024-01-15","2024-01-16","2024-01-17","2024-01-18","2024-01-19","2024-01-20","2024-01-21","2024-01-22","2024-01-23","2024-01-24","2024-01-25","2024-01-26","2024-01-27","2024-01-28","2024-01-29","2024-01-30","2024-01-31","2024-02-01","2024-02-02","2024-02-03","2024-02-04","2024-02-07","2024-02-08","2024-02-09","2024-02-10","2024-02-11","2024-02-12","2024-02-13","2024-02-14","2024-02-15","2024-02-16","2024-02-17","2024-02-18","2024-02-19","2024-02-20","2024-02-21","2024-02-22","2024-02-23","2024-02-24","2024-02-25","2024-02-26","2024-02-27","2024-02-28","2024-02-29","2024-03-01","2024-03-02","2024-03-03","2024-03-04","2024-03-05","2024-03-08","2024-03-09","2024-03-10","2024-03-11","2024-03-12","2024-03-13","2024-03-14","2024-03-16","2024-03-17","2024-03-18","2024-03-19","2024-03-20","2024-03-21","2024-03-22","2024-03-23","2024-03-24","2024-03-25","2024-03-26","2025-12-10","2025-12-11","2025-12-12","2025-12-13","2025-12-14","2025-12-15","2025-12-16","2025-12-17","2025-12-18","2025-12-19","2025-12-20","2025-12-21","2025-12-22","2025-12-23","2025-12-24","2025-12-25","2025-12-26","2025-12-27","2025-12-28","2025-12-29","2025-12-30","2026-01-03","2026-01-04","2026-01-05","2026-01-07","2026-01-08","2026-01-09","2026-01-10","2026-01-11","2026-01-12","2026-01-13","2026-01-14","2026-01-15","2026-01-16","2026-01-17","2026-01-18","2026-01-19","2026-01-20","2026-01-21","2026-01-22","2026-01-23","2026-01-24","2026-01-25","2026-01-26","2026-01-27","2026-01-28","2026-01-29","2026-01-31","2026-02-01","2026-02-02","2026-02-03","2026-02-05","2026-02-07","2026-02-08","2026-02-09","2026-02-10","2026-02-11","2026-02-12","2026-02-13","2026-02-14","2026-02-15","2026-02-16","2026-02-17","2026-02-18","2026-02-19","2026-02-20","2026-02-21","2026-02-22","2026-02-24","2026-02-25","2026-02-26","2026-02-27","2026-02-28","2026-03-01","2026-03-02","2026-03-03","2026-03-04","2026-03-05","2026-03-06","2026-03-07","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-12","2026-03-13","2026-03-14","2026-03-15","2026-03-16","2026-03-18","2026-03-19","2026-03-20","2026-03-21","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-26","2026-03-27","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-02","2026-04-03"],
+  drain:[748.7,468.8,1888.8,910.5,330.5,1082.1,917.8,665.4,335.3,719.8,810.4,573.4,397.1,448.3,259.8,159.9,197.6,466.5,448.1,156.8,165.9,180.0,382.4,204.0,187.8,447.7,102.8,505.0,155.4,470.7,362.9,440.0,142.7,393.2,414.5,737.4,880.5,731.4,265.2,241.3,204.7,212.8,223.0,319.6,165.4,109.3,398.7,177.6,372.4,332.6,136.8,248.1,262.2,398.0,179.2,319.7,386.4,269.1,126.7,159.9,745.5,328.9,899.9,748.0,319.0,162.8,182.9,205.7,74.8,135.9,381.5,85.5,119.3,119.3,864.7,201.4,157.2,174.8,154.1,209.7,176.2,157.2,50.4,63.9,162.4,127.5,81.9,87.4,60.1,67.0,104.5,61.1,48.5,71.0,91.3,109.0,178.0,520.3,153.1,97.6,109.4,20.5,44.3,85.0,176.6,80.2,70.7,94.0,97.2,124.5,104.7,119.7,219.9,178.5,152.1,143.4,137.7,163.6,0.0,599.2,141.9,238.7,210.5,103.6,127.2,152.6,130.0,199.6,170.2,159.5,50.7,102.3,184.7,109.6,202.4,418.6,400.8,247.2,134.8,71.4,128.6,69.2,208.7,95.3,150.0,361.5,139.3,57.0,426.9,385.5,244.3,101.7,362.6,298.4,195.6,294.6,259.4,117.1,56.2,208.1,91.6,204.5,171.9,290.2,134.8,186.7,110.9,174.2,132.7,170.9,17.1,16.5,63.4,102.9,181.4,103.6,87.7,31.2,0.0,332.4,60.9,99.8,827.0,49.3,97.8,0.0,56.3,203.6,99.1,59.5,84.1,52.7,100.7,104.6,68.4,170.9,161.3,121.4,125.2,77.4,132.6,103.6,187.5,48.8,141.7,131.6,147.6,87.6,94.3,83.6,135.4,85.2,73.3,98.2,304.1,100.2,140.7,96.3,101.6,98.5,84.7,100.1,83.5,292.2,30.5,437.8,1384.8,3135.7,3561.2,1700.1,818.0,4843.6,5975.5,2633.2,3389.2,1994.2,3505.1,2869.7,4481.9,5346.1,2937.2,1832.6,2386.8,1934.3,1575.5,1029.0,1006.0,9237.8,4330.9,4476.2,5181.4,2603.2,3607.5,2372.4,4388.3,3364.5,2328.6,2658.9,2259.0,2108.0,4638.0,3872.7,2884.3,5036.0,2520.7,4057.8,2460.6,2935.3,2422.5,2391.1,2559.5,1860.0,2293.3,1430.2,2851.8,2958.0,4025.3,1417.5,2799.0,977.6,1823.1,2215.7,1617.7,1296.8,1632.6,1820.6,1409.7,1796.2,2172.7,1826.5,1540.4,1114.6,1307.0,4547.0,1762.2,950.6,1606.2,2496.4,1627.6,1187.8,1541.5,1284.3,1429.9,1843.1,2015.3,2672.4,2168.5,2099.6,1508.0,2856.6,1897.6,1554.2,812.1,1781.7,1790.8,2826.6,1713.5,1882.4,1980.4,2499.2,2381.1,1921.1,2118.7,2570.0,1531.3,2955.2,3396.6,2322.1,2209.8,1676.6,0.0],
+  udl:[41.48,48.57,31.99,48.11,7.79,23.46,49.79,8.12,4.75,15.96,2.90,-120.97,97.33,22.61,9.32,11.32,11.85,18.34,23.20,19.28,-14.95,-2.31,6.01,-9.44,-5.88,9.37,5.55,4.89,2.63,6.10,7.85,-185.95,58.18,4.10,7.53,6.58,9.16,9.60,17.48,-3.45,5.38,-6.15,8.60,7.05,11.82,4.17,12.19,12.25,9.44,5.85,9.33,0.64,1.27,-59.86,82.42,11.04,8.34,13.20,15.68,4.24,7.87,10.26,6.48,5.08,2.50,2.71,6.16,-0.26,16.81,3.75,0.94,4.73,5.32,10.88,11.99,-0.21,-2.02,3.08,7.80,5.64,13.62,-46.74,82.57,24.54,19.44,9.27,7.29,-12.29,9.60,13.07,12.55,-6.78,13.03,27.89,13.13,2.69,9.60,5.20,0.24,0.72,-94.38,-36.33,33.23,13.87,11.10,26.87,-0.64,4.54,5.90,6.39,-2.70,0.07,24.65,9.73,6.74,16.24,36.51,9.16,15.60,-33.95,75.81,35.34,35.77,9.29,8.11,16.33,23.73,9.11,16.84,3.50,10.40,25.50,-4.57,-9.59,-1.24,15.06,12.77,-5.23,-0.35,-15.58,-12.85,-13.68,4.94,-13.94,8.72,-4.77,-1.68,-14.58,-72.14,70.83,15.55,11.87,13.81,1.81,6.11,8.63,-2.22,3.53,15.64,16.76,12.83,14.89,-7.27,5.30,26.07,-27.29,-21.14,19.50,10.22,-1.51,-8.57,-6.45,8.52,9.87,-9.89,-6.49,-10.04,-21.16,-1190.88,75.62,54.40,29.02,22.23,5.13,14.97,-367.68,11.93,-7.72,0.78,0.93,7.83,-3.44,9.03,6.72,10.23,9.89,6.69,10.74,1.55,-0.98,-3.90,3.77,7.11,3.31,4.38,15.18,2.51,53.59,7.35,10.18,13.66,13.38,2.88,2.74,6.04,11.18,-4.65,-0.80,6.26,9.08,15.26,-36.42,14.98,1.05,-60.29,96.59,92.22,46.77,40.07,56.29,45.49,41.34,49.76,38.17,12.02,24.41,22.19,6.05,-115.61,16.27,22.32,14.34,10.77,2.09,20.73,-59.63,97.88,79.28,60.03,31.74,67.52,30.16,15.86,14.20,16.42,30.97,9.76,12.65,-0.68,12.30,4.27,-5.15,17.10,0.34,-33.52,11.69,10.01,12.63,18.47,6.26,3.99,11.65,17.64,6.23,-5.99,-222.02,27.51,5.66,16.02,8.95,18.50,16.60,8.08,13.32,4.98,-10.77,5.69,-2.67,0.34,8.42,4.76,-0.83,-29.88,29.09,21.61,-79.74,17.67,24.74,8.71,8.13,4.34,5.47,4.17,-7.99,5.74,12.96,6.77,7.08,6.67,7.46,17.11,10.37,6.80,-1.81,8.21,-16.03,14.16,-1.04,8.75,6.57,14.76,0.18,1.56,12.32,-31.11,-12.63,-1.31,-4.20,-42.48,-14.33,-122.96],
+  season:["22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","22-23","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","23-24","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26","25-26"]
+};
+
+// Build effluent season table
+(function(){
+  var tb = document.getElementById('effluentTableBody');
+  if(!tb) return;
+  var sum4 = WATER.mill.map(function(v,i){ return v+WATER.boil[i]+WATER.pan[i]+WATER.cent[i]; });
+  for(var i=0;i<WATER.seasons.length;i++){
+    var tr = document.createElement('tr');
+    var isLast = i===WATER.seasons.length-1;
+    if(isLast) tr.style.cssText='background:rgba(231,76,60,0.08);font-weight:600;';
+    var fmt = function(v){ return v===null?'—':Math.round(v).toLocaleString(); };
+    tr.innerHTML='<td>'+WATER.seasons[i]+'</td><td>'+fmt(WATER.mill[i])+'</td><td>'+fmt(WATER.boil[i])+'</td><td>'+fmt(WATER.pan[i])+'</td><td>'+fmt(WATER.cent[i])+'</td><td style="font-weight:700;color:'+(sum4[i]>1000?'#e74c3c':'inherit')+'">'+fmt(sum4[i])+'</td><td>'+fmt(WATER.pond[i])+'</td><td>'+fmt(WATER.condIn[i])+'</td><td>'+fmt(WATER.condOut[i])+'</td><td style="font-weight:700;color:'+(WATER.udl[i]>7?'#e74c3c':'inherit')+'">'+WATER.udl[i].toFixed(2)+'</td>';
+    tb.appendChild(tr);
+  }
+})();
+
+// Chart: Drain stacked bar + UDL line
+new Chart(document.getElementById('chartDrainUdl'), {
+  type:'bar',
+  data:{
+    labels:WATER.seasons,
+    datasets:[
+      {label:'Mill',data:WATER.mill,backgroundColor:'rgba(52,152,219,0.7)',stack:'drain'},
+      {label:'Boil',data:WATER.boil,backgroundColor:'rgba(230,126,34,0.7)',stack:'drain'},
+      {label:'Pan',data:WATER.pan,backgroundColor:'rgba(155,89,182,0.7)',stack:'drain'},
+      {label:'Cent',data:WATER.cent,backgroundColor:'rgba(231,76,60,0.7)',stack:'drain'},
+      {label:'UDL %',data:WATER.udl,type:'line',borderColor:'#1a1a2e',backgroundColor:'rgba(26,26,46,0.1)',borderWidth:2.5,pointRadius:4,yAxisID:'y1',tension:0.3}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{font:{size:11}}}},
+    scales:{
+      x:{stacked:true},
+      y:{stacked:true,title:{display:true,text:'Sugar Content (ppm)'}},
+      y1:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'UDL %'},min:4,max:10}
+    }
+  }
+});
+
+// Chart: Condenser sugar trend
+new Chart(document.getElementById('chartCondenser'), {
+  type:'line',
+  data:{
+    labels:WATER.seasons,
+    datasets:[
+      {label:'Cond In (ppm)',data:WATER.condIn,borderColor:'#e74c3c',backgroundColor:'rgba(231,76,60,0.1)',fill:true,tension:0.3,pointRadius:4},
+      {label:'Cond Out (ppm)',data:WATER.condOut,borderColor:'#3498db',backgroundColor:'rgba(52,152,219,0.1)',fill:true,tension:0.3,pointRadius:4,spanGaps:true}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom'},
+      annotation:{ annotations:{ threshold:{ type:'line',yMin:200,yMax:200,borderColor:'rgba(46,204,113,0.6)',borderWidth:2,borderDash:[6,3],label:{display:true,content:'ปกติ <200 ppm (Rein §12.9)',position:'start',font:{size:10}} } } }
+    },
+    scales:{y:{title:{display:true,text:'Sugar in Condensate (ppm)'},min:0}}
+  }
+});
+
+// Chart: Daily 25-26 time-series
+new Chart(document.getElementById('chartDaily2526'), {
+  type:'bar',
+  data:{
+    labels:DAILY_2526.dates,
+    datasets:[
+      {label:'Drain Sum (ppm)',data:DAILY_2526.drain,backgroundColor:DAILY_2526.drain.map(function(v){return v>3000?'rgba(231,76,60,0.7)':v>2000?'rgba(230,126,34,0.6)':'rgba(52,152,219,0.5)';}),yAxisID:'y',order:2},
+      {label:'Stop Hours',data:DAILY_2526.stops,type:'line',borderColor:'#e74c3c',backgroundColor:'rgba(231,76,60,0.1)',borderWidth:1.5,pointRadius:DAILY_2526.stops.map(function(v){return v>1?4:0;}),yAxisID:'y1',order:1,tension:0.1}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom'}},
+    scales:{
+      x:{ticks:{maxRotation:90,font:{size:9},autoSkip:true,maxTicksLimit:30}},
+      y:{title:{display:true,text:'Drain Sugar (ppm)'},min:0},
+      y1:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'Stop Hours'},min:0,max:20}
+    }
+  }
+});
+
+// Chart: Scatter UDL vs Drain (multi-season)
+(function(){
+  var colors={'22-23':'rgba(52,152,219,0.6)','23-24':'rgba(46,204,113,0.6)','25-26':'rgba(231,76,60,0.6)'};
+  var borderColors={'22-23':'rgba(52,152,219,1)','23-24':'rgba(46,204,113,1)','25-26':'rgba(231,76,60,1)'};
+  var datasets={};
+  var filteredDrain=[],filteredUdl=[],filteredSeason=[];
+  for(var i=0;i<MERGED_DAILY.drain.length;i++){
+    var u=MERGED_DAILY.udl[i], d=MERGED_DAILY.drain[i], s=MERGED_DAILY.season[i];
+    if(u<-50||u>50||d<=0) continue;
+    filteredDrain.push(d); filteredUdl.push(u); filteredSeason.push(s);
+    if(!datasets[s]) datasets[s]={label:s,data:[],backgroundColor:colors[s],borderColor:borderColors[s],pointRadius:4,pointHoverRadius:6};
+    datasets[s].data.push({x:d,y:u});
+  }
+  var dsList=[];
+  ['22-23','23-24','25-26'].forEach(function(k){if(datasets[k])dsList.push(datasets[k]);});
+  new Chart(document.getElementById('chartDrainVsUdl'),{
+    type:'scatter',
+    data:{datasets:dsList},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{size:11}}},tooltip:{callbacks:{label:function(ctx){return ctx.dataset.label+': drain='+ctx.parsed.x.toFixed(0)+' ppm, UDL='+ctx.parsed.y.toFixed(1)+'%';}}}},
+      scales:{
+        x:{title:{display:true,text:'Drain Sugar Content (ppm)'},min:0},
+        y:{title:{display:true,text:'UDL % (รายวัน)'},min:-10,max:50}
+      }
+    }
+  });
+
+  // Compute stats
+  var n=filteredDrain.length;
+  var sx=0,sy=0,sxy=0,sx2=0,sy2=0;
+  var drainBySeason={},udlBySeason={};
+  for(var i=0;i<n;i++){
+    var x=filteredDrain[i],y=filteredUdl[i],s=filteredSeason[i];
+    sx+=x;sy+=y;sxy+=x*y;sx2+=x*x;sy2+=y*y;
+    if(!drainBySeason[s]){drainBySeason[s]=[];udlBySeason[s]=[];}
+    drainBySeason[s].push(x);udlBySeason[s].push(y);
+  }
+  var r=(n*sxy-sx*sy)/Math.sqrt((n*sx2-sx*sx)*(n*sy2-sy*sy));
+  var avg=function(a){var s=0;for(var j=0;j<a.length;j++)s+=a[j];return a.length?(s/a.length):0;};
+  var avgUdl2223=avg(udlBySeason['22-23']||[]);
+  var avgUdl2324=avg(udlBySeason['23-24']||[]);
+  var avgUdl2526=avg(udlBySeason['25-26']||[]);
+  var avgDrainOld=avg((drainBySeason['22-23']||[]).concat(drainBySeason['23-24']||[]));
+  var avgDrain2526=avg(drainBySeason['25-26']||[]);
+
+  document.getElementById('dsStat1').textContent=n+' วัน (3 ฤดูหีบ, กรอง outlier)';
+  document.getElementById('dsStat2').textContent=Math.round(sx/n).toLocaleString()+' ppm';
+  document.getElementById('dsStat3').textContent=avgUdl2223.toFixed(1)+'% / '+avgUdl2324.toFixed(1)+'%';
+  document.getElementById('dsStat4').textContent=avgUdl2526.toFixed(1)+'% (สูงกว่า '+(avgUdl2526-((avgUdl2223+avgUdl2324)/2)).toFixed(1)+' จุด)';
+  document.getElementById('dsStat5').textContent=Math.round(avgDrain2526).toLocaleString()+' vs '+Math.round(avgDrainOld).toLocaleString()+' ppm (+'+(((avgDrain2526-avgDrainOld)/avgDrainOld)*100).toFixed(0)+'%)';
+  document.getElementById('dsStat6').textContent=r.toFixed(3);
+})();
+
+// Chart: Stop comparison bar
+(function(){
+  var normal=[],bigStop=[];
+  for(var i=0;i<DAILY_2526.drain.length;i++){
+    if(DAILY_2526.stops[i]<=1) normal.push(DAILY_2526.drain[i]);
+    else if(DAILY_2526.stops[i]>3) bigStop.push(DAILY_2526.drain[i]);
+  }
+  var avg=function(a){var s=0;for(var j=0;j<a.length;j++)s+=a[j];return a.length?Math.round(s/a.length):0;};
+  var avgN=avg(normal), avgB=avg(bigStop);
+
+  new Chart(document.getElementById('chartStopCompare'),{
+    type:'bar',
+    data:{
+      labels:['วันปกติ (≤1 ชม.)','วันหยุดนาน (>3 ชม.)'],
+      datasets:[{label:'Drain เฉลี่ย (ppm)',data:[avgN,avgB],backgroundColor:['rgba(52,152,219,0.7)','rgba(231,76,60,0.7)'],borderWidth:0}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,indexAxis:'y',
+      plugins:{legend:{display:false},datalabels:{display:false}},
+      scales:{x:{title:{display:true,text:'Sugar Content เฉลี่ย (ppm)'},min:0}}
+    }
+  });
+})();
 
 // ===== SPA PAGE SWITCHING =====
 function showPage(pageId) {
